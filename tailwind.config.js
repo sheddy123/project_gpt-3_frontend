@@ -14,6 +14,8 @@ export default {
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
+        satoshi: ['Satoshi', 'sans-serif'],
+        inter: ['Inter', 'sans-serif']
       },
     },
     screens: {
