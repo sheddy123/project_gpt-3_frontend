@@ -3,13 +3,13 @@ import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
 import logo from "../../../assets/images/logo.svg";
 import "./Navbar.css";
 import Button from "../../Common/Button/Button";
-import { navLinksData } from "../../../utils/constants";
-import { trimAndConvertToLowerCase } from "../../../utils/helpers";
+import { navLinksData } from "../../../utils/Constants/ComponentsConstants/constants";
+import { trimAndConvertToLowerCase } from "../../../utils/Helpers/helpers";
+
 
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const { text, nav_auth, icontype } = navLinksData;
-
   const menuItems = text.map((item, index) => (
     <p key={`${index + item}`}>
       <a href={`#${trimAndConvertToLowerCase(item)}`}>{item}</a>

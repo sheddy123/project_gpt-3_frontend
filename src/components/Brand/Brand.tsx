@@ -1,7 +1,7 @@
 import React from "react";
 import { google, slack, atlassian, dropbox, shopify } from "./imports";
 import "./Brand.css";
-import { brandData } from "../../utils/constants";
+import { brandData } from "../../utils/Constants/ComponentsConstants/constants";
 
 const Brand = () => (
   <div className="gpt3__brand ">

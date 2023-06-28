@@ -1,25 +1,41 @@
 import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+//import { useNavigate } from 'react-router-dom';
+import { getAuth } from "../../../redux/features/auth/authSlice";
+import Modal from "../../Common/Modal/Modal";
+import { openModal } from "../../../redux/features/modal/modalSlice";
 
-const CLIENT_ID = "9503706682799524aaf7";
-function loginWithGitHub() {
-  window.location.assign(
-    "https://github.com/login/oauth/authorize?client_id=" + CLIENT_ID
-  );
+const url = import.meta.env.VITE_CLIENT_ID_URL + import.meta.env.VITE_CLIENT_ID;
+//"https://localhost:7135/api/Auth/Authenticate?code="
+function loginWithGitHub(dispatch) {
+  //  dispatch(openModal(null));
+  window.location.assign(url);
 }
 
 const Login = () => {
+  const dispatch = useDispatch();
+  //const navigate = useNavigate();
+  const store = useSelector((state) => state);
+
   useEffect(() => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const codeParam = urlParams.get("code");
-    console.log(codeParam);
-    
-  }, []);
-
+    if (codeParam) {
+      dispatch(getAuth(codeParam) as any).then(() => {
+        // Clear the URL parameter after successful API call
+        // navigate('/login', { replace: true });
+      });
+    }
+  }, [dispatch]);
+  const modal = store.modalReducer.isOpen && <Modal />;
   return (
     <>
+      {modal}
       <div>
-        <button onClick={loginWithGitHub}>Login with Github</button>
+        <button onClick={() => loginWithGitHub(dispatch)}>
+          Login with Github
+        </button>
       </div>
     </>
   );
