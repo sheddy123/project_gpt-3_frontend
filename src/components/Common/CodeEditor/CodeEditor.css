@@ -1,0 +1,39 @@
+#editor {
+  height: 250px;
+}
+
+.button-container {
+  text-align: right;
+  padding: 4px 0px;
+}
+#putHtmlCodeHere {
+  width: 100% !important;
+}
+
+.btn {
+  background: #57a958;
+  color: white;
+  padding: 8px;
+  border: 0;
+}
+
+.output {
+  padding: 4px;
+  /* border: 2px solid gray; */
+  min-height: 100px;
+  width: 100%;
+  resize: none;
+  background: #b8b9b5;
+}
+
+.select__editor {
+  width: auto;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 28px;
+  padding: 0 1rem;
+  outline: none;
+  height: 34px;
+  border-radius:4px;
+}

@@ -1,0 +1,53 @@
+/*
+=============== 
+Modal Dialog
+===============
+*/
+
+:root {
+    --clr-primary: #645cff;
+    --clr-primary-dark: #282566;
+    --clr-primary-light: #a29dff;
+    --clr-grey-1: #102a42;
+    --clr-grey-5: #617d98;
+    --clr-grey-10: #f1f5f8;
+    --clr-white: #fff;
+    --clr-red-dark: hsl(360, 67%, 44%);
+    --clr-red-light: hsl(360, 71%, 66%);
+    --transition: all 0.3s linear;
+    --spacing: 0.25rem;
+    --radius: 0.25rem;
+    --large-screen-width: 1170px;
+    --small-screen-width: 90vw;
+    --fixed-width: 50rem;
+  }
+  
+.modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modal {
+    background: var(--clr-white);
+    width: 80vw;
+    max-width: 400px;
+    border-radius: var(--radius);
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+  .modal h4 {
+    margin-bottom: 0;
+    line-height: 1.5;
+  }
+  .modal .clear-btn,
+  .modal .confirm-btn {
+    margin-top: 1rem;
+  }
