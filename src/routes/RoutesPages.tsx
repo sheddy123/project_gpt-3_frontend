@@ -3,9 +3,6 @@ import HomePage from "../pages/HomePage/HomePage.tsx";
 import RequireAuth from "./RequireAuth.tsx";
 import { ROLES } from "../utils/Constants/ApiConstants/api_constants.tsx";
 import PersistLogin from "./PersistLogin.tsx";
-import { useSelector } from "react-redux/es/hooks/useSelector";
-import {useEffect} from 'react'
-import useAuth from "../utils/Hooks/useAuth.tsx";
 
 function NotFoundPage() {
   return (
@@ -25,14 +22,7 @@ function UnAuthorizedPage() {
 }
 
 const RoutePages = () => {
-  //const userRole2 = useSelector((store) => console.log(store?.authReducer?.auth_response?.roles));
-  //console.log("Auth is", userRole);
-  const store = useSelector((state) => state);
-  //const { setAuth, auth } = useAuth();
   
-  useEffect(() => {
-    console.log("Store value:", store);
-  }, [store]);
   return (
     // <Router>
     <Routes>

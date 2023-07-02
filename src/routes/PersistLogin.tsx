@@ -22,7 +22,6 @@ const PersistLogin = () => {
         isMounted && setIsLoading(false);
       }
     };
-console.log("============",user?.token);
 
     // persist added here AFTER tutorial video
     // Avoids unwanted call to verifyRefreshToken
@@ -32,13 +31,15 @@ console.log("============",user?.token);
   }, []);
 
   useEffect(() => {
-    console.log("Persist login" + JSON.stringify(user));
-    console.log(`isLoading: ${isLoading}`);
-    console.log(`aT: ${JSON.stringify(auth)}`);
+    //console.log("Persist login" + JSON.stringify(auth));
+    // console.log(`isLoading: ${isLoading}`);
+    // console.log(`aT: ${JSON.stringify(auth)}`);
   }, [isLoading]);
 
   return (
+    //you can put your loading icon here
     <>{!persist ? <Outlet /> : isLoading ? <p>Loading...</p> : <Outlet />}</>
+    // <>{!persist ? <Outlet /> : isLoading ? <p>Loading...</p> : <Outlet />}</>
   );
 };
 
