@@ -2,11 +2,19 @@ export interface IAvatarStacked {
   img: string;
 }
 
-export interface IButtonProps {
+export interface IBaseButtonProps {
   styles: string;
   text: string;
 }
 
+export interface IButtonProps  extends IBaseButtonProps{
+  onClick?: () => void;
+}
+export interface ILoginProps extends IBaseButtonProps {
+  // Additional properties specific to Login component
+  isLoggedIn?: boolean;
+  username?: string;
+}
 export interface IHeaderProps {
   h1_header_text: string;
   p_header_text: string;
