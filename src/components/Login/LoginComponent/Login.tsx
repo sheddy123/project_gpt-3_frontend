@@ -2,29 +2,37 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 //import { useNavigate } from 'react-router-dom';
 import { getAuth } from "../../../redux/features/auth/authSlice";
-import Modal from "../../Common/Modal/Modal";
-import { openModal } from "../../../redux/features/modal/modalSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
 import useAuth from "../../../utils/Hooks/useAuth";
-
+import './Login.css';
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import useLogout from "../../../utils/Hooks/useLogout";
+import Button from "../../Common/Button/Button";
+import { ILoginProps } from "../../../interfaces/IConstants/IConstants";
 
 const url = import.meta.env.VITE_CLIENT_ID_URL + import.meta.env.VITE_CLIENT_ID;
 //"https://localhost:7135/api/Auth/Authenticate?code="
 function loginWithGitHub(dispatch) {
-  //  dispatch(openModal(null));
+  //dispatch(openModal("Open the modal"));
   window.location.assign(url);
 }
+
 //const navigate = useNavigate();
 
-const Login = () => {
+const Login : React.FC<ILoginProps> = ({ styles, text }) => {
   const dispatch = useDispatch();
-  const modalReducer = useSelector((state) => state.modalReducer);
-  const { setAuth, auth } = useAuth();
-
+  
+  const { setAuth, auth, persist, setPersist } = useAuth();
+  const logout = useLogout();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+
+  const signOut = async () => {
+    console.log("I am clicked");
+
+    await logout();
+  };
 
   useEffect(() => {
     const queryString = window.location.search;
@@ -40,6 +48,7 @@ const Login = () => {
             message: result?.message,
             auth_response: result?.auth_User,
           });
+
           navigate(from, { replace: true });
         })
         .catch((error) => {
@@ -47,16 +56,33 @@ const Login = () => {
         });
     }
   }, [dispatch]);
-  const modal = modalReducer.isOpen && <Modal />;
+  
 
+  useEffect(() => {
+    
+    localStorage.setItem('persist', persist);
+  }, [persist]);
+  
+  const togglePersist = () => {
+    
+    
+    setPersist(prev => !prev);
+  }
   return (
     <>
-      {modal}
-      <div>
-        <button onClick={() => loginWithGitHub(dispatch)}>
+      
+      
+        {/* <button onClick={() => loginWithGitHub(dispatch)}>
           Login with Github
-        </button>
-      </div>
+        </button> */}
+        {/* <Button onClick={() =>loginWithGitHub(dispatch)} styles={`${styles}`} text={`${text}`} /> */}
+        
+        {/* <button onClick={signOut}>Sign out</button> */}
+        {/* <div className="persistCheck">
+          <input type="checkbox" id="persist" onChange={togglePersist}  checked={persist}/>
+          <label htmlFor="persist">Trus this device</label>
+        </div> */}
+      
     </>
   );
 };
