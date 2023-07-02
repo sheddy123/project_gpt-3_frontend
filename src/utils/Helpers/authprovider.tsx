@@ -14,9 +14,11 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const persistValue = localStorage.getItem('persist');
+  
   const [auth, setAuth] = useState({});
   const [persist, setPersist] = useState<boolean>(
-    JSON.parse(localStorage.getItem('persist') || 'false')
+    (persistValue === null ? false : true)
   );
 
   return (

@@ -5,6 +5,8 @@ export const appAxiosInstance = axios.create({
   baseURL: BaseUrl,
 });
 
+appAxiosInstance.defaults.withCredentials = true;
+
 export const appAxiosAuthInstance = axios.create({
   baseURL: BaseUrl,
   headers: { "Content-Type": "application/json" },
@@ -12,4 +14,4 @@ export const appAxiosAuthInstance = axios.create({
 });
 
 // Alter defaults after instance has been created
-appAxiosAuthInstance.defaults.headers.common["Authorization"] = AUTH_TOKEN;
+//appAxiosAuthInstance.defaults.headers.common["Authorization"] = AUTH_TOKEN;
