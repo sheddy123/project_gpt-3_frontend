@@ -1,5 +1,5 @@
+import Feature from '@/components/Common/Feature/Feature';
 import './About.css';
-import Feature from '../../Common/Feature/Feature';
 
 const About = () => (
 
