@@ -1,8 +1,9 @@
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
-import useRefreshToken from "../utils/Hooks/useRefreshToken";
-import useAuth from "../utils/Hooks/useAuth";
+
 import { useSelector } from "react-redux/es/hooks/useSelector";
+import useRefreshToken from "@/utils/Hooks/useRefreshToken";
+import useAuth from "@/utils/Hooks/useAuth";
 
 const PersistLogin = () => {
   const [isLoading, setIsLoading] = useState(true);
