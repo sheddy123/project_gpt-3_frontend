@@ -1,20 +1,21 @@
+import { IAuth, ILogin } from "@/interfaces/IFeatures/IFeatures";
+import { Login_Url } from "@/utils/Constants/ApiConstants/api_constants";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { IAuth, IAuthResponse } from "../../../interfaces/IFeatures/IFeatures";
 import axios from "axios";
-import { Login_Url } from "../../../utils/Constants/ApiConstants/api_constants";
 
 export const getAuth = createAsyncThunk(
   "users/Auth/getUserDataWithAccessToken",
-  async (prop: string, thunkAPI) => {
+  async (prop: ILogin, thunkAPI) => {
     const controller = new AbortController();
     const signal = controller.signal;
 
     try {
       const response = await axios.post(
-        Login_Url + prop,
-        { signal },
+        Login_Url,
+        { code: prop.code, provider: prop.provider },
         {
           withCredentials: true,
+          signal,
         }
       );
       return response.data;
@@ -73,7 +74,7 @@ const authSlice = createSlice({
     },
     logOff: (state, action) => {
       console.log("Action is logged out" + action.payload);
-      
+
       state.message = "";
       state.auth_response = action.payload;
     },
