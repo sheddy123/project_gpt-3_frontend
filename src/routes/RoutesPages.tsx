@@ -1,8 +1,9 @@
+import HomePage from "@/pages/HomePage/HomePage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "../pages/HomePage/HomePage.tsx";
-import RequireAuth from "./RequireAuth.tsx";
-import { ROLES } from "../utils/Constants/ApiConstants/api_constants.tsx";
-import PersistLogin from "./PersistLogin.tsx";
+import PersistLogin from "./PersistLogin";
+import RequireAuth from "./RequireAuth";
+import { ROLES } from "@/utils/Constants/ApiConstants/api_constants";
+
 
 function NotFoundPage() {
   return (

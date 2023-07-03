@@ -4,28 +4,28 @@ import {
   IBrands,
   IHeaderProps,
   INavLinks,
-} from "../../../interfaces/IConstants/IConstants";
+} from "@/interfaces/IConstants/IConstants";
 
 //Avatar
 export const avatarStackedData: IAvatarStacked[] = [
   {
-    img: new URL("../../../assets/images/portrait/portrait1.png", import.meta.url)
+    img: new URL("@/assets/images/portrait/portrait1.png", import.meta.url)
       .href,
   },
   {
-    img: new URL("../../../assets/images/portrait/portrait2.jpg", import.meta.url)
+    img: new URL("@/assets/images/portrait/portrait2.jpg", import.meta.url)
       .href,
   },
   {
-    img: new URL("../../../assets/images/portrait/portrait3.jpg", import.meta.url)
+    img: new URL("@/assets/images/portrait/portrait3.jpg", import.meta.url)
       .href,
   },
   {
-    img: new URL("../../../assets/images/portrait/portrait4.jpeg", import.meta.url)
+    img: new URL("@/assets/images/portrait/portrait4.jpeg", import.meta.url)
       .href,
   },
   {
-    img: new URL("../../../assets/images/portrait/portrait5.jpeg", import.meta.url)
+    img: new URL("@/assets/images/portrait/portrait5.jpeg", import.meta.url)
       .href,
   },
 ];
@@ -37,7 +37,7 @@ export const headerData: IHeaderProps = {
   p_header_text: `  Harness AI power for transformative coding proficiency assessment. Our
     groundbreaking GPT-3-based hybrid program test generation offers
     unparalleled insights into coding skills and capabilities.`,
-  img: new URL("../../../assets/images/ai-coding.png", import.meta.url).href,
+  img: new URL("@/assets/images/ai-coding.png", import.meta.url).href,
   avatarStackedData: avatarStackedData,
   button: {
     styles: "",
@@ -64,13 +64,13 @@ export const navLinksData: INavLinks = {
 
 export const brandData : IBrands = {
     img: [
-        new URL("../../../assets/icons/c.png", import.meta.url).href,
-        new URL("../../../assets/icons/cpp.png", import.meta.url).href,
-        new URL("../../../assets/icons/html.png", import.meta.url).href,
-        new URL("../../../assets/icons/java.png", import.meta.url).href,
-        new URL("../../../assets/icons/js3.png", import.meta.url).href,
-        new URL("../../../assets/icons/php.png", import.meta.url).href,
-        new URL("../../../assets/icons/python.png", import.meta.url).href,
-        new URL("../../../assets/icons/sql.png", import.meta.url).href,
+        new URL("@/assets/icons/c.png", import.meta.url).href,
+        new URL("@/assets/icons/cpp.png", import.meta.url).href,
+        new URL("@/assets/icons/html.png", import.meta.url).href,
+        new URL("@/assets/icons/java.png", import.meta.url).href,
+        new URL("@/assets/icons/js3.png", import.meta.url).href,
+        new URL("@/assets/icons/php.png", import.meta.url).href,
+        new URL("@/assets/icons/python.png", import.meta.url).href,
+        new URL("@/assets/icons/sql.png", import.meta.url).href,
     ]
 }
