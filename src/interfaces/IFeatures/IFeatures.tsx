@@ -2,6 +2,12 @@ export interface IAuth {
   message: string;
   auth_response: IAuthResponse;
 }
+
+export interface ILogin {
+  code: string;
+  provider: string;
+}
+
 export interface IAuthResponse {
   isLoading: boolean;
   code: string;
