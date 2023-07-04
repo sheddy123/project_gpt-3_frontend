@@ -1,4 +1,5 @@
-import { IAvatarStacked } from "../../../interfaces/IConstants/IConstants";
+import { IAvatarStacked } from "@/interfaces/IConstants/IConstants";
+
 
 const Avatar =  ({ AvatarStacked }: { AvatarStacked: IAvatarStacked[] }) => {
   return (
