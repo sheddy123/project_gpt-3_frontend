@@ -130,12 +130,12 @@ $(document).ready(function () {
   const htmlCode = `
                               <div>
                                 <div class="header gradient__text"></div>
-                                <div class="control-panel" style="display: flex;flex-direction: row;">
+                                <div class="control-panel" style="display: grid;">
                                   <label for="small" style="font-size: 13px;" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Language:</label>
                                   <select id="languages" onChange="changeLanguage()" class="select__editor" style="margin-right: 12px;">
                                     <option selected>Select a language</option>
                                     <option value="c" id="c"> C </option>
-                                    <option value="csharp" id="c#"> C# </option>
+                                    <option value="csharp" id="c#"> C# </option> 
                                     <option value="cpp" id="cpp"> C++ </option>
                                     <option value="php" id="php"> PHP </option>
                                     <option value="python" id="python"> Python </option>
