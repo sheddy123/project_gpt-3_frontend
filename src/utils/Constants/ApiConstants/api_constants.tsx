@@ -1,6 +1,7 @@
 export const BaseUrl = import.meta.env.VITE_API_BASE_URL;
 export const AUTH_TOKEN = "/";
 export const Login_Url = BaseUrl + import.meta.env.VITE_LOGIN;
+export const Logout_Url = BaseUrl + import.meta.env.VITE_LOGOUT;
 
 export const ROLES = {
   Administrator: "Admin",

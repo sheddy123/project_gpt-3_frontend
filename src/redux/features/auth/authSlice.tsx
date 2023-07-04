@@ -1,5 +1,6 @@
 import { IAuth, ILogin } from "@/interfaces/IFeatures/IFeatures";
-import { Login_Url } from "@/utils/Constants/ApiConstants/api_constants";
+import { Login_Url, Logout_Url } from "@/utils/Constants/ApiConstants/api_constants";
+import { appAxiosAuthInstance } from "@/utils/Helpers/axios_config";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -39,6 +40,8 @@ export const getAuth = createAsyncThunk(
   }
 );
 
+
+
 const initialState: IAuth = {
   message: "",
   auth_response: {
@@ -73,11 +76,14 @@ const authSlice = createSlice({
       state.auth_response = action.payload?.auth_User;
     },
     logOff: (state, action) => {
-      console.log("Action is logged out" + action.payload);
+      console.log("Action is logged out" + JSON.stringify(action.payload));
 
       state.message = "";
       state.auth_response = action.payload;
     },
+    errMessage: (state,action)=>{
+      state.message = action.payload
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -122,10 +128,10 @@ const authSlice = createSlice({
       })
       .addCase(getAuth.rejected, (state, action) => {
         state.auth_response.isLoading = false;
-      });
+      })
   },
 });
 
-export const { clearAuth, updateAuth, logOff } = authSlice.actions;
+export const { clearAuth, updateAuth, logOff, errMessage } = authSlice.actions;
 
 export default authSlice.reducer;

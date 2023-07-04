@@ -50,10 +50,16 @@ export const navLinksData: INavLinks = {
   text: ["Home", "What is GPT3?", "Open AI", "Case Studies", "Library"],
   nav_auth: {
     text: "Sign in",
-    button: {
-      styles: "",
-      text: "Sign up",
-    },
+    button: [
+      {
+        styles: "",
+        text: "Sign in",
+      },
+      {
+        styles: "",
+        text: "Sign out",
+      }
+    ],
   },
   icontype: {
     close: RiCloseLine,
@@ -61,16 +67,15 @@ export const navLinksData: INavLinks = {
   },
 };
 
-
-export const brandData : IBrands = {
-    img: [
-        new URL("@/assets/icons/c.png", import.meta.url).href,
-        new URL("@/assets/icons/cpp.png", import.meta.url).href,
-        new URL("@/assets/icons/html.png", import.meta.url).href,
-        new URL("@/assets/icons/java.png", import.meta.url).href,
-        new URL("@/assets/icons/js3.png", import.meta.url).href,
-        new URL("@/assets/icons/php.png", import.meta.url).href,
-        new URL("@/assets/icons/python.png", import.meta.url).href,
-        new URL("@/assets/icons/sql.png", import.meta.url).href,
-    ]
-}
+export const brandData: IBrands = {
+  img: [
+    new URL("@/assets/icons/c.png", import.meta.url).href,
+    new URL("@/assets/icons/cpp.png", import.meta.url).href,
+    new URL("@/assets/icons/html.png", import.meta.url).href,
+    new URL("@/assets/icons/java.png", import.meta.url).href,
+    new URL("@/assets/icons/js3.png", import.meta.url).href,
+    new URL("@/assets/icons/php.png", import.meta.url).href,
+    new URL("@/assets/icons/python.png", import.meta.url).href,
+    new URL("@/assets/icons/sql.png", import.meta.url).href,
+  ],
+};
