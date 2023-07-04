@@ -1,4 +1,4 @@
-import possibilityImage from '../../../assets/images/manufacturing-hero.png';
+import possibilityImage from '@/assets/images/manufacturing-hero.png';
 import './Possibility.css';
 import CodeEditor from '../../Common/CodeEditor/CodeEditor';
 

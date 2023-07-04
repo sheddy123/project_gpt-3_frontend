@@ -1,14 +1,13 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 //import { useNavigate } from 'react-router-dom';
-import { getAuth } from "../../../redux/features/auth/authSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
-import useAuth from "../../../utils/Hooks/useAuth";
 import './Login.css';
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import useLogout from "../../../utils/Hooks/useLogout";
-import Button from "../../Common/Button/Button";
-import { ILoginProps } from "../../../interfaces/IConstants/IConstants";
+import { ILoginProps } from "@/interfaces/IConstants/IConstants";
+import useAuth from "@/utils/Hooks/useAuth";
+import useLogout from "@/utils/Hooks/useLogout";
+import { getAuth } from "@/redux/features/auth/authSlice";
 
 const url = import.meta.env.VITE_CLIENT_ID_URL + import.meta.env.VITE_CLIENT_ID;
 //"https://localhost:7135/api/Auth/Authenticate?code="

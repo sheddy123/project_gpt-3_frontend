@@ -1,28 +1,64 @@
 import { useState } from "react";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
-import logo from "../../../assets/images/logo.svg";
+import logo from "@/assets/images/logo.svg";
 import "./Navbar.css";
-import Button from "../../Common/Button/Button";
-import { navLinksData } from "../../../utils/Constants/ComponentsConstants/constants";
-import { trimAndConvertToLowerCase } from "../../../utils/Helpers/helpers";
-
+import { trimAndConvertToLowerCase } from "@/utils/Helpers/helpers";
+import Button from "@/components/Common/Button/Button";
+import { navLinksData } from "@/utils/Constants/ComponentsConstants/constants";
+import { useDispatch, useSelector } from "react-redux";
+import { openModal } from "@/redux/features/modal/modalSlice";
+import useLogout from "@/utils/Hooks/useLogout";
+import { useEffect } from "react";
+import useCookiePresent from "@/utils/Hooks/useCookiePresent";
 
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const { text, nav_auth, icontype } = navLinksData;
+  const logout = useLogout();
+  const cookiePresent = useCookiePresent();
+  const dispatch = useDispatch();
+  const auth_message = useSelector((store) => store?.authReducer?.message);
+
   const menuItems = text.map((item, index) => (
     <p key={`${index + item}`}>
       <a href={`#${trimAndConvertToLowerCase(item)}`}>{item}</a>
     </p>
   ));
 
+  const logUserOut = async () => {
+    await logout();
+  };
+
+  useEffect(() => {
+    
+    
+    const checkCookie = async () => {
+      try {
+        await cookiePresent();
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    checkCookie();
+  }, []);
+
   const auth_Items = (
     <>
-      <p>{nav_auth.text}</p>
-      <Button
-        styles={`${nav_auth.button.styles}`}
-        text={`${nav_auth.button.text}`}
-      />
+      {/* <p>{nav_auth.text}</p> */}
+      {auth_message === "Successfully logged in." || auth_message === "Valid client request" ? (
+        <Button
+          styles={`${nav_auth.button[1].styles}`}
+          text={`${nav_auth.button[1].text}`}
+          onClick={logUserOut}
+        />
+      ) : (
+        <Button
+          styles={`${nav_auth.button[0].styles}`}
+          text={`${nav_auth.button[0].text}`}
+          onClick={() => dispatch(openModal(undefined))}
+        />
+      )}
     </>
   );
 
