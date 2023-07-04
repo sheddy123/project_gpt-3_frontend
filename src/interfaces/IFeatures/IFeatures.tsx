@@ -31,3 +31,14 @@ export interface IRoles {
   id: number;
   roleName: string;
 }
+
+
+export interface ICodeExecutor {
+  language: string;
+  code: string;
+}
+
+export interface ICodeResponse{
+  response:object,
+  timeTaken: number
+}

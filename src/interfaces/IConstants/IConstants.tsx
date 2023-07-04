@@ -27,7 +27,7 @@ export interface INavLinks {
   text: string[];
   nav_auth: {
     text: string;
-    button: IButtonProps;
+    button: IButtonProps[];
   };
   icontype: {
     close: object;
