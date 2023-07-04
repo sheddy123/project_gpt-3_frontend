@@ -1,12 +1,19 @@
+import { useLocation, useNavigate } from "react-router-dom";
 import { Github } from "../Icons/Icons";
 
 const OAuthGithub = () => {
-  
-function loginWithGitHub() {
-  const url =
-    import.meta.env.VITE_CLIENT_ID_URL + import.meta.env.VITE_CLIENT_ID;
-  window.location.assign(url);
-}
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/";
+  // Store the original requested path in localStorage
+  localStorage.setItem("originalPath", from);
+  function loginWithGitHub() {
+    const url =
+      import.meta.env.VITE_CLIENT_ID_URL + import.meta.env.VITE_CLIENT_ID;
+
+    window.location.assign(url);
+  }
   return (
     <button
       onClick={loginWithGitHub}
