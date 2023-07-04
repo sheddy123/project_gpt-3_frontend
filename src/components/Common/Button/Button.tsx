@@ -1,4 +1,5 @@
-import { IButtonProps } from "../../../interfaces/IConstants/IConstants";
+import { IButtonProps } from "@/interfaces/IConstants/IConstants";
+
 
 const Button: React.FC<IButtonProps> = ({ styles, text, onClick }) => {
 
