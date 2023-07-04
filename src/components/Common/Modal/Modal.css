@@ -51,3 +51,59 @@ Modal Dialog
   .modal .confirm-btn {
     margin-top: 1rem;
   }
+
+  .header {
+  /* Style the header */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-icon {
+  /* Position the close icon */
+  //position: absolute;
+  position: relative;
+top: -20px;
+right: -3px;
+
+  padding: 5px;
+  cursor: pointer;
+}
+
+.content {
+  /* Style the content */
+  margin-top: 20px;
+}
+
+.alert-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
+.slide-in {
+  animation: slideIn 0.3s ease-in-out forwards;
+}
+
+.slide-out {
+  animation: slideOut 0.3s ease-in-out forwards;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
