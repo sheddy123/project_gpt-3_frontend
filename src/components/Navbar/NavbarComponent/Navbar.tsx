@@ -10,6 +10,7 @@ import { openModal } from "@/redux/features/modal/modalSlice";
 import useLogout from "@/utils/Hooks/useLogout";
 import { useEffect } from "react";
 import useCookiePresent from "@/utils/Hooks/useCookiePresent";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
@@ -21,7 +22,7 @@ const Navbar = () => {
 
   const menuItems = text.map((item, index) => (
     <p key={`${index + item}`}>
-      <a href={`#${trimAndConvertToLowerCase(item)}`}>{item}</a>
+      <Link to={`${trimAndConvertToLowerCase(item)}`}>{item}</Link>
     </p>
   ));
 
