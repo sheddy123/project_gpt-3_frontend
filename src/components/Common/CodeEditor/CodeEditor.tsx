@@ -12,14 +12,23 @@ const CodeEditor = () => {
   const [theme, setTheme] = useState<string>("twilight");
   const [language, setLanguage] = useState<string>("cpp");
   const [fontSize, setFontSize] = useState<string>("14px");
-  const [executingText, setExecutingText] = useState<string>(
-    "Enter a command in the code editor and click 'Run' to execute."
-  );
+
   const [code, setCode] = useState(codeSnippets[language]);
   const editorRef = useRef(null);
   const dispatch = useDispatch();
+  const [defaultValue, setDefaultValue] = useState(
+    `Enter a command in the code editor and click 'Run' to execute.`
+  );
 
   const codeResponse = useSelector((store) => store?.codeEditorReducer);
+  useEffect(() => {
+    // Check if codeResponse has a value and update defaultValue
+    if (codeResponse?.response?.response) {
+      setDefaultValue(
+        `Finished in ${codeResponse?.timeTaken} ms\n${codeResponse?.response?.response}`
+      );
+    }
+  }, [codeResponse]);
 
   const handleThemeChange = (event) => {
     setTheme(event.target.value);
@@ -41,7 +50,7 @@ const CodeEditor = () => {
   };
 
   const executeCodeSnippets = () => {
-    setExecutingText("Running...");
+    setDefaultValue("Running...");
     const codeSnippet = language === "php" ? removePhpTags(code) : code;
     dispatch(executeCode({ language: language, code: codeSnippet }) as any);
   };
@@ -52,7 +61,8 @@ const CodeEditor = () => {
     setLanguage(selectedLanguage);
     setCode(selectedCodeSnippet);
   };
-
+  const textAreaColor =
+    Object.keys(codeResponse?.response).length === 0 ? "#7a200b" : "black";
   return (
     <>
       {/* <div id="putHtmlCodeHere"></div> */}
@@ -181,27 +191,16 @@ const CodeEditor = () => {
             Run
           </button>
         </div>
-        <div className="output">
-          {Object.keys(codeResponse?.response).length === 0 ? (
-            <p
-              className="text-sm text-green-400"
-              style={{
-                color: "#7a200b",
-                fontWeight: "bold",
-                fontSize: "13px",
-              }}>
-              {executingText}
-            </p>
-          ) : (
-            <>
-              <p style={{ color: "green", fontSize: "13px" }}>
-                Finished in {codeResponse?.timeTaken} ms <br />
-                <span style={{ color: "black", fontSize: "14px" }}>
-                  {codeResponse?.response?.response}
-                </span>
-              </p>
-            </>
-          )}
+
+        <div>
+          <textarea
+            id="message"
+            rows={4}
+            className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+            style={{ background: "#b8b9b5", color: `${textAreaColor}` }}
+            placeholder="Write your thoughts here..."
+            value={defaultValue}
+            disabled>hhjdb djkdfdjkd</textarea>
         </div>
       </div>
     </>

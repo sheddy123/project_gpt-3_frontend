@@ -2,7 +2,7 @@ export const codeSnippets = {
   cpp: `#include <iostream>
 #include <string>
 
-std::string Foo()
+std::string Solution()
 {
     std::string x = "Hello world!";
     return x;
@@ -10,13 +10,13 @@ std::string Foo()
 
 int main()
 {
-    std::cout << Foo() << std::endl;
+    std::cout << Solution() << std::endl;
     return 0;
 }`,
   c: `#include <stdio.h>
 #include <string.h>
 
-const char* Foo()
+const char* Solution()
 {
     const char* x = "Hello world!";
     return x;
@@ -24,46 +24,46 @@ const char* Foo()
 
 int main()
 {
-    printf("%s", Foo());
+    printf("%s", Solution());
     return 0;
 }`,
   php: `<?php
-function foo() {
+function Solution() {
     $x = "Hello world!";
     return $x;
 }
-echo foo();
+echo Solution();
 ?>`,
   python: `def main():
-    print(foo())
+    print(Solution())
 
-def foo():
+def Solution():
     x = "Hello world!"
     return x
 
 if __name__ == "__main__":
     main()
 `,
-  javascript: `function foo() {
+  javascript: `function Solution() {
     var x = "Hello world!";
     return x;
 }
 
-console.log(foo());
+console.log(Solution());
 `,
-  node: `function foo() {
+  node: `function Solution() {
     var x = "Hello world!";
     return x;
 }
 
-console.log(foo());
+console.log(Solution());
 `,
   java: `public class Main {
     public static void main(String[] args) {
-        System.out.println(foo());
+        System.out.println(Solution());
     }
 
-    public static String foo() {
+    public static String Solution() {
         String x = "Hello world!";
         return x;
     }
@@ -74,10 +74,10 @@ namespace DemoTest{
     {
         public static void Main(string[] args)
         {
-            Debug.WriteLine(Foo());
+            Debug.WriteLine(Solution());
         }
-
-        public static string Foo()
+        //Do not comment this out. 
+        public static string Solution()
         {
             string x = "Hello world!";
             return x;
