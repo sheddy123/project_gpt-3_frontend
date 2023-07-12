@@ -47,7 +47,7 @@ export const headerData: IHeaderProps = {
 
 //Navlinks Data
 export const navLinksData: INavLinks = {
-  text: ["Home", "What is GPT3?", "Open AI", "Case Studies", "Library"],
+  text: ["Home", "Dashboard", "Open AI", "Case Studies", "Library"],
   nav_auth: {
     text: "Sign in",
     button: [
