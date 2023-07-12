@@ -28,22 +28,23 @@ const HomePage = () => {
   //   }
 
   // }, [user]);
-  useEffect(() => {
-    function openModalWhenNotAuthenticate() {
-      if (
-        user?.message != "Valid client request" &&
-        message === "Not Authenticated"
-      ) {
-        dispatch(openModal(undefined));
-      }
-    }
-    const timer = setTimeout(() => {
-      //console.log("Modal is open");
-      openModalWhenNotAuthenticate();
-    }, 3000);
+    useEffect(() => {
+      
+        function openModalWhenNotAuthenticate() {
+            if (
+                user?.message != "Valid client request" &&
+                (message === "Not Authenticated" || message === "Session Ended")
+            ) {
+                dispatch(openModal(undefined));
+            }
+        }
+        const timer = setTimeout(() => {
+            //console.log("Modal is open");
+            openModalWhenNotAuthenticate();
+        }, 3000);
 
-    return () => clearTimeout(timer);
-  }, [user]);
+        return () => clearTimeout(timer);
+    }, [user]);
 
   //console.log("Persist login" + JSON.stringify(location?.state?.from?.pathname));
   return (
