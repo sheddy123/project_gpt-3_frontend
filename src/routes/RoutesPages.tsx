@@ -1,9 +1,10 @@
 import HomePage from "@/pages/HomePage/HomePage";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import PersistLogin from "./PersistLogin";
 import RequireAuth from "./RequireAuth";
 import { ROLES } from "@/utils/Constants/ApiConstants/api_constants";
 
+import DashboardLayout from "./DashboardLayout";
 
 function NotFoundPage() {
   return (
@@ -23,20 +24,35 @@ function UnAuthorizedPage() {
 }
 
 const RoutePages = () => {
- 
   return (
-    // <Router>
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route element={<PersistLogin />}>
-        <Route element={<RequireAuth allowedRoles={[ROLES.Student]} />}>
+    <>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        {/* <Route path="/home" element={<HomePage />} /> */}
+        <Route element={<PersistLogin />}>
           <Route path="unauthorized" element={<UnAuthorizedPage />} />
+          <Route element={<RequireAuth allowedRoles={[ROLES.Student]} />}>
+            {/* ================================= Dashboard =======================================*/}
+            <Route path="/dashboard/*" element={<DashboardLayout />} />
+            {/* ================================= Dashboard =======================================*/}
+          </Route>
         </Route>
-      </Route>
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
-    // </Router>
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </>
   );
 };
 
 export default RoutePages;
+
+// <Routes>
+//   <Route path="/" element={<HomePage />} />
+//   <Route path="/home" element={<HomePage />} />
+//   <Route element={<PersistLogin />}>
+//     <Route element={<RequireAuth allowedRoles={[ROLES.Student]} />}>
+//       <Route path="unauthorized" element={<UnAuthorizedPage />} />
+//     </Route>
+//   </Route>
+//   <Route path="*" element={<NotFoundPage />} />
+// </Routes>
+// </Router>
