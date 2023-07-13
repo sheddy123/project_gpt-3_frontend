@@ -81,6 +81,9 @@ const authSlice = createSlice({
       state.message = "";
       state.auth_response = action.payload;
     },
+    sessionEnded: (state, action)=>{
+      state.message = "Session ended"
+    },
     errMessage: (state,action)=>{
       state.message = action.payload
     }
@@ -132,6 +135,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { clearAuth, updateAuth, logOff, errMessage } = authSlice.actions;
+export const { clearAuth, updateAuth, logOff, errMessage, sessionEnded } = authSlice.actions;
 
 export default authSlice.reducer;
