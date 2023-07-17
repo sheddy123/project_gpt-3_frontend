@@ -25,23 +25,22 @@ const RequireAuth = ({ allowedRoles }) => {
   }
 
   if (isTokenExpired) {
-    console.log("Expiry ended", hasAllowedRoles);
+    //console.log("Expiry ended", hasAllowedRoles);
     dispatch(sessionEnded(undefined));
   }
 
   if (isLoggedIn && !hasAllowedRoles) {
     // User tried logging in but does not have allowed roles
     // Track this event (e.g., send analytics, log to console, etc.)
-    console.log("User tried logging in but does not have allowed roles");
+    //console.log("User tried logging in but does not have allowed roles");
   }
-
   if (hasAllowedRoles && !isTokenExpired) {
     return <Outlet />;
   } else if (isLoggedIn) {
     return (
       <Navigate to="/unauthorized" state={{ from: location }} replace />
     );
-  } else if (isTokenExpired) {
+  } else if (isTokenExpired || user?.message.includes("Lifetime validation failed")) {
     return (
       <Navigate
         to="/"
@@ -49,7 +48,8 @@ const RequireAuth = ({ allowedRoles }) => {
         replace
       />
     );
-  } else {
+  } 
+  else if(hasAllowedRoles === undefined) {
     return (
       <Navigate
         to="/"
