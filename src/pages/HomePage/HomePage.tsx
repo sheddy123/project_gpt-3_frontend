@@ -17,6 +17,7 @@ const HomePage = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const message = location.state && location.state.message;
+ 
   // useEffect(() => {
   //   if(user?.message == "Valid client request"){
   //     dispatch(closeModal(undefined));
@@ -28,6 +29,7 @@ const HomePage = () => {
   //   }
 
   // }, [user]);
+  
     useEffect(() => {
       
         function openModalWhenNotAuthenticate() {
