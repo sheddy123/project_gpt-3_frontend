@@ -28,7 +28,7 @@ const RoutePages = () => {
     <>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        {/* <Route path="/home" element={<HomePage />} /> */}
+        <Route path="/home" element={<HomePage />} />
         <Route element={<PersistLogin />}>
           <Route path="unauthorized" element={<UnAuthorizedPage />} />
           <Route element={<RequireAuth allowedRoles={[ROLES.Student]} />}>
