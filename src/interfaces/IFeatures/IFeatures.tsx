@@ -16,6 +16,7 @@ export interface IAuthResponse {
   locked_out_enabled: string;
   lockout_end: string;
   normalized_email: string;
+  image_url: string;
   normalized_username: string;
   phone_number: string;
   security_stamp: string;
@@ -32,13 +33,42 @@ export interface IRoles {
   roleName: string;
 }
 
-
 export interface ICodeExecutor {
   language: string;
   code: string;
 }
 
-export interface ICodeResponse{
-  response:object,
-  timeTaken: number
+export interface ICodeResponse {
+  response: object;
+  timeTaken: number;
+}
+
+export interface IGeoLocation {
+  ip: string;
+  network: string;
+  version: string;
+  city: string;
+  region: string;
+  region_code: string;
+  country: string;
+  country_name: string;
+  country_code: string;
+  country_code_iso3: string;
+  country_capital: string;
+  country_tld: string;
+  continent_code: string;
+  in_eu: string;
+  postal: string;
+  latitude: string;
+  longitude: string;
+  timezone: string;
+  utc_offset: string;
+  country_calling_code: string;
+  currency: string;
+  currency_name: string;
+  languages: string;
+  country_area: string;
+  country_population: string;
+  asn: string;
+  org: string;
 }
