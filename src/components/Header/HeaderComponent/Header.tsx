@@ -8,8 +8,8 @@ import { headerData } from "@/utils/Constants/ComponentsConstants/constants";
 import { useEffect } from "react";
 import useAuth from "@/utils/Hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getAuth } from "@/redux/features/auth/authSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
+import { getAuthService } from "@/services/api/AuthService/GetAuthService";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const Header = () => {
     const urlParams = new URLSearchParams(queryString);
     const codeParam = urlParams.get("code");
     if (codeParam) {
-      dispatch(getAuth({ code: codeParam, provider: "Github" }) as any)
+      dispatch(getAuthService({ code: codeParam, provider: "Github" }) as any)
         .then(unwrapResult)
         .then((result) => {
           // Clear the URL parameter after successful API call
