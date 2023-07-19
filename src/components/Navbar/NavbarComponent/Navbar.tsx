@@ -31,23 +31,24 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    
-    
-    const checkCookie = async () => {
-      try {
-        await cookiePresent();
-      } catch (error) {
-        console.error(error);
-      }
-    };
-  
-    checkCookie();
+    if (auth_message !== "Successfully logged in.") {
+      const checkCookie = async () => {
+        try {
+          await cookiePresent();
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      checkCookie();
+    }
   }, []);
 
   const auth_Items = (
     <>
       {/* <p>{nav_auth.text}</p> */}
-      {auth_message === "Successfully logged in." || auth_message === "Valid client request" ? (
+      {auth_message === "Successfully logged in." ||
+      auth_message === "Valid client request" ? (
         <Button
           styles={`${nav_auth.button[1].styles}`}
           text={`${nav_auth.button[1].text}`}
