@@ -10,13 +10,13 @@ import { IAuth, IGeoLocation } from "@/interfaces/IFeatures/IFeatures";
 import StudentProgressBar from "@/components/Common/StudentProgressBar/StudentProgressBar";
 import Confetti from "react-confetti";
 import { closeConfetti } from "@/redux/features/modal/modalSlice";
-import { MapPin } from "../Common/Icons/Icons";
+import { MapPin, Verified } from "../Common/Icons/Icons";
 import { geoLocationService } from "@/services/api/GeoLocation/GeoLocationService";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { dashboardSidebar } from "@/utils/Constants/ComponentsConstants/constants";
 
 const Sidebar = () => {
-  const { currentColor, activeMenu, setActiveMenu, screenSize } =
+  const { currentColor, activeMenu, setActiveMenu, screenSize, handleClick } =
     useStateContext();
   const [isActiveLink, setIsActiveLink] = useState("");
   const [geographicLocation, setGeographicLocation] = useState<IGeoLocation>({
@@ -49,8 +49,7 @@ const Sidebar = () => {
     org: "",
   });
   const dispatch = useDispatch();
-  const { img } =
-    dashboardSidebar;
+  const { img } = dashboardSidebar;
   const location = useLocation();
   const [windowDimension, setWindowDimension] = useState({
     width: window.innerWidth,
@@ -151,7 +150,7 @@ const Sidebar = () => {
             <div className="flex justify-center items-center mx-auto">
               <div className="flex flex-col">
                 <p className="text-black dark:text-white">
-                  {store?.auth_response.user_name}
+                  {store?.auth_response.user_name} <span className="inline-flex items-center justify-center w-5 h-5"><Verified color='#31d26c' size={5} /></span>
                 </p>
                 <div className="flex items-center mx-auto">
                   <MapPin color={currentColor} size="5" />
@@ -160,10 +159,15 @@ const Sidebar = () => {
                     {geographicLocation.country_name}
                   </span>
                 </div>
-                <div className="badge-block mx-auto">
-                  <a href="#" className="e-badge e-badge-secondary mx-auto">
-                    Profile
-                  </a>
+
+                <div
+                  className="badge-block mx-auto"
+                  onClick={() => handleClick("userProfile")}>
+                  <TooltipComponent content="Profile" position="BottomCenter">
+                    <a href="#" className="e-badge e-badge-secondary mx-auto">
+                      Profile
+                    </a>
+                  </TooltipComponent>
                 </div>
               </div>
             </div>
@@ -288,7 +292,7 @@ const Sidebar = () => {
               </div>
 
               <p className="mb-3 text-sm text-white dark:text-black animate__animated  animate__pulse animate__slow animate__infinite">
-                <img src={img} style={{maxWidth:'76%'}}/>
+                <img src={img} style={{ maxWidth: "76%" }} />
               </p>
             </div>
             <div className="mt-20 text-center dark:text-white text-black font-bold font-poppins">
