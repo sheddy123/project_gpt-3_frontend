@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
     "@syncfusion/ej2": "^19.4.48",
     "@syncfusion/ej2-react-calendars": "^19.4.48",
     "@syncfusion/ej2-react-charts": "^19.4.50",
@@ -18,13 +19,14 @@
     "@syncfusion/ej2-react-inputs": "^19.4.52",
     "@syncfusion/ej2-react-kanban": "^19.4.48",
     "@syncfusion/ej2-react-popups": "^19.4.52",
+    "@syncfusion/ej2-react-progressbar": "^19.4.52",
     "@syncfusion/ej2-react-richtexteditor": "^19.4.50",
     "@syncfusion/ej2-react-schedule": "^19.4.50",
-    "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
     "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
     "react-ace": "^10.1.0",
+    "react-confetti": "^6.1.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
     "react-redux": "^8.1.1",
