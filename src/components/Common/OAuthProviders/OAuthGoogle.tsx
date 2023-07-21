@@ -2,10 +2,10 @@ import { useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { closeModal } from "@/redux/features/modal/modalSlice";
-import { getAuth } from "@/redux/features/auth/authSlice";
 import useAuth from "@/utils/Hooks/useAuth";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useLocation, useNavigate } from "react-router-dom";
+import { getAuthService } from "@/services/api/AuthService/GetAuthService";
 
 const OAuthGoogle = () => {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const OAuthGoogle = () => {
     //console.log(jwtDecode(response.credential));
     dispatch(closeModal(undefined));
     dispatch(
-      getAuth({
+      getAuthService({
         code: JSON.stringify(jwtDecode(response.credential)),
         provider: "Google",
       }) as any
