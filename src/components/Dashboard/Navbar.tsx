@@ -59,7 +59,6 @@ const Navbar = () => {
     }
   }, [screenSize]);
 
-  console.log(currentColor);
   const handleActiveMenu = () => setActiveMenu(!activeMenu);
   const activeLink = `pb-2 px-2 border-b-4 border-[${currentColor}] font-semibold`;
   const normalLink = "pb-2 px-2 text-gray-500 font-semibold ";
@@ -74,12 +73,12 @@ const Navbar = () => {
       />
 
       <div className="hidden md:flex items-center space-x-1">
-        {links.map((item) => (
-          <>
+        {links.map((item, index) => (
+          <div key={`${item}${index}`}>
             {item.links.map((link) => (
               <NavLink
                 to={`/dashboard/${link.name}`}
-                key={link.name}
+                key={`${item} ${link.name}${index}`}
                 style={({ isActive }) => ({
                   color: isActive ? currentColor : "",
                   borderColor: isActive ? currentColor : "",
@@ -87,10 +86,10 @@ const Navbar = () => {
                 className={({ isActive }) =>
                   isActive ? activeLink : normalLink
                 }>
-                <span className="capitalize ">{link.name}</span>
+                <span key={`${item} ${link}${index}`} className="capitalize ">{link.name}</span>
               </NavLink>
             ))}
-          </>
+          </div>
         ))}
       </div>
       <div className="flex">
