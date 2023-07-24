@@ -245,3 +245,4 @@ export const SkillIcon = ({ color, styles }) => {
     </svg>
   );
 };
+
