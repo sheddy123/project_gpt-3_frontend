@@ -1,0 +1,39 @@
+.course-overview--show-more-btn--2jq19 {
+  margin-left: 2.4rem;
+}
+.ud-btn-ghost {
+  color: #5624d0;
+  background-color: transparent;
+  min-width: auto;
+  padding: 0;
+}
+
+.ud-btn-medium {
+  height: 4rem;
+}
+
+.fade__content {
+  -webkit-mask-image: linear-gradient(#ffffff, #ffffff, rgba(255, 255, 255, 0));
+}
+
+.long__text {
+  max-height: 0;
+  overflow: hidden;
+  display: inline-block;
+  transition: max-height 0.4s;
+}
+
+.expanded {
+  max-height: 100rem;
+  transition: max-height 2s;
+}
+
+.custom-disc-color li::before {
+  content: "";
+  display: inline-block;
+  width: 0.75em; /* Adjust the size of the bullet point */
+  height: 0.75em; /* Adjust the size of the bullet point */
+  background-color: #ff0000; /* Set your desired color here */
+  border-radius: 50%;
+  margin-right: 0.5em; /* Adjust the spacing between the bullet point and the list item text */
+}
