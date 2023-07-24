@@ -38,3 +38,14 @@ export interface INavLinks {
 export interface IBrands {
   img: string[];
 }
+
+export interface ITabNav {
+  handleTabClick?: void;
+  activeTab?: string;
+  tabNavs: ITabDescription[]
+}
+export interface ITabDescription{
+  id:number,
+  name: string;
+  content:string;
+}
