@@ -22,7 +22,6 @@ const UserProfile = () => {
   const data = JSON.parse(
     JSON.parse(store?.profileReducer?.programming_skills)
   );
-
   function DisplaySkills() {
     // Check if programming_skills is an array before rendering
     if (Array.isArray(data)) {
