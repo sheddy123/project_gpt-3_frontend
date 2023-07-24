@@ -1,6 +1,8 @@
 export interface IProfileModal {
-  yearsOfExperience: string;
+  years_of_experience: string;
   level: string;
-  programmingSkills: string[] | string;
-  profileSummary: string;
+  programming_skills: string[] | string;
+  profile_summary: string;
+  user_id?: string;
+  last_updated?: string;
 }
