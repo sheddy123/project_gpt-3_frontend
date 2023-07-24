@@ -5,20 +5,31 @@ import {
   setPage,
   selectFormTitle,
   setData,
-  setSameAsBilling,
   selectCanNextPage1,
   selectCanNextPage2,
   selectCanSubmit,
+  selectDisablePrev,
+  selectPrevHide,
+  selectNextHide,
+  selectSubmitHide,
+  selectDisableNext,
 } from "@/redux/features/form/formSlice";
 import FormInputs from "./FormInputs";
 const Form = () => {
-  const page = useSelector(selectFormPage);
-  const data = useSelector(selectFormData);
-  const title = useSelector(selectFormTitle);
+  const formData = {
+    page: useSelector(selectFormPage),
+    data: useSelector(selectFormData),
+    title: useSelector(selectFormTitle),
+    canNextPage1: useSelector(selectCanNextPage1),
+    canNextPage2: useSelector(selectCanNextPage2),
+    canSubmit: useSelector(selectCanSubmit),
+    disablePrev: useSelector(selectDisablePrev),
+    prevHide: useSelector(selectPrevHide),
+    nextHide: useSelector(selectNextHide),
+    submitHide: useSelector(selectSubmitHide),
+    disableNext: useSelector(selectDisableNext),
+  };
   const dispatch = useDispatch();
-  const canNextPage1 = useSelector(selectCanNextPage1);
-  const canNextPage2 = useSelector(selectCanNextPage2);
-  const canSubmit = useSelector(selectCanSubmit);
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
@@ -31,62 +42,50 @@ const Form = () => {
   const handleNext = (page: number) => {
     dispatch(setPage(page + 1));
   };
-  const handleSameAsBillingChange = (e) => {
-    dispatch(setSameAsBilling({ sameAsBilling: e.target.checked }));
-  };
-
-  const disablePrev = page === 0;
-
-  const disableNext = 
-     page === Object.keys(title).length - 1 ||
-     (page === 0 && !canNextPage1) ||
-     (page === 1 && !canNextPage2);
-
-     console.log("Disable Next Page " + Object.keys(title).length);
-  const prevHide = page === 0 && "remove-button";
-
-  const nextHide = page === Object.keys(title).length - 1 && "remove-button";
-
-  const submitHide = page !== Object.keys(title).length - 1 && "remove-button";
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(JSON.stringify(data));
+    console.log(JSON.stringify(formData.data));
   };
 
   // Rest of the component code...
   const content = (
     <form className="form flex-col" onSubmit={handleSubmit}>
       <header className="form-header">
-        <h2>{title[page]}</h2>
+        {/* <h2>{title[page]}</h2> */}
 
         <div className="button-container">
           <button
             type="button"
-            className={`button ${prevHide}`}
-            onClick={() => handlePrev(page)}
-            disabled={disablePrev}>
+            className={`button ${formData.prevHide}`}
+            onClick={() => handlePrev(formData.page)}
+            disabled={formData.disablePrev}>
             Prev
           </button>
 
           <button
             type="button"
-            className={`button ${nextHide}`}
-            onClick={() => handleNext(page)}
-            disabled={disableNext}>
+            className={`button ${formData.nextHide}`}
+            onClick={() => handleNext(formData.page)}
+            disabled={formData.disableNext}>
             Next
           </button>
 
           <button
             type="submit"
-            className={`button ${submitHide}`}
-            disabled={!canSubmit}>
+            className={`button ${formData.submitHide}`}
+            disabled={!formData.canSubmit}>
             Submit
           </button>
         </div>
       </header>
 
-      <FormInputs handleChange={handleChange}/>
+      <FormInputs
+        handleChange={handleChange}
+        handleNext={handleNext}
+        nextHide={formData.nextHide}
+        disableNext={formData.disableNext}
+      />
     </form>
   );
 
