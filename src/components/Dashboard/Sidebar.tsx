@@ -14,6 +14,7 @@ import { MapPin, Verified } from "../Common/Icons/Icons";
 import { geoLocationService } from "@/services/api/GeoLocation/GeoLocationService";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { dashboardSidebar } from "@/utils/Constants/ComponentsConstants/constants";
+import { getProfileService } from "@/services/api/ProfileService/profileService";
 
 const Sidebar = () => {
   const { currentColor, activeMenu, setActiveMenu, screenSize, handleClick } =
@@ -50,6 +51,7 @@ const Sidebar = () => {
   });
   const dispatch = useDispatch();
   const { img } = dashboardSidebar;
+  const [userProfileData, setUserProfileData] = useState("");
   const location = useLocation();
   const [windowDimension, setWindowDimension] = useState({
     width: window.innerWidth,
@@ -93,6 +95,16 @@ const Sidebar = () => {
       .then(unwrapResult)
       .then((result) => {
         setGeographicLocation(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    //Profile
+    dispatch(getProfileService(store?.auth_response.user_name) as any)
+      .then(unwrapResult)
+      .then((result) => {
+        setUserProfileData(result);
       })
       .catch((error) => {
         console.log(error);
@@ -150,7 +162,10 @@ const Sidebar = () => {
             <div className="flex justify-center items-center mx-auto">
               <div className="flex flex-col">
                 <p className="text-black dark:text-white">
-                  {store?.auth_response.user_name} <span className="inline-flex items-center justify-center w-5 h-5"><Verified color='#31d26c' size={5} /></span>
+                  {store?.auth_response.user_name}{" "}
+                  <span className="inline-flex items-center justify-center w-5 h-5">
+                    <Verified color="#31d26c" size={5} />
+                  </span>
                 </p>
                 <div className="flex items-center mx-auto">
                   <MapPin color={currentColor} size="5" />
