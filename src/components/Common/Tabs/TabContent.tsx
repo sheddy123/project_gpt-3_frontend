@@ -12,10 +12,10 @@ const TabContent = ({ TabNavs, activeTab }) => {
       {TabNavs.map((tab, index) => {
         return (
           activeTab === `${tab.name}-tab` && (
-            <div className="grid grid-cols-3 gap-4 mt-3 rounded-sm items-center">
+            <div key={tab+index} className="grid grid-cols-3 gap-4 mt-3 rounded-sm items-center">
               {earningData.map((item, index) => (
                 <>
-                  <div className="bg-gray-50 shadow grid grid-cols-2 p-2 h-full w-full overflow-hidden relative max-w-xs bg-cover bg-no-repeat cont">
+                  <div key={`${item}${index}`} className="bg-gray-50 shadow grid grid-cols-2 p-2 h-full w-full overflow-hidden relative max-w-xs bg-cover bg-no-repeat cont">
                     <div>
                       <button
                         type="button"
