@@ -2,22 +2,28 @@ import { IProfileModal } from "@/interfaces/ProfileModal/IProfileModal";
 import { useState } from "react";
 import Button from "../Button/Button";
 import { closeModal, openConfetti } from "@/redux/features/modal/modalSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { createProfileService } from "@/services/api/ProfileService/profileService";
+import { unwrapResult } from "@reduxjs/toolkit";
 
 const ProfileModal = () => {
   const dispatch = useDispatch();
+  const store = useSelector((store) => store);
+
   const [inputs, setInputs] = useState<IProfileModal>({
-    yearsOfExperience: "",
+    years_of_experience: "",
     level: "",
-    programmingSkills: [],
-    profileSummary: "",
+    programming_skills: [],
+    profile_summary: "",
+    user_id: "",
   });
 
   const [errors, setErrors] = useState<IProfileModal>({
-    yearsOfExperience: "",
+    years_of_experience: "",
     level: "",
-    programmingSkills: "",
-    profileSummary: "",
+    programming_skills: "",
+    profile_summary: "",
+    user_id: "",
   });
 
   const handleChange = (
@@ -46,13 +52,13 @@ const ProfileModal = () => {
   };
 
   const handleCheckboxChange = (name: string, checked: boolean) => {
-    const { programmingSkills } = inputs;
+    const { programming_skills } = inputs;
     let updatedSkills: string[];
 
     if (checked) {
-      updatedSkills = [...programmingSkills, name];
+      updatedSkills = [...programming_skills, name];
     } else {
-      updatedSkills = programmingSkills.filter((skill) => skill !== name);
+      updatedSkills = programming_skills.filter((skill) => skill !== name);
     }
 
     return updatedSkills;
@@ -62,14 +68,15 @@ const ProfileModal = () => {
     // Handle form submission logic here
     let isValid = true;
     const newErrors: IProfileModal = {
-      yearsOfExperience: "",
+      years_of_experience: "",
       level: "",
-      programmingSkills: "",
-      profileSummary: "",
+      programming_skills: "",
+      profile_summary: "",
+      user_id: "",
     };
 
-    if (!inputs.yearsOfExperience) {
-      newErrors.yearsOfExperience = "Years of experience is required";
+    if (!inputs.years_of_experience) {
+      newErrors.years_of_experience = "Years of experience is required";
       isValid = false;
     }
 
@@ -78,14 +85,14 @@ const ProfileModal = () => {
       isValid = false;
     }
 
-    if (inputs.programmingSkills.length === 0) {
-      newErrors.programmingSkills =
+    if (inputs.programming_skills.length === 0) {
+      newErrors.programming_skills =
         "At least one programming skill is required";
       isValid = false;
     }
 
-    if (!inputs.profileSummary) {
-      newErrors.profileSummary = "Profile summary is required";
+    if (!inputs.profile_summary) {
+      newErrors.profile_summary = "Profile summary is required";
       isValid = false;
     }
 
@@ -94,11 +101,19 @@ const ProfileModal = () => {
     if (isValid) {
       // Proceed with form submission if all validations pass
       // Handle form submission logic here
-      console.log("Submit button clicked", JSON.stringify(inputs));
-      dispatch(closeModal(undefined));
-      dispatch(openConfetti(undefined));
+      inputs.user_id = store?.authReducer?.auth_response.user_name;
+      inputs.programming_skills = JSON.stringify(inputs.programming_skills);
+      dispatch(createProfileService(inputs) as any)
+        .then(unwrapResult)
+        .then((result) => {
+          //
+          dispatch(closeModal(undefined));
+          dispatch(openConfetti(undefined));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-    
   };
   return (
     <aside className="modal-container ">
@@ -112,7 +127,7 @@ const ProfileModal = () => {
               <div className="w-full px-3 justify-center">
                 <label
                   className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                  htmlFor="yearsOfExperience">
+                  htmlFor="years_of_experience">
                   Years of programming experience
                 </label>
                 <div className="flex justify-center">
@@ -120,9 +135,9 @@ const ProfileModal = () => {
                     <input
                       type="radio"
                       className="form-radio"
-                      name="yearsOfExperience"
+                      name="years_of_experience"
                       value="1-3"
-                      checked={inputs.yearsOfExperience === "1-3"}
+                      checked={inputs.years_of_experience === "1-3"}
                       onChange={handleChange}
                     />
                     <span className="ml-2">1-3 years</span>
@@ -131,9 +146,9 @@ const ProfileModal = () => {
                     <input
                       type="radio"
                       className="form-radio"
-                      name="yearsOfExperience"
+                      name="years_of_experience"
                       value="3-5"
-                      checked={inputs.yearsOfExperience === "3-5"}
+                      checked={inputs.years_of_experience === "3-5"}
                       onChange={handleChange}
                     />
                     <span className="ml-2">3-5 years</span>
@@ -142,17 +157,17 @@ const ProfileModal = () => {
                     <input
                       type="radio"
                       className="form-radio"
-                      name="yearsOfExperience"
+                      name="years_of_experience"
                       value="5-above"
-                      checked={inputs.yearsOfExperience === "5-above"}
+                      checked={inputs.years_of_experience === "5-above"}
                       onChange={handleChange}
                     />
                     <span className="ml-2">5 years above</span>
                   </label>
                 </div>
-                {errors.yearsOfExperience && (
+                {errors.years_of_experience && (
                   <p className="text-red-500 text-xs italic">
-                    * {errors.yearsOfExperience}
+                    * {errors.years_of_experience}
                   </p>
                 )}
               </div>
@@ -206,7 +221,7 @@ const ProfileModal = () => {
               <div className="w-full px-3 mt-10 justify-center">
                 <label
                   className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                  htmlFor="programmingSkills">
+                  htmlFor="programming_skills">
                   Programming skills
                 </label>
                 <div className="flex">
@@ -214,9 +229,9 @@ const ProfileModal = () => {
                     <input
                       type="checkbox"
                       className="form-checkbox"
-                      name="programmingSkills"
+                      name="programming_skills"
                       value="java"
-                      checked={inputs.programmingSkills.includes("java")}
+                      checked={inputs.programming_skills.includes("java")}
                       onChange={handleChange}
                     />
                     <span className="ml-2">Java</span>
@@ -225,9 +240,9 @@ const ProfileModal = () => {
                     <input
                       type="checkbox"
                       className="form-checkbox"
-                      name="programmingSkills"
+                      name="programming_skills"
                       value="c++"
-                      checked={inputs.programmingSkills.includes("c++")}
+                      checked={inputs.programming_skills.includes("c++")}
                       onChange={handleChange}
                     />
                     <span className="ml-2">C++</span>
@@ -236,9 +251,9 @@ const ProfileModal = () => {
                     <input
                       type="checkbox"
                       className="form-checkbox"
-                      name="programmingSkills"
+                      name="programming_skills"
                       value="python"
-                      checked={inputs.programmingSkills.includes("python")}
+                      checked={inputs.programming_skills.includes("python")}
                       onChange={handleChange}
                     />
                     <span className="ml-2">Python</span>
@@ -247,9 +262,9 @@ const ProfileModal = () => {
                     <input
                       type="checkbox"
                       className="form-checkbox"
-                      name="programmingSkills"
+                      name="programming_skills"
                       value="php"
-                      checked={inputs.programmingSkills.includes("php")}
+                      checked={inputs.programming_skills.includes("php")}
                       onChange={handleChange}
                     />
                     <span className="ml-2">PHP</span>
@@ -258,9 +273,9 @@ const ProfileModal = () => {
                     <input
                       type="checkbox"
                       className="form-checkbox"
-                      name="programmingSkills"
+                      name="programming_skills"
                       value="javascript"
-                      checked={inputs.programmingSkills.includes("javascript")}
+                      checked={inputs.programming_skills.includes("javascript")}
                       onChange={handleChange}
                     />
                     <span className="ml-2">JavaScript</span>
@@ -269,17 +284,17 @@ const ProfileModal = () => {
                     <input
                       type="checkbox"
                       className="form-checkbox"
-                      name="programmingSkills"
+                      name="programming_skills"
                       value="c#"
-                      checked={inputs.programmingSkills.includes("c#")}
+                      checked={inputs.programming_skills.includes("c#")}
                       onChange={handleChange}
                     />
                     <span className="ml-2">C#</span>
                   </label>
                 </div>
-                {errors.programmingSkills && (
+                {errors.programming_skills && (
                   <p className="text-red-500 text-xs italic">
-                    * {errors.programmingSkills}
+                    * {errors.programming_skills}
                   </p>
                 )}
               </div>
@@ -293,12 +308,12 @@ const ProfileModal = () => {
                 <textarea
                   className="bg-gray-200 appearance-none border-2 h-40 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-600"
                   id="profile-summary"
-                  name="profileSummary"
-                  value={inputs.profileSummary}
+                  name="profile_summary"
+                  value={inputs.profile_summary}
                   onChange={handleChange}></textarea>
-                {errors.profileSummary && (
+                {errors.profile_summary && (
                   <p className="text-red-500 text-xs italic">
-                    * {errors.profileSummary}
+                    * {errors.profile_summary}
                   </p>
                 )}
               </div>
