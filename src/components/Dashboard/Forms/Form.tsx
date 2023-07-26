@@ -13,6 +13,7 @@ import {
   selectNextHide,
   selectSubmitHide,
   selectDisableNext,
+  selectFormQuestionLength,
 } from "@/redux/features/form/formSlice";
 import FormInputs from "./FormInputs";
 const Form = () => {
@@ -28,11 +29,13 @@ const Form = () => {
     nextHide: useSelector(selectNextHide),
     submitHide: useSelector(selectSubmitHide),
     disableNext: useSelector(selectDisableNext),
+    questionLength: useSelector(selectFormQuestionLength),
   };
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
+    console.log(name, value, type);
     const payloadValue = type === "checkbox" ? e.target.checked : value;
     dispatch(setData({ name, value: payloadValue }));
   };

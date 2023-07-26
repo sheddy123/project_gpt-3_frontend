@@ -49,7 +49,7 @@ const RequireAuth = ({ allowedRoles }) => {
       />
     );
   } 
-  else if(hasAllowedRoles === undefined) {
+  else if(hasAllowedRoles === undefined || !hasAllowedRoles) {
     return (
       <Navigate
         to="/"

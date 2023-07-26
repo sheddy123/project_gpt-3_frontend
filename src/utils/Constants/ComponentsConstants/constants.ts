@@ -4,6 +4,7 @@ import {
   IBrands,
   IHeaderProps,
   INavLinks,
+  ITabDescription,
 } from "@/interfaces/IConstants/IConstants";
 
 //Avatar
@@ -58,7 +59,7 @@ export const navLinksData: INavLinks = {
       {
         styles: "",
         text: "Sign out",
-      }
+      },
     ],
   },
   icontype: {
@@ -79,3 +80,17 @@ export const brandData: IBrands = {
     new URL("@/assets/icons/sql.png", import.meta.url).href,
   ],
 };
+
+export const dashboardSidebar = {
+  img: new URL("@/assets/images/3d_villian_prev.png", import.meta.url).href,
+};
+
+export const iconLevelUp = {
+  img: new URL("@/assets/icons/level_up.png", import.meta.url).href,
+};
+
+export const TabNavs: ITabDescription[] = [
+  { id: 1, name: "inprogress", content: "in progress" },
+  { id: 2, name: "upcoming", content: "upcoming" },
+  { id: 3, name: "completed", content: "completed" },
+];

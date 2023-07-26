@@ -37,3 +37,50 @@
   border-radius: 50%;
   margin-right: 0.5em; /* Adjust the spacing between the bullet point and the list item text */
 }
+
+.e-toolbar .e-toolbar-items {
+  padding-bottom: 46px;
+}
+
+/* dark-mode.css */
+
+/* Styles for dark mode */
+.darkMode .e-grid .e-gridheader .e-headercell,
+.darkMode .e-grid .e-gridheader .e-detailheadercell,
+.darkMode .e-grid .e-rowcell:not(.e-editedbatchcell):not(.e-updatedtd),
+.darkMode .e-toolbar .e-toolbar-items,
+.darkMode .e-grid .e-gridheader {
+  color: #fff;
+  background-color: #444;
+  /* border-top-color: #7a7a87;
+  border-bottom-color: #7a7a87;
+  border-left-color: #7a7a87;
+  border-right-color: #7a7a87; */
+}
+
+.darkMode .e-search > .e-input::placeholder,
+.darkMode .e-search > .e-input,
+.darkMode
+  .e-grid
+  .e-toolbar-items
+  .e-toolbar-item.e-search-wrapper
+  .e-search
+  .e-search-icon {
+  color: #fff;
+}
+
+.darkMode .e-pager div.e-parentmsgbar,
+.darkMode .e-grid .e-icons:not(.e-btn-icon) {
+  color: #282020;
+}
+
+.darkMode .border-color {
+  border-color: rgba(196, 173, 173, 0.1);
+  background: #c1c1c1;
+}
+.reset__button {
+  font-size: 14px !important;
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
+  border-radius: 2.5px !important;
+}

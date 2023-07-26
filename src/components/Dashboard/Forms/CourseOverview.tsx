@@ -3,24 +3,25 @@ import {
   ChevronUp,
   Verified,
 } from "@/components/Common/Icons/Icons";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./Form.css";
 import { useStateContext } from "@/utils/Helpers/ContextProvider";
 import { useSelector } from "react-redux";
 import { selectFormPage } from "@/redux/features/form/formSlice";
 
-const AboutCourse = ({ handleNext, disableNext, nextHide }) => {
+const CourseOverview = ({ handleNext, disableNext, nextHide }) => {
   const [showTopContent, setShowTopContent] = useState(false);
   // Create a reference to the element you want to scroll to (e.g., a div)
   const scrollContainerRef = useRef(null);
   const page = useSelector(selectFormPage);
-
   const handleScrollToBottom = () => {
     // Scroll the element into view
     setShowTopContent((prev) => !prev);
     scrollContainerRef.current.scrollIntoView({ behavior: "smooth" });
   };
-  const { currentColor } = useStateContext();
+  const { currentColor} = useStateContext();
+  
+
   return (
     <>
       <div>
@@ -37,8 +38,7 @@ const AboutCourse = ({ handleNext, disableNext, nextHide }) => {
         </div>
         <hr className="mb-3" />
         <div
-          className={`grid grid-cols-1 sm:grid-cols-3 gap-4 ${
-            showTopContent ? "" : "fade__content"
+          className={`grid grid-cols-1 sm:grid-cols-3 gap-4 
           }`}>
           {/* Row 1, Column 1 */}
           <div className="">
@@ -61,9 +61,10 @@ const AboutCourse = ({ handleNext, disableNext, nextHide }) => {
             <p className=" mb-0 mt-0">Video: 21 total hours</p>
           </div>
         </div>
-        <div className={`long__text ${showTopContent ? "expanded" : ""}`}>
+        
           <hr className="mb-3" />
-          <div className={`grid grid-cols-1 sm:grid-cols-3 gap-4`}>
+          <div className={`grid grid-cols-1 sm:grid-cols-3 gap-4 ${
+            showTopContent ? "" : "fade__content"}`}>
             {/* Row 1, Column 1 */}
             <div className="">
               <p className=" mb-0 mt-0">Description</p>
@@ -81,10 +82,6 @@ const AboutCourse = ({ handleNext, disableNext, nextHide }) => {
                 align with the major changes made to the AZ-400 exam by
                 Microsoft on the 13th of July.{" "}
               </p>
-              <p>
-                All sections are being refreshed. Sections are being added as
-                NEW and will contain a refresh of all key concepts and demos.
-              </p>
               <p>The course now aligns with the new exam objectives</p>
               <ul>
                 <li>
@@ -93,18 +90,10 @@ const AboutCourse = ({ handleNext, disableNext, nextHide }) => {
                 <li>
                   <p>Design and implement source control</p>
                 </li>
-                <li>
-                  <p>Design and implement build and release pipelines</p>
-                </li>
-                <li>
-                  <p>Develop a security and compliance plan</p>
-                </li>
-                <li>
-                  <p>Implement an instrumentation strategy</p>
-                </li>
               </ul>
             </div>
           </div>
+          <div className={`long__text ${showTopContent ? "expanded" : ""}`}>
           <hr className="mb-3" />
           <div
             className={`grid grid-cols-1 sm:grid-cols-3 gap-4 
@@ -187,4 +176,4 @@ const AboutCourse = ({ handleNext, disableNext, nextHide }) => {
   );
 };
 
-export default AboutCourse;
+export default CourseOverview;

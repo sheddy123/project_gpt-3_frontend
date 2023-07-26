@@ -1,9 +1,15 @@
 /** @type {import('tailwindcss').Config} */
+import typography from "@tailwindcss/typography";
+
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
-  darkMode: 'class',
+  darkMode: "class",
   theme: {
     extend: {
+      backgroundImage: {
+        gradient:
+          "radial-gradient(ellipse at top right, rgb(6, 47, 48) 0%, rgb(0, 0, 0) 100%)",
+      },
       colors: {
         primary: "#00040f",
         secondary: "#00f6ff",
@@ -56,5 +62,5 @@ export default {
       xl: "1700px",
     },
   },
-  plugins: [],
+  plugins: [typography],
 };

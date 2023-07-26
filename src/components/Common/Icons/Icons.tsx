@@ -246,14 +246,14 @@ export const SkillIcon = ({ color, styles }) => {
   );
 };
 
-export const Document = () => {
+export const Document = ({currentMode}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth="1.5"
-      stroke="purple"
+      stroke={`${currentMode == "Dark" ? "white" : "purple"}`}
       className="w-6 h-6">
       <path
         strokeLinecap="round"

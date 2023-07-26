@@ -5,10 +5,12 @@ export interface IAvatarStacked {
 export interface IBaseButtonProps {
   styles: string;
   text: string;
+  
 }
 
 export interface IButtonProps  extends IBaseButtonProps{
   onClick?: () => void;
+  backgroundColor?: string;
 }
 export interface ILoginProps extends IBaseButtonProps {
   // Additional properties specific to Login component

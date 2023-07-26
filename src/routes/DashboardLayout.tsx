@@ -3,9 +3,8 @@ import { FiSettings } from "react-icons/fi";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 import { Navbar, Footer, Sidebar, ThemeSettings } from "@/components";
 import { useEffect } from "react";
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import {
-  Ecommerce,
   Orders,
   Calendar,
   Employees,
@@ -22,6 +21,7 @@ import {
   ColorMapping,
   Editor,
   DashboardHome,
+  Courses,
 } from "@/pages/Dashboard";
 
 const DashboardLayout = () => {
@@ -82,7 +82,7 @@ const DashboardLayout = () => {
               {/* dashboard  */}
               <Route path="/" element={<DashboardHome />} />
               <Route path="/home" element={<DashboardHome />} />
-              <Route path="/ecommerce" element={<Ecommerce />} />
+              <Route path="/courses/:courseId" element={<Courses />} />
 
               {/* pages  */}
               <Route path="/orders" element={<Orders />} />

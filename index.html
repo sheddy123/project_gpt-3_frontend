@@ -46,6 +46,17 @@
       <div class="circle"></div>
       <div class="circle"></div>
       <div class="circle"></div> -->
+      <script>
+        // JavaScript to toggle the 'darkMode' class based on user preference
+        if (
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+        ) {
+          //document.body.classList.add("darkMode");
+        } else {
+          //document.body.classList.remove("darkMode");
+        }
+      </script>
     <script type="module" src="/src/main.tsx"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="./assets/js/ace.js"></script>

@@ -93,7 +93,7 @@ const Navbar = () => {
         ))}
       </div>
       <div className="flex">
-        <NavButton
+        {/* <NavButton
           title="Cart"
           customFunc={() => handleClick("cart")}
           color={currentColor}
@@ -105,7 +105,7 @@ const Navbar = () => {
           customFunc={() => handleClick("chat")}
           color={currentColor}
           icon={<BsChatLeft />}
-        />
+        /> */}
         <NavButton
           title="Notification"
           dotColor="rgb(254, 201, 15)"

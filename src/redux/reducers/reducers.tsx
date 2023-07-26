@@ -1,13 +1,21 @@
 import { combineReducers } from "redux";
-import authReducer from "../features/auth/authSlice";
-import modalReducer from "../features/modal/modalSlice";
-import codeEditorReducer from "../features/codeEditor/code_editor_slice";
+import {
+  authReducer,
+  modalReducer,
+  codeEditorReducer,
+  geoLocationReducer,
+  profileReducer,
+  formReducer
+} from "..";
 
 const rootReducer = combineReducers({
   // Add your reducers here
   authReducer,
   modalReducer,
-  codeEditorReducer
+  codeEditorReducer,
+  geoLocationReducer,
+  profileReducer,
+  formReducer
 });
 
 export default rootReducer;

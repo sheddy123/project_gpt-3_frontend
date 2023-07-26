@@ -1,31 +1,17 @@
 import { useStateContext } from "@/utils/Helpers/ContextProvider";
-import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
 import { ChartsHeader, Pie } from "..";
 import { ecomPieChartData, pieChartData } from "./data/dummy";
+import DropDownComponent from "./DropdownComponent";
 const MyLearning = () => {
   const filterData: string[] = ["By hours", "By minutes", "By seconds"];
-  const DropDown = ({ currentMode }) => (
-    <div className="w-28 border-1 border-color px-2 py-1 rounded-md">
-      <DropDownListComponent
-        id="time"
-        fields={{ text: "Time", value: "Id" }}
-        style={{ border: "none", color: currentMode === "Dark" && "black" }}
-        value="1"
-        dataSource={filterData}
-        popupHeight="220px"
-        popupWidth="120px"
-        placeholder="Filter by"
-      />
-    </div>
-  );
-
+  
   const { currentMode } = useStateContext();
 
   return (
     <>
       <div className="flex justify-between items-center gap-2 mt-10">
         <p className="text-xl font-semibold">Statistics</p>
-        <DropDown currentMode={currentMode} />
+        <DropDownComponent handleOnClick={null} filterData={filterData} currentMode={currentMode} />
       </div>
       <div className="grid grid-cols-2 gap-4 mt-6">
       <div className="...">

@@ -1,7 +1,14 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectFormData } from "@/redux/features/form/formSlice";
+import {
+  setSameAsBilling
+} from "@/redux/features/form/formSlice";
 
 const Shipping = ({ handleChange }) => {
+  const dispatch = useDispatch();
+  const handleSameAsBillingChange = (e) => {
+    dispatch(setSameAsBilling({ sameAsBilling: e.target.checked }));
+  };
   const data = useSelector(selectFormData);
   const content = (
     <>
@@ -11,7 +18,7 @@ const Shipping = ({ handleChange }) => {
           id="sameAsBilling"
           name="sameAsBilling"
           checked={data.sameAsBilling}
-          onChange={handleChange}
+          onChange={handleSameAsBillingChange}
         />
         Same as Billing Address
       </label>
