@@ -3,7 +3,7 @@ import {
   selectFormPage,
   selectFormQuestionLength,
   setQuestionLength,
-  setTotalQuestions
+  setTotalQuestions,
 } from "@/redux/features/form/formSlice";
 import CourseOverview from "./CourseOverview";
 import CourseQuestionLists from "./CourseQuestionLists";
@@ -21,12 +21,73 @@ const FormInputs = ({ handleChange, handleNext, nextHide, disableNext }) => {
     setActiveMenu(false);
   }, []);
   const QuestionsData = [
-    { id: 2, component: "1", data: "Question 1 data" },
-    { id: 3, component: "2", data: "Question 2 data" },
-    { id: 4, component: "3", data: "Question 3 data" },
-    { id: 5, component: "4", data: "Question 4 data" },
-    { id: 6, component: "5", data: "Question 5 data" },
-    { id: 7, component: "6", data: "Question 6 data" },
+    {
+      id: 2,
+      data: `Which of the following is a bug and item tracking tool that can be integrated into your DevOps processes?`,
+      options: [
+        "Maven",
+        "JIRA",
+        "Kenkins"
+      ],
+      answer: "JIRA",
+    },
+    {
+      id: 3,
+      data: `Your DevOps team is currently looking at the integration of Azure DevOps services and Microsoft Teams. Your team has already added the Azure Boards app to Microsoft Teams.
+
+      Which of the following command is used to link a specific Azure Boards project to the respective Teams channel?`,
+      options: [
+        "@azure boards connect",
+        "@azure boards link",
+        "@azure boards create",
+      ],
+      answer: "@azure boards link",
+    },
+    {
+      id: 4,
+      data: `Your DevOps team is currently using the Azure DevOps suite of services. They have defined a project in Azure DevOps and are currently using Azure Boards for work tracking purposes. They want to make use of chart widgets to track different project metrics.
+
+      Which of the following can be used to track the below metric?
+      
+      <b>“Time taken to close a work item after work on it has started”</b>`,
+      options: [
+        "Velocity",
+        "Sprint Capacity",
+        "Lead time",
+        "Cycle Time"
+      ],
+      answer: "Cycle Time",
+    },
+    {
+      id: 5,
+      data: `Your DevOps team is currently using the Azure DevOps suite of services. They have defined a project in Azure DevOps and are currently using Azure Boards for work tracking purposes. They want to make use of chart widgets to track different project metrics.
+
+      Which of the following can be used to track the below metric?
+      
+      <b>“Time taken to close a work item after it was created”</b>`,
+      options: [
+        "Velocity",
+        "Sprint Capacity",
+        "Lead time",
+        "Cycle Time"
+      ],
+      answer: "Lead time",
+    },
+    {
+      id: 6,
+      data: `Your DevOps team is currently using the Azure DevOps suite of services. They have defined a project in Azure DevOps and are currently using Azure Boards for work tracking purposes. They want to make use of chart widgets to track different project metrics.
+
+      Which of the following can be used to track the below metric?
+      
+      <b>“Track the team’s capacity to deliver work sprint after sprint”</b>`,
+      options: [
+        "Velocity",
+        "Sprint Capacity",
+        "Lead time",
+        "Cycle Time"
+      ],
+      answer: "Velocity",
+    },
     // Add more billing data as needed
   ];
   const display = {
@@ -38,12 +99,15 @@ const FormInputs = ({ handleChange, handleNext, nextHide, disableNext }) => {
       />
     ),
     1: <CourseQuestionLists handleChange={handleChange} />,
-    ...QuestionsData.reduce((acc, step) => {
+    ...QuestionsData.reduce((acc, step, index) => {
+      console.log("Index is " + index)
       acc[step.id] = (
         <Questions
           key={step.id}
-          component={step.component}
+          component={index + 1}
           data={step.data}
+          options={step.options}
+          answer={step.answer}
           handleChange={handleChange}
         />
       );
