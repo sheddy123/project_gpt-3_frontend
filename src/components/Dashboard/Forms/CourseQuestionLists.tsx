@@ -35,16 +35,20 @@ const CourseQuestionLists = ({ handleChange }) => {
       />
     );
   }
+
   let grid: Grid | null;
+  const elementIds = ['Title', 'Difficulty', 'Status', 'Solution', 'QuestionType'];
 
   const dropdownOnChangeHandler = (args) => {
     if (args == "Reset") {
+      
       grid.searchSettings.key = "";
-      document.getElementById('Title').value = null;
-      document.getElementById('Difficulty').value = null;
-      document.getElementById('Status').value = null;
-      document.getElementById('Solution').value = null;
-      document.getElementById('time').value = null;
+      elementIds.forEach((id) => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.value = null;
+        }
+      });
     } else if (grid) {
       grid.search(args.value);
     }
@@ -108,6 +112,7 @@ const CourseQuestionLists = ({ handleChange }) => {
           filterData={questionTypeDataSrc}
           currentMode={null}
           filterText="QuestionType"
+          id={"QuestionType"}
         />
       ),
     },
