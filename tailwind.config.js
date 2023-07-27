@@ -6,6 +6,9 @@ export default {
   darkMode: "class",
   theme: {
     extend: {
+      listStyleImage: {
+        checkmark: 'url("/assets/images/google.png")',
+      },
       backgroundImage: {
         gradient:
           "radial-gradient(ellipse at top right, rgb(6, 47, 48) 0%, rgb(0, 0, 0) 100%)",
