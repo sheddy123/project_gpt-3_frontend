@@ -20,7 +20,7 @@ export const ChevronDown = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className="h-6 w-6"
+      className="h-4 w-4"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
@@ -246,7 +246,7 @@ export const SkillIcon = ({ color, styles }) => {
   );
 };
 
-export const Document = ({currentMode}) => {
+export const Document = ({ currentMode }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -260,6 +260,24 @@ export const Document = ({currentMode}) => {
         strokeLinejoin="round"
         d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
       />
+    </svg>
+  );
+};
+
+export const Star = ({currentMode, currentColor, fillColor}) => {
+  return (
+    <svg
+      aria-label="Mark for review"
+      role="img"
+      stroke=""
+      focusable="false"
+      //style={{fill: `${currentMode == "Dark" ? currentColor : ''}`}}
+      className={`w-4 h-4 fill-${fillColor} mr-4`}>
+      <use xlinkHref="#icon-rating-star">
+        <symbol id="icon-rating-star" viewBox="0 0 24 24">
+          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z"></path>
+        </symbol>
+      </use>
     </svg>
   );
 };
