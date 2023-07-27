@@ -84,3 +84,31 @@
   padding-bottom: 3px !important;
   border-radius: 2.5px !important;
 }
+
+
+
+
+.faded-li {
+  position: relative;
+  margin-bottom: 1rem; /* Adjust the value as per your requirement */
+  //margin-top: 1.75rem; /* Adjust the value as per your requirement */
+}
+
+.faded-li::before {
+  content: "";
+  position: absolute;
+  top: -1rem; /* Make the overlay cover the top margin */
+  left: 0;
+  width: 100%;
+  height: calc(100% + 1.8rem); /* Make the overlay cover the entire li including margins */
+  pointer-events: none; /* Allow clicks to pass through the overlay */
+}
+.faded-li_light::before{
+  background-color: rgba(249, 250, 251, 0.75); /* Transparent overlay color */
+}
+.faded-li_dark::before{
+  background-color: rgba(32, 35, 42, 0.78);
+}
+.hr__border{
+  border-color: #5e6469;
+}
