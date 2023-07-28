@@ -1,5 +1,4 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
 import {
   selectFormPage,
   selectFormData,
@@ -15,11 +14,21 @@ import {
   selectSubmitHide,
   selectDisableNext,
   selectFormQuestionLength,
+  setSelectedQuestion,
+  selectSelectedQuestion,
+  resetSelectedQuestions,
+  selectAnswerOption,
+  selectAnsweredQuestions,
+  resetAnsweredQuestions,
+  selectQuestionsSkipped,
+  setSkippedQuestion,
 } from "@/redux/features/form/formSlice";
 import FormInputs from "./FormInputs";
 const Form = () => {
   const formData = {
     page: useSelector(selectFormPage),
+    selectSelectedQuestion: useSelector(selectSelectedQuestion),
+    selectAnsweredQuestions: useSelector(selectAnsweredQuestions),
     data: useSelector(selectFormData),
     title: useSelector(selectFormTitle),
     canNextPage1: useSelector(selectCanNextPage1),
@@ -31,61 +40,58 @@ const Form = () => {
     submitHide: useSelector(selectSubmitHide),
     disableNext: useSelector(selectDisableNext),
     questionLength: useSelector(selectFormQuestionLength),
+    questionsSkipped: useSelector(selectQuestionsSkipped),
   };
   const dispatch = useDispatch();
-  const [selectedQuestion, setSelectedQuestion] = useState<number[]>([]);
   const handleChange = (e) => {
     const { name, value, type } = e.target;
     console.log(name, value, type);
-    const payloadValue = type === "checkbox" ? e.target.checked : value;
-    dispatch(setData({ name, value: payloadValue }));
+    // console.log(name, value, type);
+    // const payloadValue = type === "checkbox" ? e.target.checked : value;
+    // dispatch(setData({ name, value: payloadValue }));
   };
   const handlePrev = (page: number) => {
+    if (page > 1) {
+      dispatch(setSkippedQuestion(page));
+    }
     dispatch(setPage(page - 1));
   };
-
   const handleNext = (page: number) => {
+    if (page == 0) {
+      dispatch(resetSelectedQuestions());
+      dispatch(resetAnsweredQuestions());
+    }
+    if (page > 1) {
+      dispatch(setSkippedQuestion(page));
+    }
     dispatch(setPage(page + 1));
-
-    console.log("Page is " + page);
-    
-      setSelectedQuestion((prevSelected) => {
-        // Check if the question is already selected, then remove it from the selected questions
-        if (prevSelected.includes(page)) {
-          return prevSelected.filter((q) => q !== page);
-        }
-        // Otherwise, add the question to the selected questions
-        return [...prevSelected, page];
-      });
-    // if (visitedQuestionNumber) {
-    //   // Assuming 'numbers' is the state storing the array of unique numbers
-    //   setNumbers((prevNumbers) => {
-    //     const updatedNumbers = [
-    //       ...new Set([visitedQuestionNumber, ...prevNumbers]),
-    //     ].slice(0, 5);
-    //     return updatedNumbers;
-    //   });
-    // }
+    dispatch(setSelectedQuestion(page));
   };
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(JSON.stringify(formData.data));
   };
 
+  const updatedQuestionsArray = formData.data.map((item, index) => ({
+    ...item,
+    formId: index + 2, // Update the formId to start from 2
+  }));
   // Rest of the component code...
   const content = (
     <form className="form flex-col" onSubmit={handleSubmit}>
-      <header className="form-header">
+      {/* <header className="form-header"> */}
         {/* <h2>{title[page]}</h2> */}
 
-        <div className="button-container">
-          <button
-            type="button"
-            className={`button ${formData.prevHide}`}
-            onClick={() => handlePrev(formData.page)}
-            disabled={formData.disablePrev}>
-            Prev
-          </button>
+        {/* <div className="button-container">
+          {formData.page < 2 && (
+            <button
+              type="button"
+              className={`button ${formData.prevHide}`}
+              onClick={() => handlePrev(formData.page)}
+              disabled={formData.disablePrev}>
+              Prev
+            </button>
+          )}
 
           <button
             type="button"
@@ -102,16 +108,19 @@ const Form = () => {
             Submit
           </button>
         </div>
-      </header>
-
+      </header> */}
+<br/>
       <FormInputs
         handleChange={handleChange}
         handleNext={handleNext}
         nextHide={formData.nextHide}
         handlePrev={handlePrev}
         disableNext={formData.disableNext}
-        selectedQuestion={selectedQuestion}
-        setSelectedQuestion={setSelectedQuestion}
+        selectedQuestion={formData.selectSelectedQuestion}
+        questionSets={updatedQuestionsArray}
+        selectAnswerOption={selectAnswerOption}
+        selectAnsweredQuestions={formData.selectAnsweredQuestions}
+        selectQuestionsSkipped={formData.questionsSkipped}
       />
     </form>
   );
