@@ -4,24 +4,77 @@ const initialState = {
   page: 0,
   questionLength: 0,
   totalQuestions: 0,
-  data: {
-    billFirstName: "",
-    billLastName: "",
-    billAddress1: "",
-    billAddress2: "",
-    billCity: "",
-    billState: "",
-    billZipCode: "",
-    sameAsBilling: false,
-    shipFirstName: "",
-    shipLastName: "",
-    shipAddress1: "",
-    shipAddress2: "",
-    shipCity: "",
-    shipState: "",
-    shipZipCode: "",
-    optInNews: false,
-  },
+  selectedQuestion: [1],
+  questionsSkipped: [1],
+  answeredQuestions: [
+    {
+      formId: 0,
+      selectedAnswer: "",
+      isClicked: false,
+      courseId: "",
+      id: "",
+    },
+  ],
+  data: [
+    {
+      id: 1,
+      formId: 2,
+      question: `Which of the following is a bug and item tracking tool that can be integrated into your DevOps processes?`,
+      options: ["Maven", "JIRA", "Jenkins"],
+      answer: "JIRA",
+      courseId: 100,
+    },
+    {
+      id: 2,
+      formId: 3,
+      question: `Your DevOps team is currently looking at the integration of Azure DevOps services and Microsoft Teams. Your team has already added the Azure Boards app to Microsoft Teams.
+
+      Which of the following command is used to link a specific Azure Boards project to the respective Teams channel?`,
+      options: [
+        "@azure boards connect",
+        "@azure boards link",
+        "@azure boards create",
+      ],
+      answer: "@azure boards link",
+      courseId: 100,
+    },
+    {
+      id: 3,
+      formId: 4,
+      question: `Your DevOps team is currently using the Azure DevOps suite of services. They have defined a project in Azure DevOps and are currently using Azure Boards for work tracking purposes. They want to make use of chart widgets to track different project metrics.
+
+      Which of the following can be used to track the below metric?
+      
+      <b>“Time taken to close a work item after work on it has started”</b>`,
+      options: ["Velocity", "Sprint Capacity", "Lead time", "Cycle Time"],
+      answer: "Cycle Time",
+      courseId: 100,
+    },
+    {
+      id: 4,
+      formId: 5,
+      question: `Your DevOps team is currently using the Azure DevOps suite of services. They have defined a project in Azure DevOps and are currently using Azure Boards for work tracking purposes. They want to make use of chart widgets to track different project metrics.
+
+      Which of the following can be used to track the below metric?
+      
+      <b>“Time taken to close a work item after it was created”</b>`,
+      options: ["Velocity", "Sprint Capacity", "Lead time", "Cycle Time"],
+      answer: "Lead time",
+      courseId: 100,
+    },
+    {
+      id: 5,
+      formId: 6,
+      question: `Your DevOps team is currently using the Azure DevOps suite of services. They have defined a project in Azure DevOps and are currently using Azure Boards for work tracking purposes. They want to make use of chart widgets to track different project metrics.
+
+      Which of the following can be used to track the below metric?
+      
+      <b>“Track the team’s capacity to deliver work sprint after sprint”</b>`,
+      options: ["Velocity", "Sprint Capacity", "Lead time", "Cycle Time"],
+      answer: "Velocity",
+      courseId: 100,
+    },
+  ],
   title: {
     0: "About Course",
     1: "Course Overview",
@@ -35,6 +88,69 @@ const formSlice = createSlice({
     setPage: (state, action) => {
       state.page = action.payload;
     },
+    setSelectedQuestion: (state, action) => {
+      const isNumberSelected = state.selectedQuestion.includes(action.payload);
+      if (!isNumberSelected) {
+        state.selectedQuestion.push(action.payload);
+      }
+    },
+    setSkippedQuestion: (state, action) => {
+      const skippedQuest = action.payload - 1;
+      const answeredQuestionIndex = state.answeredQuestions.some(
+        (selected) => selected.id === skippedQuest
+      );
+      if (answeredQuestionIndex) {
+        const filteredArray = state.questionsSkipped.filter(
+          (item) => item !== skippedQuest
+        );
+        state.questionsSkipped = filteredArray;
+      } else {
+        // Number doesn't exist in the array, add it
+        if (!state.questionsSkipped.includes(skippedQuest))
+          state.questionsSkipped.push(skippedQuest);
+      }
+    },
+
+    selectAnswerOption: (state, action) => {
+      const { questionId, selectedAnswer, courseId, id } = action.payload;
+      const answeredQuestionIndex = state.answeredQuestions.findIndex(
+        (item) => item.id === id && item.formId === questionId
+      );
+
+      if (answeredQuestionIndex !== -1) {
+        // If the question is already answered, update the selectedAnswer
+        state.answeredQuestions[answeredQuestionIndex].selectedAnswer =
+          selectedAnswer;
+        state.answeredQuestions[answeredQuestionIndex].isClicked = true;
+        state.answeredQuestions[answeredQuestionIndex].formId = questionId;
+        state.answeredQuestions[answeredQuestionIndex].id = id;
+        state.answeredQuestions[answeredQuestionIndex].courseId = courseId;
+      } else {
+        // If the question is not answered, add it to answeredQuestions
+        state.answeredQuestions.push({
+          formId: questionId,
+          selectedAnswer,
+          isClicked: true,
+          courseId: courseId,
+          id: id,
+        });
+      }
+    },
+    resetSelectedQuestions: (state) => {
+      state.answeredQuestions = [1];
+      state.questionsSkipped = [1];
+    },
+    resetAnsweredQuestions: (state) => {
+      state.answeredQuestions = [
+        {
+          formId: 0,
+          selectedAnswer: "",
+          isClicked: false,
+          courseId: "",
+          id: "",
+        },
+      ];
+    },
     setData: (state, action) => {
       const { name, value } = action.payload;
       state.data[name] = value;
@@ -45,27 +161,6 @@ const formSlice = createSlice({
     setTotalQuestions: (state, action) => {
       state.totalQuestions = action.payload;
     },
-    setSameAsBilling: (state, action) => {
-      const { sameAsBilling } = action.payload;
-      if (sameAsBilling) {
-        state.data.shipFirstName = state.data.billFirstName;
-        state.data.shipLastName = state.data.billLastName;
-        state.data.shipAddress1 = state.data.billAddress1;
-        state.data.shipAddress2 = state.data.billAddress2;
-        state.data.shipCity = state.data.billCity;
-        state.data.shipState = state.data.billState;
-        state.data.shipZipCode = state.data.billZipCode;
-      } else {
-        state.data.shipFirstName = "";
-        state.data.shipLastName = "";
-        state.data.shipAddress1 = "";
-        state.data.shipAddress2 = "";
-        state.data.shipCity = "";
-        state.data.shipState = "";
-        state.data.shipZipCode = "";
-      }
-      state.data.sameAsBilling = sameAsBilling;
-    },
   },
 });
 
@@ -73,6 +168,12 @@ const formSlice = createSlice({
 export const selectFormPage = (state) => state.formReducer.page;
 export const selectFormData = (state) => state.formReducer.data;
 export const selectFormTitle = (state) => state.formReducer.title;
+export const selectQuestionsSkipped = (state) =>
+  state.formReducer.questionsSkipped;
+export const selectAnsweredQuestions = (state) =>
+  state.formReducer.answeredQuestions;
+export const selectSelectedQuestion = (state) =>
+  state.formReducer.selectedQuestion;
 export const selectFormQuestionLength = (state) =>
   state.formReducer.questionLength;
 export const selectFormTotalQuestionsLength = (state) =>
@@ -137,8 +238,17 @@ export const selectCanNextPage2 = (state) => {
 };
 
 // Actions
-export const { setPage, setData, setSameAsBilling, setQuestionLength, setTotalQuestions } =
-  formSlice.actions;
+export const {
+  setPage,
+  setData,
+  setQuestionLength,
+  setTotalQuestions,
+  setSelectedQuestion,
+  resetSelectedQuestions,
+  selectAnswerOption,
+  resetAnsweredQuestions,
+  setSkippedQuestion,
+} = formSlice.actions;
 
 // Reducer
 export default formSlice.reducer;
