@@ -12,23 +12,30 @@ import { useEffect } from "react";
 import Questions from "./Questions";
 import SubmitQuestions from "./SubmitQuestions";
 
-const FormInputs = ({ handleChange, handleNext, nextHide, disableNext }) => {
+const FormInputs = ({
+  handleChange,
+  handleNext,
+  nextHide,
+  disableNext,
+  handlePrev,
+  selectedQuestion,
+  setSelectedQuestion,
+}) => {
   const page = useSelector(selectFormPage);
   const questLength = useSelector(selectFormQuestionLength);
   const { setActiveMenu } = useStateContext();
   const dispatch = useDispatch();
+  
   useEffect(() => {
     setActiveMenu(false);
+    //setSelectedQuestion([]);
   }, []);
+
   const QuestionsData = [
     {
       id: 2,
       data: `Which of the following is a bug and item tracking tool that can be integrated into your DevOps processes?`,
-      options: [
-        "Maven",
-        "JIRA",
-        "Kenkins"
-      ],
+      options: ["Maven", "JIRA", "Kenkins"],
       answer: "JIRA",
     },
     {
@@ -50,12 +57,7 @@ const FormInputs = ({ handleChange, handleNext, nextHide, disableNext }) => {
       Which of the following can be used to track the below metric?
       
       <b>“Time taken to close a work item after work on it has started”</b>`,
-      options: [
-        "Velocity",
-        "Sprint Capacity",
-        "Lead time",
-        "Cycle Time"
-      ],
+      options: ["Velocity", "Sprint Capacity", "Lead time", "Cycle Time"],
       answer: "Cycle Time",
     },
     {
@@ -65,12 +67,7 @@ const FormInputs = ({ handleChange, handleNext, nextHide, disableNext }) => {
       Which of the following can be used to track the below metric?
       
       <b>“Time taken to close a work item after it was created”</b>`,
-      options: [
-        "Velocity",
-        "Sprint Capacity",
-        "Lead time",
-        "Cycle Time"
-      ],
+      options: ["Velocity", "Sprint Capacity", "Lead time", "Cycle Time"],
       answer: "Lead time",
     },
     {
@@ -80,12 +77,7 @@ const FormInputs = ({ handleChange, handleNext, nextHide, disableNext }) => {
       Which of the following can be used to track the below metric?
       
       <b>“Track the team’s capacity to deliver work sprint after sprint”</b>`,
-      options: [
-        "Velocity",
-        "Sprint Capacity",
-        "Lead time",
-        "Cycle Time"
-      ],
+      options: ["Velocity", "Sprint Capacity", "Lead time", "Cycle Time"],
       answer: "Velocity",
     },
     // Add more billing data as needed
@@ -96,11 +88,11 @@ const FormInputs = ({ handleChange, handleNext, nextHide, disableNext }) => {
         handleNext={handleNext}
         nextHide={nextHide}
         disableNext={disableNext}
+        page={page}
       />
     ),
     1: <CourseQuestionLists handleChange={handleChange} />,
     ...QuestionsData.reduce((acc, step, index) => {
-      console.log("Index is " + index)
       acc[step.id] = (
         <Questions
           key={step.id}
@@ -108,7 +100,12 @@ const FormInputs = ({ handleChange, handleNext, nextHide, disableNext }) => {
           data={step.data}
           options={step.options}
           answer={step.answer}
+          questLength={questLength}
           handleChange={handleChange}
+          handleNext={handleNext}
+          handlePrev={handlePrev}
+          selectedQuestion={selectedQuestion}
+          page={page}
         />
       );
       return acc;
