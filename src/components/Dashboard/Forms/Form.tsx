@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
 import {
   selectFormPage,
   selectFormData,
@@ -32,7 +33,7 @@ const Form = () => {
     questionLength: useSelector(selectFormQuestionLength),
   };
   const dispatch = useDispatch();
-
+  const [selectedQuestion, setSelectedQuestion] = useState<number[]>([]);
   const handleChange = (e) => {
     const { name, value, type } = e.target;
     console.log(name, value, type);
@@ -42,10 +43,30 @@ const Form = () => {
   const handlePrev = (page: number) => {
     dispatch(setPage(page - 1));
   };
+
   const handleNext = (page: number) => {
     dispatch(setPage(page + 1));
-  };
 
+    console.log("Page is " + page);
+    
+      setSelectedQuestion((prevSelected) => {
+        // Check if the question is already selected, then remove it from the selected questions
+        if (prevSelected.includes(page)) {
+          return prevSelected.filter((q) => q !== page);
+        }
+        // Otherwise, add the question to the selected questions
+        return [...prevSelected, page];
+      });
+    // if (visitedQuestionNumber) {
+    //   // Assuming 'numbers' is the state storing the array of unique numbers
+    //   setNumbers((prevNumbers) => {
+    //     const updatedNumbers = [
+    //       ...new Set([visitedQuestionNumber, ...prevNumbers]),
+    //     ].slice(0, 5);
+    //     return updatedNumbers;
+    //   });
+    // }
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(JSON.stringify(formData.data));
@@ -87,7 +108,10 @@ const Form = () => {
         handleChange={handleChange}
         handleNext={handleNext}
         nextHide={formData.nextHide}
+        handlePrev={handlePrev}
         disableNext={formData.disableNext}
+        selectedQuestion={selectedQuestion}
+        setSelectedQuestion={setSelectedQuestion}
       />
     </form>
   );
