@@ -6,14 +6,12 @@ import {
 import { useState, useRef, useEffect } from "react";
 import "./Form.css";
 import { useStateContext } from "@/utils/Helpers/ContextProvider";
-import { useSelector } from "react-redux";
-import { selectFormPage } from "@/redux/features/form/formSlice";
 
-const CourseOverview = ({ handleNext, disableNext, nextHide }) => {
+
+const CourseOverview = ({ handleNext, disableNext, nextHide, page }) => {
   const [showTopContent, setShowTopContent] = useState(false);
   // Create a reference to the element you want to scroll to (e.g., a div)
   const scrollContainerRef = useRef(null);
-  const page = useSelector(selectFormPage);
   const handleScrollToBottom = () => {
     // Scroll the element into view
     setShowTopContent((prev) => !prev);
