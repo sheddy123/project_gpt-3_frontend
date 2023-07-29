@@ -15,6 +15,7 @@ import { geoLocationService } from "@/services/api/GeoLocation/GeoLocationServic
 import { unwrapResult } from "@reduxjs/toolkit";
 import { dashboardSidebar } from "@/utils/Constants/ComponentsConstants/constants";
 import { getProfileService } from "@/services/api/ProfileService/profileService";
+import LearningHoursCard from "./LearningHoursCard";
 
 const Sidebar = () => {
   const { currentColor, activeMenu, setActiveMenu, screenSize, handleClick } =
@@ -186,7 +187,7 @@ const Sidebar = () => {
                 </div>
               </div>
             </div>
-            <StudentProgressBar />
+            <StudentProgressBar progress={65} spanText="%" progressText="Progress" />
 
             {/* {links.map((item) => (
               <div key={item.title} className="mt-10">
@@ -262,54 +263,11 @@ const Sidebar = () => {
                 </div>
               ))}
             </div>
-            <div
-              id="dropdown-cta"
-              className="ml-3 mr-3 p-4 mt-10 rounded-lg"
-              style={{ backgroundColor: currentColor }}
-              role="alert">
-              <div className="flex items-center mb-3">
-                <span className="bg-orange-100 text-orange-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-orange-200 dark:text-orange-900">
-                  Beta
-                </span>
-
-                {/* <button
-                  type="button"
-                  className="ml-auto -mx-1.5 -my-1.5 bg-orange-100 inline-flex justify-center items-center w-6 h-6 text-orange-100 rounded-lg focus:ring-2 focus:ring-orange-400 p-1 hover:bg-blue-200 h-6 w-6 dark:bg-orange-900 dark:text-orange-400 dark:hover:bg-orange-800"
-                  data-dismiss-target="#dropdown-cta"
-                  aria-label="Close">
-                  <span className="sr-only">Close</span>
-                  <svg
-                    className="w-2.5 h-2.5"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 14 14">
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                    />
-                  </svg>
-                </button> */}
-              </div>
-              <div className="grid grid-rows-3 grid-flow-col">
-                <div className="row-span-3 text-8xl font-bold text-white">
-                  76
-                </div>
-                <div className="col-span-2 text-md text-white mt-4">
-                  learning hours
-                </div>
-                <div className="row-span-2 col-span-2 text-white text-md">
-                  Keep it up
-                </div>
-              </div>
-
-              <p className="mb-3 text-sm text-white dark:text-black animate__animated  animate__pulse animate__slow animate__infinite">
-                <img src={img} style={{ maxWidth: "76%" }} />
-              </p>
-            </div>
+            <LearningHoursCard
+              currentColor={currentColor}
+              img={img}
+              noOfHours={76}
+            />
             <div className="mt-20 text-center dark:text-white text-black font-bold font-poppins">
               <img
                 width="20"
