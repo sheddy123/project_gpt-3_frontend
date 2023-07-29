@@ -46,7 +46,6 @@ const Questions = ({
 
   const questionTextAnswered =
     matchingObjects.length <= 1 ? "question" : "questions";
-
   //const numberOfQuestionsSkipped = matchingObjects.length
   const handleItemClick = (item) => {
     const { selectedAnswer } = item;
@@ -133,20 +132,20 @@ const Questions = ({
             {page != 2 && (
               <button
                 onClick={() => handlePrev(page)}
-                className="flex-1 px-4 py-2 rounded-sm bg-transparent hover:bg-gray-100 text-gray-600 hover:text-gray-800 border border-gray-300 hover:border-gray-400 transition duration-300">
+                className="flex-1 px-4 py-2 rounded-sm bg-transparent hover:bg-gray-100 dark:bg-gray-100 dark:hover:bg-slate-600 dark:hover:border-slate-600 dark:hover:text-white text-gray-600 hover:text-gray-800 border border-gray-300 hover:border-gray-400 transition duration-300">
                 Previous
               </button>
             )}
             {component == 5 ? (
               <button
                 onClick={() => handleNext(page)}
-                className="flex-1 px-4 py-2 rounded-sm bg-transparent hover:bg-gray-100 text-gray-600 hover:text-gray-800 border border-gray-300 hover:border-gray-400 transition duration-300">
+                className="flex-1 px-4 py-2 rounded-sm bg-transparent hover:bg-gray-100 dark:bg-gray-100 text-gray-600 dark:hover:bg-slate-600 dark:hover:border-slate-600 dark:hover:text-white hover:text-gray-800 border border-gray-300 hover:border-gray-400 transition duration-300">
                 Submit
               </button>
             ) : (
               <button
                 onClick={() => handleNext(page)}
-                className="flex-1 px-4 py-2 rounded-sm bg-transparent hover:bg-gray-100 text-gray-600 hover:text-gray-800 border border-gray-300 hover:border-gray-400 transition duration-300">
+                className="flex-1 px-4 py-2 rounded-sm bg-transparent hover:bg-gray-100 dark:bg-gray-100 text-gray-600 dark:hover:bg-slate-600 dark:hover:border-slate-600 dark:hover:text-white hover:text-gray-800 border border-gray-300 hover:border-gray-400 transition duration-300">
                 Next
               </button>
             )}
