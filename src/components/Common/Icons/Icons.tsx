@@ -264,7 +264,7 @@ export const Document = ({ currentMode }) => {
   );
 };
 
-export const Star = ({currentMode, currentColor, fillColor}) => {
+export const Star = ({ currentMode, currentColor, fillColor }) => {
   return (
     <svg
       aria-label="Mark for review"
@@ -272,12 +272,27 @@ export const Star = ({currentMode, currentColor, fillColor}) => {
       stroke=""
       focusable="false"
       //style={{fill: `${currentMode == "Dark" ? currentColor : ''}`}}
-      className={`w-4 h-4 fill-${fillColor} mr-4`}>
+      className={`w-4 h-4 ${fillColor} mr-4`}>
       <use xlinkHref="#icon-rating-star">
         <symbol id="icon-rating-star" viewBox="0 0 24 24">
           <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z"></path>
         </symbol>
       </use>
+    </svg>
+  );
+};
+
+export const SharpInformation = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24">
+      <path
+        fill="currentColor"
+        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+      />
     </svg>
   );
 };
