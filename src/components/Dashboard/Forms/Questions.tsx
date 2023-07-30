@@ -21,6 +21,8 @@ const Questions = ({
   selectAnswerOption,
   selectAnsweredQuestions,
   selectQuestionsSkipped,
+  isSubmitted,
+  lastPage
 }) => {
   const { currentColor, currentMode } = useStateContext();
   const [fillColor, setFillColor] = useState("slate-400");
@@ -28,6 +30,8 @@ const Questions = ({
   const sanitizedText = DOMPurify.sanitize(data.question);
   const dispatch = useDispatch();
 
+  //console.log("Questions skipped: " + JSON.stringify(selectAnsweredQuestions));
+  console.log("IsSubmitted: " + JSON.stringify(isSubmitted));
   const currentQuestionAnsweredObject = selectAnsweredQuestions.find(
     (item) => item.id === component
   );
@@ -81,7 +85,7 @@ const Questions = ({
             <Star
               currentMode={currentMode}
               currentColor={currentColor}
-              fillColor={fillColor}
+              fillColor={"dark:fill-[#f5f5f4] fill-[#424237]"}
             />{" "}
             <span className="font-bold text-[16px]">Question {component}:</span>
           </span>
@@ -129,16 +133,22 @@ const Questions = ({
             ))}
           </ul>
           <div className="flex gap-4 float-right">
-            {page != 2 && (
+            {page != 2 && !isSubmitted && (
               <button
                 onClick={() => handlePrev(page)}
                 className="flex-1 px-4 py-2 rounded-sm bg-transparent hover:bg-gray-100 dark:bg-gray-100 dark:hover:bg-slate-600 dark:hover:border-slate-600 dark:hover:text-white text-gray-600 hover:text-gray-800 border border-gray-300 hover:border-gray-400 transition duration-300">
                 Previous
               </button>
             )}
-            {component == 5 ? (
+            {isSubmitted ? (
               <button
-                onClick={() => handleNext(page)}
+                onClick={() => handleClick(lastPage)}
+                className="flex-1 px-4 py-2 rounded-sm bg-transparent hover:bg-gray-100 dark:bg-gray-100 text-gray-600 dark:hover:bg-slate-600 dark:hover:border-slate-600 dark:hover:text-white hover:text-gray-800 border border-gray-300 hover:border-gray-400 transition duration-300">
+                Back to results
+              </button>
+            ) : component == 5 ? (
+              <button
+                onClick={handleChange}
                 className="flex-1 px-4 py-2 rounded-sm bg-transparent hover:bg-gray-100 dark:bg-gray-100 text-gray-600 dark:hover:bg-slate-600 dark:hover:border-slate-600 dark:hover:text-white hover:text-gray-800 border border-gray-300 hover:border-gray-400 transition duration-300">
                 Submit
               </button>
