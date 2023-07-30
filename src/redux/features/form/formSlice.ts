@@ -4,6 +4,8 @@ const initialState = {
   page: 0,
   questionLength: 0,
   totalQuestions: 0,
+  isSubmitted: false,
+  lastPage: 0,
   selectedQuestion: [1],
   questionsSkipped: [1],
   answeredQuestions: [
@@ -137,8 +139,10 @@ const formSlice = createSlice({
       }
     },
     resetSelectedQuestions: (state) => {
-      state.answeredQuestions = [1];
+      //state.answeredQuestions = [1];
       state.questionsSkipped = [1];
+      state.selectedQuestion = [1];
+      state.isSubmitted = false;
     },
     resetAnsweredQuestions: (state) => {
       state.answeredQuestions = [
@@ -161,6 +165,13 @@ const formSlice = createSlice({
     setTotalQuestions: (state, action) => {
       state.totalQuestions = action.payload;
     },
+    submitQuestion: (state) => {
+      state.isSubmitted = true;
+      state.lastPage = Math.max(
+        ...state.answeredQuestions.map((obj) => obj.formId)
+      );
+      //console.log("Questions are already marked" , JSON.stringify(state.answeredQuestions), "Last page", state.lastPage);
+    },
   },
 });
 
@@ -168,6 +179,8 @@ const formSlice = createSlice({
 export const selectFormPage = (state) => state.formReducer.page;
 export const selectFormData = (state) => state.formReducer.data;
 export const selectFormTitle = (state) => state.formReducer.title;
+export const selectIsSubmitted = (state) => state.formReducer.isSubmitted;
+export const selectLastPage = (state) => state.formReducer.lastPage;
 export const selectQuestionsSkipped = (state) =>
   state.formReducer.questionsSkipped;
 export const selectAnsweredQuestions = (state) =>
@@ -248,6 +261,7 @@ export const {
   selectAnswerOption,
   resetAnsweredQuestions,
   setSkippedQuestion,
+  submitQuestion,
 } = formSlice.actions;
 
 // Reducer
