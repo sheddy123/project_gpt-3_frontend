@@ -5,8 +5,6 @@ import {
   setPage,
   selectFormTitle,
   setData,
-  selectCanNextPage1,
-  selectCanNextPage2,
   selectCanSubmit,
   selectDisablePrev,
   selectPrevHide,
@@ -22,6 +20,9 @@ import {
   resetAnsweredQuestions,
   selectQuestionsSkipped,
   setSkippedQuestion,
+  submitQuestion,
+  selectIsSubmitted,
+  selectLastPage
 } from "@/redux/features/form/formSlice";
 import FormInputs from "./FormInputs";
 const Form = () => {
@@ -31,8 +32,6 @@ const Form = () => {
     selectAnsweredQuestions: useSelector(selectAnsweredQuestions),
     data: useSelector(selectFormData),
     title: useSelector(selectFormTitle),
-    canNextPage1: useSelector(selectCanNextPage1),
-    canNextPage2: useSelector(selectCanNextPage2),
     canSubmit: useSelector(selectCanSubmit),
     disablePrev: useSelector(selectDisablePrev),
     prevHide: useSelector(selectPrevHide),
@@ -41,11 +40,15 @@ const Form = () => {
     disableNext: useSelector(selectDisableNext),
     questionLength: useSelector(selectFormQuestionLength),
     questionsSkipped: useSelector(selectQuestionsSkipped),
+    isSubmitted: useSelector(selectIsSubmitted),
+    lastPage: useSelector(selectLastPage),
+
   };
   const dispatch = useDispatch();
-  const handleChange = (e) => {
-    const { name, value, type } = e.target;
-    console.log(name, value, type);
+  const handleChange = () => {
+    //dispatch(submitQuestion());
+    // const { name, value, type } = e.target;
+    // console.log(name, value, type);
     // console.log(name, value, type);
     // const payloadValue = type === "checkbox" ? e.target.checked : value;
     // dispatch(setData({ name, value: payloadValue }));
@@ -69,8 +72,13 @@ const Form = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(JSON.stringify(formData.data));
+    dispatch(submitQuestion());
+    dispatch(setPage(formData.page + 1));
+    // console.log(JSON.stringify(formData.data));
   };
+  const handleGoToQuestionReview = (page) =>{
+    dispatch(setPage(page + 1));
+  }
 
   const updatedQuestionsArray = formData.data.map((item, index) => ({
     ...item,
@@ -80,9 +88,17 @@ const Form = () => {
   const content = (
     <form className="form flex-col" onSubmit={handleSubmit}>
       {/* <header className="form-header"> */}
-        {/* <h2>{title[page]}</h2> */}
-
-        {/* <div className="button-container">
+      {/* <h2>{title[page]}</h2> */}
+      
+            <button
+              type="button"
+              className={`button ${formData.prevHide}`}
+              onClick={() => handlePrev(formData.page)}
+              disabled={formData.disablePrev}>
+              Prev
+            </button>
+      
+      {/* <div className="button-container">
           {formData.page < 2 && (
             <button
               type="button"
@@ -109,7 +125,7 @@ const Form = () => {
           </button>
         </div>
       </header> */}
-<br/>
+      <br />
       <FormInputs
         handleChange={handleChange}
         handleNext={handleNext}
@@ -121,6 +137,8 @@ const Form = () => {
         selectAnswerOption={selectAnswerOption}
         selectAnsweredQuestions={formData.selectAnsweredQuestions}
         selectQuestionsSkipped={formData.questionsSkipped}
+        isSubmitted={formData.isSubmitted}
+        lastPage = {formData.lastPage}
       />
     </form>
   );
