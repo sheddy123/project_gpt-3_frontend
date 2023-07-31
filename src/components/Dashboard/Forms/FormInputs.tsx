@@ -24,7 +24,10 @@ const FormInputs = ({
   selectAnsweredQuestions,
   selectQuestionsSkipped,
   isSubmitted,
-  lastPage
+  lastPage,
+  setSkippedQuestion,
+  setPage,
+  wholeQuestions
 }) => {
   const page = useSelector(selectFormPage);
   const questLength = useSelector(selectFormQuestionLength);
@@ -65,6 +68,9 @@ const FormInputs = ({
           selectAnsweredQuestions={selectAnsweredQuestions}
           isSubmitted={isSubmitted}
           lastPage={lastPage}
+          setSkippedQuestion={setSkippedQuestion}
+          setPage={setPage}
+          wholeQuestions={wholeQuestions}
         />
       );
       return acc;
@@ -80,7 +86,7 @@ const FormInputs = ({
   const displayRequiredPage = !isOnLastPage ? (
     display[page]
   ) : (
-    <SubmitQuestions page={page} />
+    <SubmitQuestions page={page} setPage={setPage} />
   );
 
   const content = (
