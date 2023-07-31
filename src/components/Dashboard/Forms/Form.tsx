@@ -76,10 +76,6 @@ const Form = () => {
     dispatch(setPage(formData.page + 1));
     // console.log(JSON.stringify(formData.data));
   };
-  const handleGoToQuestionReview = (page) =>{
-    dispatch(setPage(page + 1));
-  }
-
   const updatedQuestionsArray = formData.data.map((item, index) => ({
     ...item,
     formId: index + 2, // Update the formId to start from 2
@@ -90,13 +86,13 @@ const Form = () => {
       {/* <header className="form-header"> */}
       {/* <h2>{title[page]}</h2> */}
       
-            <button
+            {/* <button
               type="button"
               className={`button ${formData.prevHide}`}
               onClick={() => handlePrev(formData.page)}
               disabled={formData.disablePrev}>
               Prev
-            </button>
+            </button> */}
       
       {/* <div className="button-container">
           {formData.page < 2 && (
@@ -139,6 +135,9 @@ const Form = () => {
         selectQuestionsSkipped={formData.questionsSkipped}
         isSubmitted={formData.isSubmitted}
         lastPage = {formData.lastPage}
+        setSkippedQuestion={setSkippedQuestion}
+        setPage={setPage}
+        wholeQuestions={formData.data}
       />
     </form>
   );
