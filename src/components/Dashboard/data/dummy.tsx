@@ -35,7 +35,7 @@ import { Document } from "@/components/Common/Icons/Icons";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 import { useStateContext } from "@/utils/Helpers/ContextProvider";
 import { useDispatch, useSelector } from "react-redux";
-import { selectFormPage, setPage } from "@/redux/features/form/formSlice";
+import { selectFormPage, setPage, resetSelectedQuestions, resetAnsweredQuestions } from "@/redux/features/form/formSlice";
 
 export const gridOrderImage = (props) => (
   <div>
@@ -169,6 +169,8 @@ const CourseGridButton = (props) => {
   const page = useSelector(selectFormPage);
   const handleNext = (page: number) => {
     dispatch(setPage(page + 1));
+    dispatch(resetSelectedQuestions());
+      dispatch(resetAnsweredQuestions());
   };
 
   return (
@@ -837,7 +839,7 @@ export const earningData = [
     icon: <MdOutlineSupervisorAccount />,
     amount: "39,354",
     percentage: "-4%",
-    title: "Customers",
+    title: "Array",
     iconColor: "#03C9D7",
     iconBg: "#E5FAFB",
     pcColor: "red-600",
@@ -846,7 +848,7 @@ export const earningData = [
     icon: <BsBoxSeam />,
     amount: "4,396",
     percentage: "+23%",
-    title: "Products",
+    title: "Linked Lists",
     iconColor: "rgb(255, 244, 229)",
     iconBg: "rgb(254, 201, 15)",
     pcColor: "green-600",
@@ -855,7 +857,7 @@ export const earningData = [
     icon: <FiBarChart />,
     amount: "423,39",
     percentage: "+38%",
-    title: "Sales",
+    title: "Binary Search",
     iconColor: "rgb(228, 106, 118)",
     iconBg: "rgb(255, 244, 229)",
 
@@ -865,7 +867,7 @@ export const earningData = [
     icon: <HiOutlineRefresh />,
     amount: "39,354",
     percentage: "-12%",
-    title: "Refunds",
+    title: "Strings",
     iconColor: "rgb(0, 194, 146)",
     iconBg: "rgb(235, 250, 242)",
     pcColor: "red-600",
@@ -3184,13 +3186,13 @@ export const lineCustomSeries = [
 ];
 
 export const pieChartData = [
-  { x: "Labour", y: 18, text: "18%" },
-  { x: "Legal", y: 8, text: "8%" },
-  { x: "Production", y: 15, text: "15%" },
-  { x: "License", y: 11, text: "11%" },
-  { x: "Facilities", y: 18, text: "18%" },
-  { x: "Taxes", y: 14, text: "14%" },
-  { x: "Insurance", y: 16, text: "16%" },
+  { x: "Array", y: 18, text: "18%" },
+  { x: "Linked Lists", y: 8, text: "8%" },
+  { x: "Strings", y: 15, text: "15%" },
+  { x: "Binary Tree", y: 11, text: "11%" },
+  { x: "Graphs", y: 18, text: "18%" },
+  { x: "Heaps", y: 14, text: "14%" },
+  { x: "Greedy Algorithms", y: 16, text: "16%" },
 ];
 
 export const contextMenuItems = [
