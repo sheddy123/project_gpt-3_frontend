@@ -19,7 +19,7 @@ const UserProfile = () => {
     await logout();
   };
   const store = useSelector((store) => store);
-  const data = JSON.parse(
+  const data = store?.profileReducer?.programming_skills && JSON.parse(
     JSON.parse(store?.profileReducer?.programming_skills)
   );
   function DisplaySkills() {
@@ -72,10 +72,10 @@ const UserProfile = () => {
           </p>
         </div>
 
-        <p className="text-gray-500 text-sm font-semibold dark:text-gray-400">
+        {/* <p className="text-gray-500 text-sm font-semibold dark:text-gray-400">
           {" "}
           {store?.authReducer?.auth_response.email}{" "}
-        </p>
+        </p> */}
       </div>
 
       <div>
