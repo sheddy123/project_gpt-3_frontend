@@ -161,7 +161,7 @@ const Sidebar = () => {
             </div>
 
             <div className="flex justify-center items-center mx-auto">
-              <div className="flex flex-col">
+              <div className="flex flex-col text-center">
                 <p className="text-black dark:text-white">
                   {store?.auth_response.user_name}{" "}
                   <span className="inline-flex items-center justify-center w-5 h-5">
@@ -269,13 +269,14 @@ const Sidebar = () => {
               noOfHours={76}
             />
             <div className="mt-20 text-center dark:text-white text-black font-bold font-poppins">
+              
+              <p className=" text-base">
               <img
                 width="20"
                 height="20"
                 src="https://img.icons8.com/fluency/48/so-so.png"
-                alt="so-so"
+                alt="so-so" className="inline-flex items-center justify-center w-5 h-5 ml-1"
               />
-              <p className=" text-base">
                 Hey, {store?.auth_response.user_name}!
               </p>
               <p className="text-sm text-gray-500">
