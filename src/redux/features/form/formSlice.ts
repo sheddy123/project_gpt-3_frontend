@@ -14,21 +14,20 @@ const initialState = {
       selectedAnswer: "",
       isClicked: false,
       courseId: "",
-      id: "",
+      id:0
     },
   ],
   data: [
     {
-      id: 1,
-      formId: 2,
-      question: `Which of the following is a bug and item tracking tool that can be integrated into your DevOps processes?`,
+      formId: 5,
+      question: `Which of the following is a bug and item tracking tool that can be integrated into your DevOps processes? `,
       options: ["Maven", "JIRA", "Jenkins"],
       answer: "JIRA",
       courseId: 100,
+      id:78
     },
     {
-      id: 2,
-      formId: 3,
+      formId: 6,
       question: `Your DevOps team is currently looking at the integration of Azure DevOps services and Microsoft Teams. Your team has already added the Azure Boards app to Microsoft Teams.
 
       Which of the following command is used to link a specific Azure Boards project to the respective Teams channel?`,
@@ -39,10 +38,10 @@ const initialState = {
       ],
       answer: "@azure boards link",
       courseId: 100,
+      id: 31
     },
     {
-      id: 3,
-      formId: 4,
+      formId: 7,
       question: `Your DevOps team is currently using the Azure DevOps suite of services. They have defined a project in Azure DevOps and are currently using Azure Boards for work tracking purposes. They want to make use of chart widgets to track different project metrics.
 
       Which of the following can be used to track the below metric?
@@ -51,10 +50,10 @@ const initialState = {
       options: ["Velocity", "Sprint Capacity", "Lead time", "Cycle Time"],
       answer: "Cycle Time",
       courseId: 100,
+      id: 14
     },
     {
-      id: 4,
-      formId: 5,
+      formId: 8,
       question: `Your DevOps team is currently using the Azure DevOps suite of services. They have defined a project in Azure DevOps and are currently using Azure Boards for work tracking purposes. They want to make use of chart widgets to track different project metrics.
 
       Which of the following can be used to track the below metric?
@@ -63,10 +62,10 @@ const initialState = {
       options: ["Velocity", "Sprint Capacity", "Lead time", "Cycle Time"],
       answer: "Lead time",
       courseId: 100,
+      id: 4
     },
     {
-      id: 5,
-      formId: 6,
+      formId: 9,
       question: `Your DevOps team is currently using the Azure DevOps suite of services. They have defined a project in Azure DevOps and are currently using Azure Boards for work tracking purposes. They want to make use of chart widgets to track different project metrics.
 
       Which of the following can be used to track the below metric?
@@ -75,7 +74,8 @@ const initialState = {
       options: ["Velocity", "Sprint Capacity", "Lead time", "Cycle Time"],
       answer: "Velocity",
       courseId: 100,
-    },
+      id: 1
+    }
   ],
   title: {
     0: "About Course",
@@ -98,7 +98,13 @@ const formSlice = createSlice({
     },
     setSkippedQuestion: (state, action) => {
       const skippedQuest = action.payload - 1;
-      const answeredQuestionIndex = state.answeredQuestions.some(
+
+      const updatedQuestionsArray = state.answeredQuestions.map((item, index) => ({
+        ...item,
+        id: index, // Update the formId to start from 1
+      }));
+
+      const answeredQuestionIndex = updatedQuestionsArray.some(
         (selected) => selected.id === skippedQuest
       );
       if (answeredQuestionIndex) {
@@ -114,19 +120,20 @@ const formSlice = createSlice({
     },
 
     selectAnswerOption: (state, action) => {
-      const { questionId, selectedAnswer, courseId, id } = action.payload;
-      const answeredQuestionIndex = state.answeredQuestions.findIndex(
-        (item) => item.id === id && item.formId === questionId
-      );
+      const { questionId, selectedAnswer, courseId,  id } = action.payload;
 
+      //console.log("Updated questions array ", JSON.stringify(updatedQuestionsArray), "Skipped ", skippedQuest);
+      const answeredQuestionIndex = state.answeredQuestions.findIndex(
+        (item) => item.id === id
+      );
       if (answeredQuestionIndex !== -1) {
         // If the question is already answered, update the selectedAnswer
         state.answeredQuestions[answeredQuestionIndex].selectedAnswer =
           selectedAnswer;
         state.answeredQuestions[answeredQuestionIndex].isClicked = true;
         state.answeredQuestions[answeredQuestionIndex].formId = questionId;
-        state.answeredQuestions[answeredQuestionIndex].id = id;
         state.answeredQuestions[answeredQuestionIndex].courseId = courseId;
+        state.answeredQuestions[answeredQuestionIndex].id = id;
       } else {
         // If the question is not answered, add it to answeredQuestions
         state.answeredQuestions.push({
@@ -134,7 +141,7 @@ const formSlice = createSlice({
           selectedAnswer,
           isClicked: true,
           courseId: courseId,
-          id: id,
+          id: id
         });
       }
     },
@@ -151,7 +158,7 @@ const formSlice = createSlice({
           selectedAnswer: "",
           isClicked: false,
           courseId: "",
-          id: "",
+          id: 0
         },
       ];
     },
@@ -167,9 +174,10 @@ const formSlice = createSlice({
     },
     submitQuestion: (state) => {
       state.isSubmitted = true;
-      state.lastPage = Math.max(
-        ...state.answeredQuestions.map((obj) => obj.formId)
-      );
+      state.lastPage = state.data.length + 1;
+      //Math.max(
+//        ...state.data.map((obj) => obj.formId)
+  //    );
       //console.log("Questions are already marked" , JSON.stringify(state.answeredQuestions), "Last page", state.lastPage);
     },
   },
