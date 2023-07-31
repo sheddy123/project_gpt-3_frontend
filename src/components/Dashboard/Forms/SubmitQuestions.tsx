@@ -1,20 +1,47 @@
 import { SharpInformation } from "@/components/Common/Icons/Icons";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
+import { useDispatch } from "react-redux";
 
-const SubmitQuestions = ({page}) => {
-  console.log("Current page: " + page);
-  const clickSpan = (e) => {
-    console.log("clickSpan ", e);
+const SubmitQuestions = ({ page, setPage }) => {
+  const dispatch = useDispatch();
+  const reviewObj = {
+    wrongAnswersReview: [
+      {
+        id: 2,
+        review: "This is correction review for id 2",
+      },
+      {
+        id: 3,
+        review: "This is correction review for id 3",
+      },
+      {
+        id: 4,
+        review: "This is correction review for id 4",
+      },
+    ],
+    correctAnswersReview: [
+      {
+        id: 5,
+        review: "This is correction review for id 5",
+      },
+      {
+        id: 6,
+        review: "This is correction review for id 6",
+      },
+    ],
+  };
+  const handleGoToQuestionReviewPage = (page) => {
+    dispatch(setPage(page));
   };
   return (
     <>
       <div
-        className="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md"
+        className="bg-green-50 dark:bg-gray-800 dark:text-white border-t-4 border-green-500 rounded-b text-green-800 px-4 py-3 shadow-md"
         role="alert">
         <div className="flex">
           <div className="py-1">
             <svg
-              className="fill-current h-6 w-6 text-teal-500 mr-4"
+              className="fill-current h-6 w-6 text-green-400 mr-4"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20">
               <path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z" />
@@ -65,36 +92,16 @@ const SubmitQuestions = ({page}) => {
 
           <li className=" list-none">
             <div className=" sm:w-[900px] w-[300px] pl-8">
-              <span
-                className="font-semibold truncate block cursor-pointer"
-                onClick={clickSpan}>
-                long texttttttttttttttttttttttttttttttttttttt fdjkfjkfd gfjgfjgf
-                jg tttttttttttttttttttttttttttttttttttttttttttttttttttttttt long
-                texttttttttttttttttttttttttttttttttttttt fdjkfjkfd gfjgfjgf jg
-                tttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-              </span>
-              <span
-                className="font-semibold truncate block cursor-pointer"
-                onClick={clickSpan}>
-                long texttttttttttttttttttttttttttttttttttttt fdjkfjkfd gfjgfjgf
-                jg tttttttttttttttttttttttttttttttttttttttttttttttttttttttt long
-                texttttttttttttttttttttttttttttttttttttt fdjkfjkfd gfjgfjgf jg
-                tttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-              </span>
-              <span
-                className="font-semibold truncate block cursor-pointer"
-                onClick={clickSpan}>
-                long texttttttttttttttttttttttttttttttttttttt fdjkfjkfd gfjgfjgf
-                jg tttttttttttttttttttttttttttttttttttttttttttttttttttttttt long
-                texttttttttttttttttttttttttttttttttttttt fdjkfjkfd gfjgfjgf jg
-                tttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-              </span>
-              <span
-                className="font-semibold truncate block cursor-pointer"
-                onClick={clickSpan}>
-                long texttttttttttttttttttttttttttttttttttttt fdjkfjkfd gfjgfjgf
-                jg tttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-              </span>
+              {reviewObj.correctAnswersReview.map(({ id, review }, index) => {
+                return (
+                  <span
+                    className="font-semibold truncate block cursor-pointer"
+                    key={index + id}
+                    onClick={() => handleGoToQuestionReviewPage(id)}>
+                    {review}
+                  </span>
+                );
+              })}
             </div>
           </li>
 
@@ -127,39 +134,27 @@ const SubmitQuestions = ({page}) => {
           </li>
           <li className=" list-none">
             <div className=" sm:w-[900px] w-[300px] pl-8">
-              <span
-                className="font-semibold truncate block cursor-pointer"
-                onClick={clickSpan}>
-                long texttttttttttttttttttttttttttttttttttttt fdjkfjkfd gfjgfjgf
-                jg tttttttttttttttttttttttttttttttttttttttttttttttttttttttt long
-                texttttttttttttttttttttttttttttttttttttt fdjkfjkfd gfjgfjgf jg
-                tttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-              </span>
-              <span
-                className="font-semibold truncate block cursor-pointer"
-                onClick={clickSpan}>
-                long texttttttttttttttttttttttttttttttttttttt fdjkfjkfd gfjgfjgf
-                jg tttttttttttttttttttttttttttttttttttttttttttttttttttttttt long
-                texttttttttttttttttttttttttttttttttttttt fdjkfjkfd gfjgfjgf jg
-                tttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-              </span>
-              <span
-                className="font-semibold truncate block cursor-pointer"
-                onClick={clickSpan}>
-                long texttttttttttttttttttttttttttttttttttttt fdjkfjkfd gfjgfjgf
-                jg tttttttttttttttttttttttttttttttttttttttttttttttttttttttt long
-                texttttttttttttttttttttttttttttttttttttt fdjkfjkfd gfjgfjgf jg
-                tttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-              </span>
-              <span
-                className="font-semibold truncate block cursor-pointer"
-                onClick={clickSpan}>
-                long texttttttttttttttttttttttttttttttttttttt fdjkfjkfd gfjgfjgf
-                jg tttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-              </span>
+              {reviewObj.wrongAnswersReview.map(({ id, review }, index) => {
+                return (
+                  <span
+                    className="font-semibold truncate block cursor-pointer"
+                    key={index + id}
+                    onClick={() => handleGoToQuestionReviewPage(id)}>
+                    {review}
+                  </span>
+                );
+              })}
             </div>
           </li>
         </ul>
+        <div className="flex justify-center">
+          <button
+            onClick={() => handleGoToQuestionReviewPage(1)}
+            className="px-4 py-2 rounded-sm bg-transparent hover:bg-gray-100 dark:bg-gray-100 text-gray-600 dark:hover:bg-slate-600 dark:hover:border-slate-600 dark:hover:text-white hover:text-gray-800 border border-gray-300 hover:border-gray-400 transition duration-300"
+            style={{ width: "auto;" }}>
+            Finish test
+          </button>
+        </div>
       </div>
     </>
   );
