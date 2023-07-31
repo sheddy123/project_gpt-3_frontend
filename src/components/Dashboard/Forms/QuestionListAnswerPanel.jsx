@@ -10,6 +10,7 @@ const QuestionListAnswerPanel = React.memo(
     component,
     selectedQuestion,
     selectQuestionsSkipped,
+    isSubmitted
   }) => { const questionAnswerPanelClass = `${
     currentMode == "Dark" ? "faded-li_dark" : "faded-li_light"
   }`;
@@ -20,7 +21,7 @@ const QuestionListAnswerPanel = React.memo(
   
   return (
     <>
-      {isSelected  ? (
+      {isSelected && !isSubmitted  ? (
         <li
           className={`flex flex-row items-center cursor-pointer px-6 pb-1 mt-4 h-16 hover:bg-black ${currentComponentClass} hover:text-white dark:hover:bg-white dark:hover:text-black mb-2`}
           onClick={() => handleClick(questionNumber)}>
@@ -41,9 +42,12 @@ const QuestionListAnswerPanel = React.memo(
           <Star
             currentMode={currentMode}
             currentColor={currentColor}
-            fillColor="fill-[#9ca8a7]"
+            fillColor={!selectQuestionsSkipped.includes(questionNumber) ? "fill-[#14b8a6]" : `fill-[#9ca8a7]`}
           />{" "}
           <span className="font-bold text-[16px]">Question {questionNumber}</span>
+          {selectQuestionsSkipped.includes(questionNumber) && <span className="text-xs cursor-pointer hover:drop-shadow-xl font-semibold rounded-lg w-18 bg-orange-400 pb-1 px-2 text-white ">
+            Skipped
+          </span>}
         </li>
       )} 
     </>
