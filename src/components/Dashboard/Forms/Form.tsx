@@ -73,6 +73,7 @@ const Form = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(submitQuestion());
+    dispatch(setSkippedQuestion(formData.page));
     dispatch(setPage(formData.page + 1));
     // console.log(JSON.stringify(formData.data));
   };
