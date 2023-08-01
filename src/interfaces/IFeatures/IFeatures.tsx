@@ -1,3 +1,4 @@
+/************************************ Authentication/Authorization ************************************/
 export interface IAuth {
   message: string;
   auth_response: IAuthResponse;
@@ -32,7 +33,9 @@ export interface IRoles {
   id: number;
   roleName: string;
 }
+/************************************ Authentication/Authorization ************************************/
 
+/************************************ Code Executor ************************************/
 export interface ICodeExecutor {
   language: string;
   code: string;
@@ -42,7 +45,9 @@ export interface ICodeResponse {
   response: object;
   timeTaken: number;
 }
+/************************************ Code Executor ************************************/
 
+/************************************ GeoLocation/Profile ************************************/
 export interface IGeoLocation {
   ip: string;
   network: string;
@@ -72,3 +77,15 @@ export interface IGeoLocation {
   asn: string;
   org: string;
 }
+/************************************ GeoLocation/Profile ************************************/
+
+/************************************ Courses ************************************/
+export interface ICourse {
+  courseCode: string;
+  title: string;
+  languages: string;
+  captions: string;
+  version: string;
+  description: string;
+}
+/************************************ Courses ************************************/
