@@ -13,7 +13,7 @@ const RequireAuth = ({ allowedRoles }) => {
   const hasAllowedRoles = user?.auth_response?.roles?.some((role) =>
     allowedRoles?.includes(role?.roleName)
   );
-
+  console.log("AllowedRoles: " + JSON.stringify(allowedRoles), hasAllowedRoles, isLoggedIn)
   let expiryJwtCode = 0;
   let isTokenExpired = false;
   //console.log("TOne is ", user.auth_response.token);
@@ -38,7 +38,7 @@ const RequireAuth = ({ allowedRoles }) => {
     return <Outlet />;
   } else if (isLoggedIn) {
     return (
-      <Navigate to="/unauthorized" state={{ from: location }} replace />
+      <Navigate to="/dashboard/unauthorized" state={{ from: location }} replace />
     );
   } else if (isTokenExpired || user?.message.includes("Lifetime validation failed")) {
     return (
