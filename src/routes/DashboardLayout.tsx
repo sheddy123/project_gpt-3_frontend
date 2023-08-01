@@ -23,6 +23,8 @@ import {
   DashboardHome,
   Courses,
 } from "@/pages/Dashboard";
+import RequireAuth from "./RequireAuth";
+import { ROLES } from "@/utils/Constants/ApiConstants/api_constants";
 
 const DashboardLayout = () => {
   const {
@@ -79,31 +81,41 @@ const DashboardLayout = () => {
           <div>
             {themeSettings && <ThemeSettings />}
             <Routes>
-              {/* dashboard  */}
-              <Route path="/" element={<DashboardHome />} />
-              <Route path="/home" element={<DashboardHome />} />
-              <Route path="/courses/:courseId" element={<Courses />} />
+              <Route element={<RequireAuth allowedRoles={[ROLES.Student]} />}>
+                {/* dashboard  */}
+                <Route path="/" element={<DashboardHome />} />
+                <Route path="/home" element={<DashboardHome />} />
+                <Route path="/courses/:courseId" element={<Courses />} />
 
-              {/* pages  */}
-              <Route path="/orders" element={<Orders />} />
-              <Route path="/employees" element={<Employees />} />
-              <Route path="/customers" element={<Customers />} />
+                {/* pages  */}
+                <Route path="/orders" element={<Orders />} />
+                <Route path="/employees" element={<Employees />} />
+                <Route path="/customers" element={<Customers />} />
 
-              {/* apps  */}
-              <Route path="/kanban" element={<Kanban />} />
-              <Route path="/editor" element={<Editor />} />
-              <Route path="/calendar" element={<Calendar />} />
-              <Route path="/color-picker" element={<ColorPicker />} />
+                {/* apps  */}
+                <Route path="/kanban" element={<Kanban />} />
+                <Route path="/editor" element={<Editor />} />
+                <Route path="/calendar" element={<Calendar />} />
+                <Route path="/color-picker" element={<ColorPicker />} />
 
-              {/* charts  */}
-              <Route path="/line" element={<Line />} />
-              <Route path="/area" element={<Area />} />
-              <Route path="/bar" element={<Bar />} />
-              <Route path="/pie" element={<Pie />} />
-              <Route path="/financial" element={<Financial />} />
-              <Route path="/color-mapping" element={<ColorMapping />} />
-              <Route path="/pyramid" element={<Pyramid />} />
-              <Route path="/stacked" element={<Stacked />} />
+                {/* charts  */}
+                <Route path="/line" element={<Line />} />
+                <Route path="/area" element={<Area />} />
+                <Route path="/bar" element={<Bar />} />
+                <Route path="/pie" element={<Pie />} />
+                <Route path="/financial" element={<Financial />} />
+                <Route path="/color-mapping" element={<ColorMapping />} />
+                <Route path="/pyramid" element={<Pyramid />} />
+                <Route path="/stacked" element={<Stacked />} />
+              </Route>
+              <Route
+                element={
+                  <RequireAuth allowedRoles={[ROLES.Instructor]} />
+                }></Route>
+              <Route
+                element={
+                  <RequireAuth allowedRoles={[ROLES.Administrator]} />
+                }></Route>
             </Routes>
           </div>
           <Footer />
