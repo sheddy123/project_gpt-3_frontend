@@ -24,7 +24,7 @@ const Home = () => {
   
   return (
     <>
-      <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white shadow rounded-sm overflow-hidden">
+      <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:bg-[#42464D] shadow rounded-sm overflow-hidden">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           <div className=" col-span-2">
             <CoursesList /> <MyLearningProgress />
