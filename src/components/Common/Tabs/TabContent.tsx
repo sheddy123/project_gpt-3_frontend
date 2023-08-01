@@ -6,6 +6,24 @@ import { IoIosMore } from "react-icons/io";
 import Button from "../Button/Button";
 import { NavLink } from "react-router-dom";
 const TabContent = ({ TabNavs, activeTab }) => {
+  const colors = [
+    "#674c80",
+    "#5F9EA0",
+    "#2F4F4F",
+    "#696969",
+    "#FFA07A",
+    "#008080",
+    "#800080",
+    "#4682B4",
+    "#DAA520",
+    "#B0C4DE",
+    "#90EE90",
+    "#FFD700",
+    "#FF4500",
+    "#7B68EE",
+    "#00FA9A",
+  ];
+
   const { currentColor } = useStateContext();
   return (
     <div id="myTabContent">
@@ -15,7 +33,8 @@ const TabContent = ({ TabNavs, activeTab }) => {
             <div key={tab+index} className="grid grid-cols-3 gap-4 mt-3 rounded-sm items-center">
               {earningData.map((item, index) => (
                 <>
-                  <div key={`${item}${index}`} className="bg-gray-50 shadow grid grid-cols-2 p-2 h-full w-full overflow-hidden relative max-w-xs bg-cover bg-no-repeat cont">
+                  <div key={`${item}${index}`} className={` shadow grid grid-cols-2 p-2 h-full w-full overflow-hidden relative max-w-xs bg-cover bg-no-repeat cont`}
+                  style={{background: colors[index]}}>
                     <div>
                       <button
                         type="button"
@@ -37,7 +56,7 @@ const TabContent = ({ TabNavs, activeTab }) => {
                     </div>
                     <div className="col-span-2 mt-11">
                       {" "}
-                      <p className="text-sm text-black font-bold mb-1 font-poppins">
+                      <p className="text-sm text-stone-300 font-bold mb-1 font-poppins">
                         {item.title}
                       </p>
                       <div className="h-1 w-full bg-neutral-200 dark:bg-neutral-600">
@@ -46,18 +65,18 @@ const TabContent = ({ TabNavs, activeTab }) => {
                           style={{ width: "45%" }}></div>
                       </div>
                       <span
-                        className="text-[11px] text-gray-500 mb-1 font-poppins"
+                        className="text-[11px] text-white mb-1 font-poppins"
                         style={{ float: "inline-start" }}>
                         Course {activeTab}
                       </span>
                       <span
-                        className="text-[11px] text-gray-500 mb-1 font-poppins"
+                        className="text-[11px] text-white mb-1 font-poppins"
                         style={{ float: "inline-end" }}>
                         1/2
                       </span>
                     </div>
                     <div className="group fd-sh group-hover:opacity-100 absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden  bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-20 flex justify-center items-center">
-                      <NavLink to={`/dashboard/courses/${item.title.toLowerCase()}`} className={'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded shadow'}>
+                      <NavLink to={`/dashboard/courses/${item.title.toLowerCase()}`} className={'bg-black  text-white font-bold py-2 px-4 border border-black shadow'}>
                         Get started
                       </NavLink>
                       {/* <Button styles="opacity-0.9 cursor-pointer" text="Get started" /> */}
