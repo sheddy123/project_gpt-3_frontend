@@ -3,7 +3,7 @@ import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
 const DropDownComponent = ({ currentMode, filterData, handleOnClick, filterText, id }) => { 
 const text = filterText === '' ? 'filter by' : filterText;
 const idProp = id === '' ? 'time' : id;
- return <div className="w-28 border-1 border-color px-2  rounded-md">
+ return <div className="w-28 border-1 border-color px-2  rounded-md bg-dimWhite">
     <DropDownListComponent
       id={idProp}
       className={idProp}
