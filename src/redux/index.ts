@@ -4,3 +4,4 @@ export { default as codeEditorReducer } from "./features/codeEditor/code_editor_
 export { default as geoLocationReducer } from "./features/geoLocation/geoLocationSlice";
 export { default as profileReducer } from "./features/profile/profileSlice";
 export { default as formReducer } from "./features/form/formSlice";
+export { default as courseReducer } from "./features/courses/courseSlice";
