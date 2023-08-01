@@ -5,14 +5,11 @@ import { useState } from "react";
 import DOMPurify from "dompurify";
 import QuestionListAnswerPanel from "./QuestionListAnswerPanel";
 import { useDispatch } from "react-redux";
-import { HtmlEditor, Inject, RichTextEditorComponent, Toolbar } from '@syncfusion/ej2-react-richtexteditor';
 
 const Questions = ({
   component,
   data,
   handleChange,
-  options,
-  answer,
   questLength,
   handleNext,
   handlePrev,
@@ -32,16 +29,6 @@ const Questions = ({
   const [selectedItem, setSelectedItem] = useState(null);
   const sanitizedText = DOMPurify.sanitize(data.question);
   const dispatch = useDispatch();
-
-  let toolbarSettings: object = {
-    items: ['Bold', 'Italic', 'Underline', 'StrikeThrough',
-          'FontName', 'FontSize', 'FontColor', 'BackgroundColor',
-          'LowerCase', 'UpperCase', '|',
-          'Formats', 'Alignments', 'OrderedList', 'UnorderedList',
-          'Outdent', 'Indent', '|',
-          'CreateLink', 'Image', '|', 'ClearFormat', 'Print',
-          'SourceCode', 'FullScreen', '|', 'Undo', 'Redo']
-  }
 
   const currentQuestionAnsweredObject = selectAnsweredQuestions.find(
     (item) => item.formId === component + 1
@@ -90,46 +77,6 @@ const Questions = ({
           Quiz {component} | {questLength - 2} questions
         </h4>
       </div>
-
-      <RichTextEditorComponent height={450} toolbarSettings={toolbarSettings}>
-      <p>The Rich Text Editor component is WYSIWYG ("what you see is what you get") editor that provides the best user experience to create and update the content.
-        Users can format their content using standard toolbar commands.</p>
-      <p><b>Key features:</b></p>
-      <ul>
-        <li>
-          <p>Provides &lt;IFRAME&gt; and &lt;DIV&gt; modes</p>
-        </li>
-        <li>
-          <p>Capable of handling markdown editing.</p>
-        </li>
-        <li>
-          <p>Contains a modular library to load the necessary functionality on demand.</p>
-        </li>
-        <li>
-          <p>Provides a fully customizable toolbar.</p>
-        </li>
-        <li>
-          <p>Provides HTML view to edit the source directly for developers.</p>
-        </li>
-        <li>
-          <p>Supports third-party library integration.</p>
-        </li>
-        <li>
-          <p>Allows preview of modified content before saving it.</p>
-        </li>
-        <li>
-          <p>Handles images, hyperlinks, video, hyperlinks, uploads, etc.</p>
-        </li>
-        <li>
-          <p>Contains undo/redo manager.</p>
-        </li>
-        <li>
-          <p>Creates bulleted and numbered lists.</p>
-        </li>
-      </ul>
-      <Inject services={[Toolbar, HtmlEditor]} />
-    </RichTextEditorComponent>
-    
       <div className={`grid grid-cols-1 sm:grid-cols-3 gap-4`}>
         <div className="col-span-2  dark:text-gray-200  py-4 px-6 rounded-md p-3 mt-3">
           {isSubmitted && (
@@ -171,7 +118,7 @@ const Questions = ({
           />
 
           <ul className="space-y-4">
-            {options.map((item, index) => (
+            {data?.options.map((item, index) => (
               <li
                 key={index}
                 className={`border border-[#676161]  p-4 rounded-lg flex items-center cursor-pointer w-full hover:bg-black hover:text-[#FAEBD7] hover:dark:bg-[#20232a] hover:dark:border-[#20232a]
@@ -192,7 +139,7 @@ const Questions = ({
                 onClick={() =>
                   handleItemClick({
                     selectedAnswer: item,
-                    questionId: data.formId,
+                    formId: data.formId,
                     courseId: data.courseId,
                     id: data.id,
                   })
@@ -211,7 +158,7 @@ const Questions = ({
           <div className="flex gap-4 float-right">
             {page != 2 && !isSubmitted && (
               <button
-                onClick={() => handlePrev(page)}
+                onClick={() => handlePrev(page, data.id)}
                 className="flex-1 px-4 py-2 rounded-sm bg-transparent hover:bg-gray-100 dark:bg-gray-100 dark:hover:bg-slate-600 dark:hover:border-slate-600 dark:hover:text-white text-gray-600 hover:text-gray-800 border border-gray-300 hover:border-gray-400 transition duration-300">
                 Previous
               </button>
@@ -230,7 +177,7 @@ const Questions = ({
               </button>
             ) : (
               <button
-                onClick={() => handleNext(page)}
+                onClick={() => handleNext(page, data.id)}
                 className="flex-1 px-4 py-2 rounded-sm bg-transparent hover:bg-gray-100 dark:bg-gray-100 text-gray-600 dark:hover:bg-slate-600 dark:hover:border-slate-600 dark:hover:text-white hover:text-gray-800 border border-gray-300 hover:border-gray-400 transition duration-300">
                 Next
               </button>
@@ -251,21 +198,25 @@ const Questions = ({
           </div>
           <hr className="mb-3 mt-2 dark:hr__border" />
           <ul className=" list-none p-0 mb-10">
-            {[...Array(wholeQuestions?.length)].map((_, index) => (
-              <QuestionListAnswerPanel
-                key={index}
-                questionNumber={index + 1}
-                fillColor={fillColor}
-                currentMode={currentMode}
-                currentColor={currentColor}
-                handleClick={handleClick}
-                component={component}
-                selectedQuestion={selectedQuestion}
-                selectQuestionsSkipped={selectQuestionsSkipped}
-                wholeQuestions={wholeQuestions}
-                isSubmitted={isSubmitted}
-              />
-            ))}
+            {[...Array(wholeQuestions?.length)].map((_, index) => {
+              return (
+                <QuestionListAnswerPanel
+                  key={index}
+                  questionNumber={index + 1}
+                  fillColor={fillColor}
+                  currentMode={currentMode}
+                  currentColor={currentColor}
+                  handleClick={handleClick}
+                  component={component}
+                  selectedQuestion={selectedQuestion}
+                  selectQuestionsSkipped={selectQuestionsSkipped}
+                  wholeQuestions={wholeQuestions}
+                  isSubmitted={isSubmitted}
+                  id={wholeQuestions[index]?.id}
+                  selectAnsweredQuestions={selectAnsweredQuestions}
+                />
+              );
+            })}
           </ul>
           <div className="flex justify-between items-center mt-5 border-t-1 border-color">
             <p className=" text-gray-500 text-sm px-6 py-3">
