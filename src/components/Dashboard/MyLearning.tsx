@@ -10,7 +10,7 @@ const MyLearning = () => {
   return (
     <>
       <div className="flex justify-between items-center gap-2 mt-10">
-        <p className="text-xl font-semibold">Statistics</p>
+        <p className="text-xl font-semibold dark:text-white">Statistics</p>
         <DropDownComponent handleOnClick={null} filterData={filterData} currentMode={currentMode} />
       </div>
       <div className="grid grid-cols-2 gap-4 mt-6">
