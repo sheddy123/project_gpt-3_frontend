@@ -200,7 +200,8 @@ export const CalendarDays = ({ color, styles }) => {
       viewBox="0 0 24 24"
       strokeWidth="1.5"
       stroke={color}
-      className={`w-2.5 h-2.5 ${styles}`}>
+      style={{ width:"20px"}}
+      className={`w-5 h-5 ${styles}`}>
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
