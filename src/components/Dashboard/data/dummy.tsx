@@ -36,6 +36,7 @@ import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 import { useStateContext } from "@/utils/Helpers/ContextProvider";
 import { useDispatch, useSelector } from "react-redux";
 import { selectFormPage, setPage, resetSelectedQuestions, resetAnsweredQuestions } from "@/redux/features/form/formSlice";
+import { ROLES } from "@/utils/Constants/ApiConstants/api_constants";
 
 export const gridOrderImage = (props) => (
   <div>
@@ -700,10 +701,12 @@ export const links = [
       {
         name: "home",
         icon: <FiHome />,
+        role: ROLES.Student
       },
       {
         name: "Courses",
         icon: <FiBookOpen />,
+        role: ROLES.Instructor
       },
     ],
   },
@@ -714,14 +717,17 @@ export const links = [
       {
         name: "Orders",
         icon: <AiOutlineShoppingCart />,
+        role: ROLES.Student
       },
       {
         name: "Employees",
         icon: <IoMdContacts />,
+        role: ROLES.Student
       },
       {
         name: "Customers",
         icon: <RiContactsLine />,
+        role: "Student"
       },
     ],
   },
@@ -862,6 +868,24 @@ export const earningData = [
     iconBg: "rgb(255, 244, 229)",
 
     pcColor: "green-600",
+  },
+  {
+    icon: <HiOutlineRefresh />,
+    amount: "39,354",
+    percentage: "-12%",
+    title: "Strings",
+    iconColor: "rgb(0, 194, 146)",
+    iconBg: "rgb(235, 250, 242)",
+    pcColor: "red-600",
+  },
+  {
+    icon: <HiOutlineRefresh />,
+    amount: "39,354",
+    percentage: "-12%",
+    title: "Strings",
+    iconColor: "rgb(0, 194, 146)",
+    iconBg: "rgb(235, 250, 242)",
+    pcColor: "red-600",
   },
   {
     icon: <HiOutlineRefresh />,
