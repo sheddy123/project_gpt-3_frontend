@@ -1,3 +1,4 @@
+import { getCourseService } from "@/services/api/CourseService/GetCourseService";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -7,14 +8,14 @@ const initialState = {
   isSubmitted: false,
   lastPage: 0,
   selectedQuestion: [1],
-  questionsSkipped: [1],
+  questionsSkipped: [0],
   answeredQuestions: [
     {
       formId: 0,
       selectedAnswer: "",
       isClicked: false,
       courseId: "",
-      id:0
+      id: 0,
     },
   ],
   data: [
@@ -24,7 +25,7 @@ const initialState = {
       options: ["Maven", "JIRA", "Jenkins"],
       answer: "JIRA",
       courseId: 100,
-      id:78
+      id: 78,
     },
     {
       formId: 6,
@@ -38,7 +39,7 @@ const initialState = {
       ],
       answer: "@azure boards link",
       courseId: 100,
-      id: 31
+      id: 31,
     },
     {
       formId: 7,
@@ -50,7 +51,7 @@ const initialState = {
       options: ["Velocity", "Sprint Capacity", "Lead time", "Cycle Time"],
       answer: "Cycle Time",
       courseId: 100,
-      id: 14
+      id: 14,
     },
     {
       formId: 8,
@@ -62,7 +63,7 @@ const initialState = {
       options: ["Velocity", "Sprint Capacity", "Lead time", "Cycle Time"],
       answer: "Lead time",
       courseId: 100,
-      id: 4
+      id: 4,
     },
     {
       formId: 9,
@@ -74,13 +75,14 @@ const initialState = {
       options: ["Velocity", "Sprint Capacity", "Lead time", "Cycle Time"],
       answer: "Velocity",
       courseId: 100,
-      id: 1
-    }
+      id: 1,
+    },
   ],
   title: {
     0: "About Course",
     1: "Course Overview",
   },
+  isLoading: false
 };
 
 const formSlice = createSlice({
@@ -97,31 +99,25 @@ const formSlice = createSlice({
       }
     },
     setSkippedQuestion: (state, action) => {
-      const skippedQuest = action.payload - 1;
-
-      const updatedQuestionsArray = state.answeredQuestions.map((item, index) => ({
-        ...item,
-        id: index, // Update the formId to start from 1
-      }));
-
-      const answeredQuestionIndex = updatedQuestionsArray.some(
-        (selected) => selected.id === skippedQuest
+      const { id } = action.payload;
+      const answeredQuestionIndex = state.answeredQuestions.some(
+        (selected) => selected.id == id
       );
+
       if (answeredQuestionIndex) {
         const filteredArray = state.questionsSkipped.filter(
-          (item) => item !== skippedQuest
+          (item) => item !== id
         );
         state.questionsSkipped = filteredArray;
       } else {
         // Number doesn't exist in the array, add it
-        if (!state.questionsSkipped.includes(skippedQuest))
-          state.questionsSkipped.push(skippedQuest);
+        if (!state.questionsSkipped.includes(id))
+          state.questionsSkipped.push(id);
       }
     },
 
     selectAnswerOption: (state, action) => {
-      const { questionId, selectedAnswer, courseId,  id } = action.payload;
-
+      const { formId, selectedAnswer, courseId, id } = action.payload;
       //console.log("Updated questions array ", JSON.stringify(updatedQuestionsArray), "Skipped ", skippedQuest);
       const answeredQuestionIndex = state.answeredQuestions.findIndex(
         (item) => item.id === id
@@ -131,23 +127,23 @@ const formSlice = createSlice({
         state.answeredQuestions[answeredQuestionIndex].selectedAnswer =
           selectedAnswer;
         state.answeredQuestions[answeredQuestionIndex].isClicked = true;
-        state.answeredQuestions[answeredQuestionIndex].formId = questionId;
+        state.answeredQuestions[answeredQuestionIndex].formId = formId;
         state.answeredQuestions[answeredQuestionIndex].courseId = courseId;
         state.answeredQuestions[answeredQuestionIndex].id = id;
       } else {
         // If the question is not answered, add it to answeredQuestions
         state.answeredQuestions.push({
-          formId: questionId,
+          formId: formId,
           selectedAnswer,
           isClicked: true,
           courseId: courseId,
-          id: id
+          id: id,
         });
       }
     },
     resetSelectedQuestions: (state) => {
       //state.answeredQuestions = [1];
-      state.questionsSkipped = [1];
+      state.questionsSkipped = [0];
       state.selectedQuestion = [1];
       state.isSubmitted = false;
     },
@@ -158,7 +154,7 @@ const formSlice = createSlice({
           selectedAnswer: "",
           isClicked: false,
           courseId: "",
-          id: 0
+          id: 0,
         },
       ];
     },
@@ -175,11 +171,19 @@ const formSlice = createSlice({
     submitQuestion: (state) => {
       state.isSubmitted = true;
       state.lastPage = state.data.length + 1;
-      //Math.max(
-//        ...state.data.map((obj) => obj.formId)
-  //    );
-      //console.log("Questions are already marked" , JSON.stringify(state.answeredQuestions), "Last page", state.lastPage);
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getCourseService.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getCourseService.fulfilled, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getCourseService.rejected, (state, action) => {
+        state.isLoading = false;
+      });
   },
 });
 
@@ -202,9 +206,7 @@ export const selectFormTotalQuestionsLength = (state) =>
 export const selectDisablePrev = (state) => state.formReducer.page === 0;
 export const selectDisableNext = (state) => {
   return (
-    state.formReducer.page === state.formReducer.questionLength ||
-    (state.formReducer.page === 0 && !selectCanNextPage1) ||
-    (state.formReducer.page === 1 && !selectCanNextPage2)
+    state.formReducer.page === state.formReducer.questionLength
   );
 };
 export const selectPrevHide = (state) =>
@@ -215,48 +217,6 @@ export const selectNextHide = (state) =>
 export const selectSubmitHide = (state) =>
   state.formReducer.page !== state.formReducer.questionLength - 1 &&
   "remove-button";
-
-// Selector to compute the value of canSubmit
-export const selectCanSubmit = (state) => {
-  const { page, data } = state.formReducer;
-  const {
-    billAddress2,
-    sameAsBilling,
-    shipAddress2,
-    optInNews,
-    ...requiredInputs
-  } = data;
-
-  const requiredInputsValues = Object.values(requiredInputs);
-  const areAllRequiredInputsFilled = requiredInputsValues.every(Boolean);
-  const isOnLastPage = page === state.formReducer.questionLength - 1;
-
-  return areAllRequiredInputsFilled && isOnLastPage;
-};
-
-// Selector to compute canNextPage1
-export const selectCanNextPage1 = (state) => {
-  const { data } = state.formReducer;
-
-  const canNextPage1 = Object.keys(data)
-    .filter((key) => key.startsWith("bill") && key !== "billAddress2")
-    .map((key) => data[key])
-    .every(Boolean);
-
-  return canNextPage1;
-};
-
-// Selector to compute canNextPage2
-export const selectCanNextPage2 = (state) => {
-  const { data } = state.formReducer;
-
-  const canNextPage2 = Object.keys(data)
-    .filter((key) => key.startsWith("ship") && key !== "shipAddress2")
-    .map((key) => data[key])
-    .every(Boolean);
-
-  return canNextPage2;
-};
 
 // Actions
 export const {
