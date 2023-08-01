@@ -81,15 +81,15 @@ const UserProfile = () => {
       <div>
         <ol className="relative border-l border-gray-200 dark:border-gray-700">
           <li className="mb-10 ml-6">
-            <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
+            <span className="absolute flex items-center justify-center w-6 h-6 bg-white rounded-full -left-3 ring-8 ring-white dark:ring-[#42464D] dark:bg-[#42464D]">
               <CalendarDays
-                color={"currentColor"}
+                color={currentMode == "Dark" ? "#CBD5E1" : "#708080"}
                 styles={"text-gray-500 dark:text-gray-500"}
               />
             </span>
             <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">
               Years of programming experience{" "}
-              <span className="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ml-3">
+              <span className="bg-[#e3165b] text-white text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-[#e3165b] dark:text-white ml-3">
                 Latest
               </span>
             </h3>
@@ -99,9 +99,9 @@ const UserProfile = () => {
             </p>
           </li>
           <li className="mb-10 ml-6">
-            <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-              <img className="w-[14px] h-[14px]" src={iconLevelUp.img} />
-              <div className="absolute inset-0 bg-white opacity-50"></div>
+            <span className="absolute flex items-center justify-center w-6 h-6 bg-white rounded-full -left-3 ring-8 ring-white dark:ring-[#42464D] dark:bg-[#42464D]">
+              <img className={`w-[14px] h-[14px]`} src={iconLevelUp.img} style={{ color:currentMode == "Dark" ? "#CBD5E1" : "#828486"}} />
+              <div className="absolute inset-0 "></div>
             </span>
             <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
               Level
@@ -111,9 +111,9 @@ const UserProfile = () => {
             </p>
           </li>
           <li className="mb-10 ml-6">
-            <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
+            <span className="absolute flex items-center justify-center w-6 h-6 bg-white rounded-full -left-3 ring-8 ring-white dark:ring-[#42464D] dark:bg-[#42464D]">
               <SkillIcon
-                color={"currentColor"}
+                color={currentMode == "Dark" ? "#CBD5E1" : "#828486"}
                 styles={"text-gray-500 dark:text-gray-500"}
               />
             </span>
@@ -125,9 +125,9 @@ const UserProfile = () => {
             </p>
           </li>
           <li className="ml-6">
-            <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
+            <span className="absolute flex items-center justify-center w-6 h-6 bg-white rounded-full -left-3 ring-8 ring-white dark:ring-[#42464D] dark:bg-[#42464D]">
               <ProfileIcon
-                color={"currentColor"}
+                color={currentMode == "Dark" ? "#CBD5E1" : "#828486"}
                 styles={"text-gray-500 dark:text-gray-500"}
               />
             </span>
