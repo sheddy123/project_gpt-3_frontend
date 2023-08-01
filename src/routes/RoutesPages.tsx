@@ -8,20 +8,13 @@ import DashboardLayout from "./DashboardLayout";
 
 function NotFoundPage() {
   return (
-    <div style={{ padding: 20, color: "white" }}>
+    <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white  dark:bg-[#42464D] shadow rounded-sm overflow-hidden prose prose-slate dark:prose-invert max-w-none prose-img:shadow-md prose-p:mb-0 prose-p:mt-0 dark:prose-hr:border-t-2 prose-hr:border-t-2 dark:prose-hr:border-white">
       <h2>404: Page Not Found</h2>
       <p>Lorem ipsum dolor sit amet, consectetur adip.</p>
     </div>
   );
 }
 
-function UnAuthorizedPage() {
-  return (
-    <div style={{ padding: 20, color: "white" }}>
-      <h2>Unauthorized</h2>
-    </div>
-  );
-}
 
 const RoutePages = () => {
   return (
@@ -30,8 +23,7 @@ const RoutePages = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/home" element={<HomePage />} />
         <Route element={<PersistLogin />}>
-          <Route path="unauthorized" element={<UnAuthorizedPage />} />
-          <Route element={<RequireAuth allowedRoles={[ROLES.Student, ROLES.Administrator, ROLES.Student]} />}>
+          <Route element={<RequireAuth allowedRoles={[ROLES.Student, ROLES.Administrator, ROLES.Instructor]} />}>
             {/* ================================= Dashboard =======================================*/}
             <Route path="/dashboard/*" element={<DashboardLayout />} />
             {/* ================================= Dashboard =======================================*/}
