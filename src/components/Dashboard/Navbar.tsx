@@ -63,7 +63,6 @@ const Navbar = () => {
   const handleActiveMenu = () => setActiveMenu(!activeMenu);
   const activeLink = `pb-2 px-2 border-b-4 border-[${currentColor}] font-semibold`;
   const normalLink = "pb-2 px-2 text-gray-500 font-semibold ";
-
   return (
     <div className="flex justify-between p-2 md:ml-6 md:mr-6 relative">
       <NavButton
