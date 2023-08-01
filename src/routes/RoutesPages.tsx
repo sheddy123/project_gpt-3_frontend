@@ -31,7 +31,7 @@ const RoutePages = () => {
         <Route path="/home" element={<HomePage />} />
         <Route element={<PersistLogin />}>
           <Route path="unauthorized" element={<UnAuthorizedPage />} />
-          <Route element={<RequireAuth allowedRoles={[ROLES.Student]} />}>
+          <Route element={<RequireAuth allowedRoles={[ROLES.Student, ROLES.Administrator, ROLES.Student]} />}>
             {/* ================================= Dashboard =======================================*/}
             <Route path="/dashboard/*" element={<DashboardLayout />} />
             {/* ================================= Dashboard =======================================*/}
