@@ -26,6 +26,22 @@ import {
 import RequireAuth from "./RequireAuth";
 import { ROLES } from "@/utils/Constants/ApiConstants/api_constants";
 
+function NotFoundDashboardPage() {
+  return (
+    <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white  dark:bg-[#42464D] shadow rounded-sm overflow-hidden prose prose-slate dark:prose-invert max-w-none prose-img:shadow-md prose-p:mb-0 prose-p:mt-0 dark:prose-hr:border-t-2 prose-hr:border-t-2 dark:prose-hr:border-white">
+      <h2>404: Page Not Found</h2>
+    </div>
+  );
+}
+
+function UnAuthorizedPage() {
+  return (
+    <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white  dark:bg-[#42464D] shadow rounded-sm overflow-hidden prose prose-slate dark:prose-invert max-w-none prose-img:shadow-md prose-p:mb-0 prose-p:mt-0 dark:prose-hr:border-t-2 prose-hr:border-t-2 dark:prose-hr:border-white">
+      <h2>Unauthorized</h2>
+    </div>
+  );
+}
+
 const DashboardLayout = () => {
   const {
     setCurrentColor,
@@ -81,6 +97,8 @@ const DashboardLayout = () => {
           <div>
             {themeSettings && <ThemeSettings />}
             <Routes>
+            <Route path="*" element={<NotFoundDashboardPage />} />
+            <Route path="unauthorized" element={<UnAuthorizedPage />} />
               <Route element={<RequireAuth allowedRoles={[ROLES.Student]} />}>
                 {/* dashboard  */}
                 <Route path="/" element={<DashboardHome />} />
@@ -111,11 +129,14 @@ const DashboardLayout = () => {
               <Route
                 element={
                   <RequireAuth allowedRoles={[ROLES.Instructor]} />
-                }></Route>
+                }>
+                  <Route path="/courses" element={<Courses />} />
+                </Route>
               <Route
                 element={
                   <RequireAuth allowedRoles={[ROLES.Administrator]} />
                 }></Route>
+                
             </Routes>
           </div>
           <Footer />
