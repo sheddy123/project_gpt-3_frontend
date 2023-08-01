@@ -41,6 +41,7 @@ const Navbar = () => {
     screenSize,
   } = useStateContext();
   const store = useSelector((store) => store?.authReducer);
+
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
 
@@ -75,7 +76,8 @@ const Navbar = () => {
       <div className="hidden md:flex items-center space-x-1">
         {links.map((item, index) => (
           <div key={`${item}${index}`}>
-            {item.links.map((link) => (
+            {item.links
+            .filter((link) => link.role === store?.auth_response.roles?.[0].roleName).map((link) => (
               <NavLink
                 to={`/dashboard/${link.name}`}
                 key={`${item} ${link.name}${index}`}
