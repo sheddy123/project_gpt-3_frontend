@@ -18,7 +18,7 @@ const QuestionListAnswerPanel = React.memo(
   
   const currentComponentClass = questionNumber == component ? "bg-black text-white dark:bg-white dark:text-black" : "";
   //const currentComponentClass = questionNumber == component && selectQuestionsSkipped.length == 1 ? "bg-black text-white dark:bg-white dark:text-black" : "";
-  
+  console.log("Component is ", component, "Question Number", questionNumber, "selectQuestionsSkipped " , selectQuestionsSkipped)
   return (
     <>
       {isSelected && !isSubmitted  ? (
@@ -45,6 +45,7 @@ const QuestionListAnswerPanel = React.memo(
             fillColor={!selectQuestionsSkipped.includes(questionNumber) ? "fill-[#14b8a6]" : `fill-[#9ca8a7]`}
           />{" "}
           <span className="font-bold text-[16px]">Question {questionNumber}</span>
+          {/* {console.log("Current question is ", JSON.stringify(selectQuestionsSkipped), questionNumber, selectQuestionsSkipped.includes(questionNumber))} */}
           {selectQuestionsSkipped.includes(questionNumber) && <span className="text-xs cursor-pointer hover:drop-shadow-xl font-semibold rounded-lg w-18 bg-orange-400 pb-1 px-2 text-white ">
             Skipped
           </span>}
