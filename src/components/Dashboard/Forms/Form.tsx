@@ -4,8 +4,6 @@ import {
   selectFormData,
   setPage,
   selectFormTitle,
-  setData,
-  selectCanSubmit,
   selectDisablePrev,
   selectPrevHide,
   selectNextHide,
@@ -22,7 +20,7 @@ import {
   setSkippedQuestion,
   submitQuestion,
   selectIsSubmitted,
-  selectLastPage
+  selectLastPage,
 } from "@/redux/features/form/formSlice";
 import FormInputs from "./FormInputs";
 const Form = () => {
@@ -32,7 +30,6 @@ const Form = () => {
     selectAnsweredQuestions: useSelector(selectAnsweredQuestions),
     data: useSelector(selectFormData),
     title: useSelector(selectFormTitle),
-    canSubmit: useSelector(selectCanSubmit),
     disablePrev: useSelector(selectDisablePrev),
     prevHide: useSelector(selectPrevHide),
     nextHide: useSelector(selectNextHide),
@@ -42,7 +39,6 @@ const Form = () => {
     questionsSkipped: useSelector(selectQuestionsSkipped),
     isSubmitted: useSelector(selectIsSubmitted),
     lastPage: useSelector(selectLastPage),
-
   };
   const dispatch = useDispatch();
   const handleChange = () => {
@@ -53,19 +49,19 @@ const Form = () => {
     // const payloadValue = type === "checkbox" ? e.target.checked : value;
     // dispatch(setData({ name, value: payloadValue }));
   };
-  const handlePrev = (page: number) => {
+  const handlePrev = (page: number, id?: number) => {
     if (page > 1) {
-      dispatch(setSkippedQuestion(page));
+      dispatch(setSkippedQuestion({id:id}));
     }
     dispatch(setPage(page - 1));
   };
-  const handleNext = (page: number) => {
+  const handleNext = (page: number, id?: number) => {
     if (page == 0) {
       dispatch(resetSelectedQuestions());
       dispatch(resetAnsweredQuestions());
     }
     if (page > 1) {
-      dispatch(setSkippedQuestion(page));
+      dispatch(setSkippedQuestion({id: id}));
     }
     dispatch(setPage(page + 1));
     dispatch(setSelectedQuestion(page));
@@ -86,15 +82,15 @@ const Form = () => {
     <form className="form flex-col" onSubmit={handleSubmit}>
       {/* <header className="form-header"> */}
       {/* <h2>{title[page]}</h2> */}
-      
-            {/* <button
+
+      {/* <button
               type="button"
               className={`button ${formData.prevHide}`}
               onClick={() => handlePrev(formData.page)}
               disabled={formData.disablePrev}>
               Prev
             </button> */}
-      
+
       {/* <div className="button-container">
           {formData.page < 2 && (
             <button
@@ -135,7 +131,7 @@ const Form = () => {
         selectAnsweredQuestions={formData.selectAnsweredQuestions}
         selectQuestionsSkipped={formData.questionsSkipped}
         isSubmitted={formData.isSubmitted}
-        lastPage = {formData.lastPage}
+        lastPage={formData.lastPage}
         setSkippedQuestion={setSkippedQuestion}
         setPage={setPage}
         wholeQuestions={formData.data}
