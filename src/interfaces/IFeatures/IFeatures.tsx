@@ -1,3 +1,5 @@
+import { FieldType } from "@/utils/Constants/ApiConstants/api_constants";
+
 /************************************ Authentication/Authorization ************************************/
 export interface IAuth {
   message: string;
@@ -89,3 +91,23 @@ export interface ICourse {
   description: string;
 }
 /************************************ Courses ************************************/
+
+/************************************ Dynamic Form ************************************/
+export interface FormFieldDescriptions {
+  description_h2: string;
+  description_paragraph: string;
+  fields: FormField[];
+}
+export interface FormField {
+  name: string;
+  type: FieldType;
+  required: boolean;
+  options: string[]; // For select and radio inputs
+  label: string; // For checkbox input
+}
+
+export interface DynamicFormProps {
+  formFields: FormFieldDescriptions;
+  onSubmit: (formData: { [key: string]: string | boolean }) => void;
+}
+/************************************ Dynamic Form ************************************/
