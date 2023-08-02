@@ -11,3 +11,12 @@ export const ROLES = {
   Instructor: "Instructor",
   Student: "Student",
 };
+
+
+export enum FieldType {
+  Input = "input",
+  TextArea = "textArea",
+  Select = "select",
+  Radio = "radio",
+  Checkbox = "checkbox",
+}
