@@ -1,4 +1,4 @@
-import { getCourseService } from "@/services/api/CourseService/GetCourseService";
+import { getCourseService } from "@/services/api/CourseService/CourseService";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
