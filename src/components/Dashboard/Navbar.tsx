@@ -78,7 +78,7 @@ const Navbar = () => {
             {item.links
             .filter((link) => link.role === store?.auth_response.roles?.[0].roleName).map((link) => (
               <NavLink
-                to={`/dashboard/${link.name}`}
+                to={`/dashboard/${link.linkName}`}
                 key={`${item} ${link.name}${index}`}
                 style={({ isActive }) => ({
                   color: isActive ? currentColor : "",
