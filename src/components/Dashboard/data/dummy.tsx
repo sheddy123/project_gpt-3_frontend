@@ -704,11 +704,13 @@ export const links = [
     links: [
       {
         name: "home",
+        linkName:"home",
         icon: <FiHome />,
         role: ROLES.Student
       },
       {
         name: "Courses",
+        linkName: "add-course",
         icon: <FiBookOpen />,
         role: ROLES.Instructor
       },
@@ -720,16 +722,19 @@ export const links = [
     links: [
       {
         name: "Orders",
+        linkName: "Orders",
         icon: <AiOutlineShoppingCart />,
         role: ROLES.Student
       },
       {
         name: "Employees",
+        linkName: "Orders",
         icon: <IoMdContacts />,
         role: ROLES.Student
       },
       {
         name: "Customers",
+        linkName: "Orders",
         icon: <RiContactsLine />,
         role: ROLES.Student
       },
