@@ -25,6 +25,7 @@ import {
 } from "@/pages/Dashboard";
 import RequireAuth from "./RequireAuth";
 import { ROLES } from "@/utils/Constants/ApiConstants/api_constants";
+import AddCourse from "@/pages/Dashboard/Instructor/AddCourse";
 
 function NotFoundDashboardPage() {
   return (
@@ -130,7 +131,7 @@ const DashboardLayout = () => {
                 element={
                   <RequireAuth allowedRoles={[ROLES.Instructor]} />
                 }>
-                  <Route path="/courses" element={<Courses />} />
+                  <Route path="/add-course" element={<AddCourse />} />
                 </Route>
               <Route
                 element={
