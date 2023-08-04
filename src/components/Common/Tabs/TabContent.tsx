@@ -5,6 +5,9 @@ import "./Tabs.css";
 import { IoIosMore } from "react-icons/io";
 import Button from "../Button/Button";
 import { NavLink } from "react-router-dom";
+import { BsBoxSeam } from "react-icons/bs";
+import { useSelector } from "react-redux";
+import { selectAllCourses } from "@/redux/features/courses/courseSlice";
 const TabContent = ({ TabNavs, activeTab }) => {
   const colors = [
     "#674c80",
@@ -24,6 +27,10 @@ const TabContent = ({ TabNavs, activeTab }) => {
     "#00FA9A",
   ];
 
+  const courseData = {
+    allCourses: useSelector(selectAllCourses) || [],
+  };
+
   const { currentColor } = useStateContext();
   return (
     <div id="myTabContent">
@@ -31,20 +38,20 @@ const TabContent = ({ TabNavs, activeTab }) => {
         return (
           activeTab === `${tab.name}-tab` && (
             <div key={tab+index} className="grid grid-cols-3 gap-4 mt-3 rounded-sm items-center">
-              {earningData.map((item, index) => (
+              {courseData.allCourses.map((item, index) => (
                 <>
                   <div key={`${item}${index}`} className={` shadow grid grid-cols-2 p-2 h-full w-full overflow-hidden relative max-w-xs bg-cover bg-no-repeat cont`}
                   style={{background: colors[index]}}>
                     <div>
-                      <button
+                      {/* <button
                         type="button"
                         style={{
-                          color: item.iconColor,
-                          backgroundColor: item.iconBg,
+                          color: "rgb(255, 244, 229)",
+                          backgroundColor: "rgb(254, 201, 15)",
                         }}
                         className="text-2xl opacity-0.9 rounded-full  hover:drop-shadow-xl">
-                        {item.icon}
-                      </button>
+                        <BsBoxSeam />
+                      </button> */}
                     </div>
                     <div className="text-end">
                       <button
@@ -76,7 +83,7 @@ const TabContent = ({ TabNavs, activeTab }) => {
                       </span>
                     </div>
                     <div className="group fd-sh group-hover:opacity-100 absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden  bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-20 flex justify-center items-center">
-                      <NavLink to={`/dashboard/courses/${item.title.toLowerCase()}`} className={'bg-black  text-white font-bold py-2 px-4 border border-black shadow'}>
+                      <NavLink to={`/dashboard/courses/${item.courseId}`} className={'bg-black  text-white font-bold py-2 px-4 border border-black shadow'}>
                         Get started
                       </NavLink>
                       {/* <Button styles="opacity-0.9 cursor-pointer" text="Get started" /> */}
