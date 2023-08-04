@@ -1,4 +1,4 @@
-import Form from "@/components/Dashboard/Forms/Form";
+import Form from "@/components/Dashboard/Student/Forms/Form";
 import {
   selectDisablePrev,
   selectFormPage,
@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useParams } from "react-router-dom";
 import {useEffect} from 'react';
 
-const Courses = () => {
+const StudentCourseList = () => {
   const { courseId } = useParams();
   const dispatch = useDispatch();
   const { currentColor } = useStateContext();
@@ -77,4 +77,4 @@ const Courses = () => {
   );
 };
 
-export default Courses;
+export default StudentCourseList;

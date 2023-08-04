@@ -21,11 +21,12 @@ import {
   ColorMapping,
   Editor,
   DashboardHome,
-  Courses,
+  StudentCourseList,
+  CoursesLists
 } from "@/pages/Dashboard";
 import RequireAuth from "./RequireAuth";
 import { ROLES } from "@/utils/Constants/ApiConstants/api_constants";
-import AddCourse from "@/pages/Dashboard/Instructor/AddCourse";
+import AddQuestions from "@/pages/Dashboard/Instructor/AddQuestions";
 
 function NotFoundDashboardPage() {
   return (
@@ -77,7 +78,7 @@ const DashboardLayout = () => {
           </TooltipComponent>
         </div>
         {activeMenu ? (
-          <div className="w-72 fixed sidebar dark:bg-main-dark-bg bg-white ">
+          <div className="w-72 fixed sidebar dark:bg-main-dark-bg bg-white z-[100]">
             <Sidebar />
           </div>
         ) : (
@@ -104,7 +105,7 @@ const DashboardLayout = () => {
                 {/* dashboard  */}
                 <Route path="/" element={<DashboardHome />} />
                 <Route path="/home" element={<DashboardHome />} />
-                <Route path="/courses/:courseId" element={<Courses />} />
+                <Route path="/courses/:courseId" element={<StudentCourseList />} />
 
                 {/* pages  */}
                 <Route path="/orders" element={<Orders />} />
@@ -131,7 +132,8 @@ const DashboardLayout = () => {
                 element={
                   <RequireAuth allowedRoles={[ROLES.Instructor]} />
                 }>
-                  <Route path="/add-course" element={<AddCourse />} />
+                  <Route path="/add-questions" element={<AddQuestions />} />
+                  <Route path="/courses" element={<CoursesLists />} />
                 </Route>
               <Route
                 element={

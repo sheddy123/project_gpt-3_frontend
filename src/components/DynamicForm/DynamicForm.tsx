@@ -2,12 +2,21 @@
 import { DynamicFormProps } from "@/interfaces/IFeatures/IFeatures";
 import { FieldType } from "@/utils/Constants/ApiConstants/api_constants";
 import { useStateContext } from "@/utils/Helpers/ContextProvider";
-import React, { useState, ChangeEvent, FormEvent } from "react";
-
+import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import {
+  HtmlEditor,
+  Image,
+  Count,
+  Inject,
+  Link,
+  QuickToolbar,
+  RichTextEditorComponent,
+  Toolbar,
+} from "@syncfusion/ej2-react-richtexteditor";
+import { FormValidator } from "@syncfusion/ej2-react-inputs";
 const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
-    const { currentColor } =
-    useStateContext();
-    const [formValues, setFormValues] = useState<{
+  const { currentColor } = useStateContext();
+  const [formValues, setFormValues] = useState<{
     [key: string]: string | boolean;
   }>(
     formFields.fields.reduce((acc, field) => ({ ...acc, [field.name]: "" }), {})
@@ -17,26 +26,58 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
     formFields.fields.reduce((acc, field) => ({ ...acc, [field.name]: "" }), {})
   );
 
+  const handleRichtextChange = (name: string) => (args: any) => {
+    const value = args.value; // Get the HTML content of the RichTextEditor
+
+    console.log("value is", args, name);
+    // setFormValues((prevValues) => ({ ...prevValues, [name]: value }));
+  };
+  useEffect(() => {
+    // Initialize formValues with initial Richtext values
+    const initialRichtextValues = formFields.fields
+      .filter((field) => field.type === FieldType.RichText)
+      .reduce((acc, field) => ({ ...acc, [field.name]: "" }), {});
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      ...initialRichtextValues,
+    }));
+
+    // Clean up event listeners
+    return () => {
+      formFields.fields.forEach((field) => {
+        if (field.type === FieldType.RichText) {
+          const rteElement = document.getElementById(field.name);
+          if (rteElement) {
+            rteElement.removeEventListener(
+              "keyup",
+              handleRichtextChange(field.name)
+            );
+          }
+        }
+      });
+    };
+  }, [formFields.fields]);
+
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value, type } = e.target;
     setFormValues((prevValues) => ({ ...prevValues, [name]: value }));
-
+    console.log("Type is " + type);
     if (type === "checkbox") {
       setFormValues((prevValues) => ({
         ...prevValues,
         [name]: (e.target as HTMLInputElement).checked,
       }));
     } else {
-        //console.log("Name is ", name, " value is ", value,"Form values are ", JSON.stringify(formValues))
+      //console.log("Name is ", name, " value is ", value,"Form values are ", JSON.stringify(formValues))
       setFormValues((prevValues) => ({ ...prevValues, [name]: value }));
     }
 
-     // Clear the error message when the user starts typing in the field
-     if (errors[name]) {
-        setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
-      }
+    // Clear the error message when the user starts typing in the field
+    if (errors[name]) {
+      setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
+    }
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -45,7 +86,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} id="myForm">
       <div className="border-b dark:border-slate-200 border-gray-900/10 pb-12">
         <h2 className="dark:text-white text-base font-semibold leading-7 text-gray-900">
           {formFields.description_h2}
@@ -61,7 +102,8 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
                   <label
                     htmlFor={field.name}
                     className="block dark:text-white text-sm font-medium leading-6 text-gray-900">
-                    {field.label}  {field.required && <span className="text-red-500">*</span>}
+                    {field.label}{" "}
+                    {field.required && <span className="text-red-500">*</span>}
                   </label>
                   <input
                     type="text"
@@ -79,7 +121,8 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
                   <label
                     htmlFor={field.name}
                     className="block text-sm dark:text-white font-medium leading-6 text-gray-900">
-                    {field.name}  {field.required && <span className="text-red-500">*</span>}
+                    {field.name}{" "}
+                    {field.required && <span className="text-red-500">*</span>}
                   </label>
                   <textarea
                     id={field.name}
@@ -92,12 +135,45 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
                   />
                 </div>
               )}
+              {field.type === FieldType.RichText && (
+                <div className="col-span-full">
+                  <label
+                    htmlFor={field.name}
+                    className="block text-sm dark:text-white font-medium leading-6 text-gray-900">
+                    {field.name}{" "}
+                    {field.required && <span className="text-red-500">*</span>}
+                  </label>
+                  <RichTextEditorComponent
+                    id={field.name}
+                    name={field.name}
+                    className="form-control"
+                    height={200}
+                    showCharCount={true}
+                    maxLength={100}
+                    placeholder={"Type something"}
+                    value={formValues[field.name] as string}
+                    // Use the custom event listener for handling Richtext changes
+                    change={handleRichtextChange(field.name)}>
+                    <Inject
+                      services={[
+                        Toolbar,
+                        Image,
+                        Link,
+                        Count,
+                        HtmlEditor,
+                        QuickToolbar,
+                      ]}
+                    />
+                  </RichTextEditorComponent>
+                </div>
+              )}
               {field.type === FieldType.Select && (
                 <div className="sm:col-span-3">
                   <label
                     htmlFor={field.name}
                     className="block text-sm dark:text-white font-medium leading-6 text-gray-900">
-                    {field.name}  {field.required && <span className="text-red-500">*</span>}
+                    {field.name}{" "}
+                    {field.required && <span className="text-red-500">*</span>}
                   </label>
                   <select
                     id={field.name}
@@ -116,7 +192,10 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
               )}
               {field.type === FieldType.Radio && (
                 <div className="mt-6 space-y-2">
-                    <legend className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">{field.name} {field.required && <span className="text-red-500">*</span>}</legend>
+                  <legend className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
+                    {field.name}{" "}
+                    {field.required && <span className="text-red-500">*</span>}
+                  </legend>
                   {field.options?.map((option) => (
                     <div className="flex items-center gap-x-3">
                       <input
@@ -132,7 +211,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
                       <label
                         key={option}
                         className="block text-sm font-medium leading-6 text-gray-900 dark:text-white">
-                        {option} 
+                        {option}
                       </label>
                     </div>
                   ))}
@@ -140,7 +219,10 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
               )}
               {field.type === FieldType.Checkbox && (
                 <div className="mt-6 space-y-6">
-                    <legend className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">{field.name} {field.required && <span className="text-red-500">*</span>}</legend>
+                  <legend className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
+                    {field.name}{" "}
+                    {field.required && <span className="text-red-500">*</span>}
+                  </legend>
                   <div className="relative flex gap-x-3">
                     <div className="flex h-6 items-center">
                       <input
@@ -158,7 +240,9 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
                   </div>
                 </div>
               )}
-              {errors[field.name] && <span className="text-red-500">{errors[field.name]}</span>}
+              {errors[field.name] && (
+                <span className="text-red-500">{errors[field.name]}</span>
+              )}
             </>
           ))}
         </div>
@@ -171,7 +255,8 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
         </button>
         <button
           type="submit"
-          className="rounded-md dark:text-white  px-3 py-2 text-sm font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 " style={{background:currentColor}}>
+          className="rounded-md dark:text-white  px-3 py-2 text-sm font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 "
+          style={{ background: currentColor }}>
           Save
         </button>
       </div>

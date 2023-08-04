@@ -519,8 +519,8 @@ export const links = [
         role: ROLES.Student
       },
       {
-        name: "Courses",
-        linkName: "add-course",
+        name: "Questions",
+        linkName: "add-questions",
         icon: <FiBookOpen />,
         role: ROLES.Instructor
       },

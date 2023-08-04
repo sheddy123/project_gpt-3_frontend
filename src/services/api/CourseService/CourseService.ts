@@ -1,4 +1,3 @@
-import { ICourse } from "@/interfaces/IFeatures/IFeatures";
 import { Course_Url } from "@/utils/Constants/ApiConstants/api_constants";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
@@ -24,10 +23,32 @@ export const getCourseService = createAsyncThunk(
   }
 );
 
+export const deletetCourseService = createAsyncThunk(
+  "users/Course/deleteCourse",
+  async (props: any, thunkAPI) => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+    try {
+      const response = await axios.delete(
+        `${Course_Url}${import.meta.env.VITE_DELETE_COURSE_URL}/${props}`,
+        {
+          withCredentials: true,
+          signal,
+        }
+      );
+      return response.data;
+    } catch (err) {
+      console.error(err);
+      return thunkAPI.rejectWithValue("Your error message");
+    } finally {
+      controller.abort();
+    }
+  }
+);
+
 export const createCourseService = createAsyncThunk(
   "users/Course/createCourse",
   async (props: any, thunkAPI) => {
-    console.log("Props received is " + props);
     const controller = new AbortController();
     const signal = controller.signal;
 
@@ -41,6 +62,38 @@ export const createCourseService = createAsyncThunk(
           version: props.version,
           description: props.description,
           course_code: props.course_code,
+        },
+        {
+          withCredentials: true,
+          signal,
+        }
+      );
+      return response.data;
+    } catch (err) {
+      console.error(err);
+      return thunkAPI.rejectWithValue("Your error message");
+    } finally {
+      controller.abort();
+    }
+  }
+);
+
+export const editCourseService = createAsyncThunk(
+  "users/Course/editCourse",
+  async (props: any, thunkAPI) => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+    try {
+      const response = await axios.patch(
+        `${Course_Url}${import.meta.env.VITE_UPDATE_COURSE_URL}`,
+        {
+          title: props.title,
+          languages: props.languages,
+          captions: props.captions === "Yes",
+          version: props.version,
+          description: props.description,
+          course_code: props.course_code,
+          courseId: props.courseId,
         },
         {
           withCredentials: true,

@@ -15,4 +15,5 @@ export { default as Pie } from "../Charts/Pie";
 export { default as Pyramid } from "../Charts/Pyramid";
 export { default as Stacked } from "../Charts/Stacked";
 export { default as DashboardHome } from "./Student/Home";
-export { default as Courses } from "./Student/Courses";
+export { default as StudentCourseList } from "./Student/StudentCourseList";
+export { default as CoursesLists } from "./Instructor/CoursesLists";

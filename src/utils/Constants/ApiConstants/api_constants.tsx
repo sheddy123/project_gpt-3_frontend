@@ -19,4 +19,5 @@ export enum FieldType {
   Select = "select",
   Radio = "radio",
   Checkbox = "checkbox",
+  RichText = "richText"
 }

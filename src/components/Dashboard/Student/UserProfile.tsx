@@ -1,5 +1,5 @@
 import { MdOutlineCancel } from "react-icons/md";
-import { Button } from "..";
+import Button from './Button';
 import { useStateContext } from "@/utils/Helpers/ContextProvider";
 import { useSelector } from "react-redux";
 import useLogout from "@/utils/Hooks/useLogout";
@@ -9,7 +9,7 @@ import {
   ProfileIcon,
   SkillIcon,
   Verified,
-} from "../Common/Icons/Icons";
+} from "../../Common/Icons/Icons";
 import { iconLevelUp } from "@/utils/Constants/ComponentsConstants/constants";
 
 const UserProfile = () => {

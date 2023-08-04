@@ -9,7 +9,7 @@ import {
   YouMayLike,
 } from "@/components/Dashboard";
 import { useStateContext } from "@/utils/Helpers/ContextProvider";
-
+import { getCourseService } from "@/services/api/CourseService/CourseService";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -19,9 +19,9 @@ const Home = () => {
   useEffect(() => {
     dispatch(openModal(undefined));
     setActiveMenu(true);
+    dispatch(getCourseService() as any);
   }, []);
 
-  
   return (
     <>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:bg-[#42464D] shadow rounded-sm overflow-hidden">

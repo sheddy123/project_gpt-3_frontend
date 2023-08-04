@@ -1,0 +1,117 @@
+.course-overview--show-more-btn--2jq19 {
+  margin-left: 2.4rem;
+}
+.ud-btn-ghost {
+  color: #5624d0;
+  background-color: transparent;
+  min-width: auto;
+  padding: 0;
+}
+
+.ud-btn-medium {
+  height: 4rem;
+}
+
+.fade__content {
+  -webkit-mask-image: linear-gradient(#ffffff, #ffffff, rgba(255, 255, 255, 0));
+}
+
+.long__text {
+  max-height: 0;
+  overflow: hidden;
+  display: inline-block;
+  transition: max-height 0.4s;
+}
+
+.expanded {
+  max-height: 100rem;
+  transition: max-height 2s;
+}
+
+.custom-disc-color li::before {
+  content: "";
+  display: inline-block;
+  width: 0.75em; /* Adjust the size of the bullet point */
+  height: 0.75em; /* Adjust the size of the bullet point */
+  background-color: #ff0000; /* Set your desired color here */
+  border-radius: 50%;
+  margin-right: 0.5em; /* Adjust the spacing between the bullet point and the list item text */
+}
+
+.e-toolbar .e-toolbar-items {
+  padding-bottom: 46px;
+}
+
+/* dark-mode.css */
+
+/* Styles for dark mode */
+.darkMode .e-grid .e-gridheader .e-headercell,
+.darkMode .e-grid .e-gridheader .e-detailheadercell,
+.darkMode .e-grid .e-rowcell:not(.e-editedbatchcell):not(.e-updatedtd),
+.darkMode .e-toolbar .e-toolbar-items,
+.darkMode .e-grid .e-gridheader {
+  color: #fff;
+  background-color: #444;
+  /* border-top-color: #7a7a87;
+  border-bottom-color: #7a7a87;
+  border-left-color: #7a7a87;
+  border-right-color: #7a7a87; */
+}
+
+.darkMode .e-search > .e-input::placeholder,
+.darkMode .e-search > .e-input,
+.darkMode
+  .e-grid
+  .e-toolbar-items
+  .e-toolbar-item.e-search-wrapper
+  .e-search
+  .e-search-icon {
+  color: #fff;
+}
+
+.darkMode .e-pager div.e-parentmsgbar,
+.darkMode .e-grid .e-icons:not(.e-btn-icon) {
+  color: #282020;
+}
+
+.darkMode .border-color {
+  border-color: rgba(196, 173, 173, 0.1);
+  background: #c1c1c1;
+}
+.reset__button {
+  font-size: 14px !important;
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
+  border-radius: 2.5px !important;
+}
+
+.faded-li {
+  position: relative;
+  margin-bottom: 1rem; /* Adjust the value as per your requirement */
+  //margin-top: 1.75rem; /* Adjust the value as per your requirement */
+}
+
+.faded-li::before {
+  content: "";
+  position: absolute;
+  top: 0rem; /* Make the overlay cover the top margin */
+  left: 0;
+  width: 100%;
+  height: calc(
+    100% + 1rem
+  ); /* Make the overlay cover the entire li including margins */
+  pointer-events: none; /* Allow clicks to pass through the overlay */
+}
+.faded-li_light::before {
+  background-color: rgba(249, 250, 251, 0.75); /* Transparent overlay color */
+}
+.faded-li_dark::before {
+  background-color: rgba(32, 35, 42, 0.78);
+}
+.hr__border {
+  border-color: #8282827a;
+}
+
+li:hover .hover_answer_div {
+  border-color: #faebd7;
+}

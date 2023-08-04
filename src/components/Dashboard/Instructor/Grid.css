@@ -1,0 +1,24 @@
+.darkMode .e-grid .e-toolbar {
+  color: #fff;
+  background-color: #444;
+  /* border-top-color: #7a7a87;
+    border-bottom-color: #7a7a87;
+    border-left-color: #7a7a87;
+    border-right-color: #7a7a87; */
+}
+.darkMode .e-grid td.e-active {
+  background-color: #a7a7a7 !important;
+}
+
+.e-toolbar {
+  height: 47px !important;
+}
+
+.darkMode .e-headercell {
+  background: #e6e7e8 !important;
+  color: black !important;
+}
+
+.darkMode #adaptivebrowser_searchbutton{
+    color: aliceblue !important;
+}

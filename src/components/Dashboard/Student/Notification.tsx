@@ -1,7 +1,7 @@
 import { MdOutlineCancel } from 'react-icons/md';
 
-import { Button } from '..';
-import { chatData } from './data/dummy';
+import Button from './Button';
+import { chatData } from '../data/dummy';
 import { useStateContext } from '@/utils/Helpers/ContextProvider';
 
 const Notification = () => {

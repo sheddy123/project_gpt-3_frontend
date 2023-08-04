@@ -15,7 +15,7 @@ import { geoLocationService } from "@/services/api/GeoLocation/GeoLocationServic
 import { unwrapResult } from "@reduxjs/toolkit";
 import { dashboardSidebar } from "@/utils/Constants/ComponentsConstants/constants";
 import { getProfileService } from "@/services/api/ProfileService/profileService";
-import LearningHoursCard from "./LearningHoursCard";
+import LearningHoursCard from "./Student/LearningHoursCard";
 
 const Sidebar = () => {
   const { currentColor, activeMenu, setActiveMenu, screenSize, handleClick } =

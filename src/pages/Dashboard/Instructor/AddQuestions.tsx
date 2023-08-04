@@ -4,7 +4,7 @@ import { createCourseService } from "@/services/api/CourseService/CourseService"
 import { FieldType } from "@/utils/Constants/ApiConstants/api_constants";
 import { useDispatch } from "react-redux";
 
-const AddCourse = () => {
+const AddQuestions = () => {
   const dispatch = useDispatch();
   const handleSubmitCourseForm = (formData: {
     [key: string]: string | boolean;
@@ -25,9 +25,9 @@ const AddCourse = () => {
   };
   // FormFields.ts
   const courseFormFields: FormFieldDescriptions = {
-    description_h2: "Personal information",
+    description_h2: "",
     description_paragraph:
-      "Use a permanent address where you can receive mail.",
+      "",
     fields: [
       {
         name: "Title",
@@ -45,7 +45,7 @@ const AddCourse = () => {
       },
       {
         name: "Description",
-        type: FieldType.TextArea,
+        type: FieldType.RichText,
         options: [],
         label: "Description",
         required: true,
@@ -87,7 +87,7 @@ const AddCourse = () => {
   return (
     <>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white  dark:bg-[#42464D] shadow rounded-sm overflow-hidden prose prose-slate dark:prose-invert max-w-none prose-img:shadow-md prose-p:mb-0 prose-p:mt-0 dark:prose-hr:border-t-2 prose-hr:border-t-2 dark:prose-hr:border-white">
-        <h1>Add Course</h1>
+        <h1>Add Questions</h1>
         <DynamicForm
           formFields={courseFormFields}
           onSubmit={handleSubmitCourseForm}
@@ -97,4 +97,4 @@ const AddCourse = () => {
   );
 };
 
-export default AddCourse;
+export default AddQuestions;
