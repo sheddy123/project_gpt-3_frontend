@@ -1,4 +1,5 @@
 import { FieldType } from "@/utils/Constants/ApiConstants/api_constants";
+import { IToolbarSettings } from "@syncfusion/ej2-react-richtexteditor";
 
 /************************************ Authentication/Authorization ************************************/
 export interface IAuth {
@@ -98,16 +99,21 @@ export interface FormFieldDescriptions {
   description_paragraph: string;
   fields: FormField[];
 }
+export interface ISelectOptions {
+  id: string | number;
+  value: string | number;
+}
 export interface FormField {
   name: string;
   type: FieldType;
   required: boolean;
-  options: string[]; // For select and radio inputs
+  options: ISelectOptions[]; // For select and radio inputs
   label: string; // For checkbox input
+  toolbarSettings?: IToolbarSettings
 }
 
 export interface DynamicFormProps {
   formFields: FormFieldDescriptions;
-  onSubmit: (formData: { [key: string]: string | boolean }) => void;
+  onSubmit: (formData: { [key: string]: string | boolean | string[] }) => void;
 }
 /************************************ Dynamic Form ************************************/
