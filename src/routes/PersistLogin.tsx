@@ -39,7 +39,10 @@ const PersistLogin = () => {
 
   return (
     //you can put your loading icon here
-    <>{!persist ? <Outlet /> : isLoading ? <p>Loading...</p> : <Outlet />}</>
+    <>{
+      //!persist ? <Outlet /> : isLoading ? <p>Loading...</p> : <Outlet />
+      isLoading ? <p>Loading...</p> : <Outlet />
+      }</>
     // <>{!persist ? <Outlet /> : isLoading ? <p>Loading...</p> : <Outlet />}</>
   );
 };
