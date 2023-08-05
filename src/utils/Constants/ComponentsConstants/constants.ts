@@ -6,6 +6,7 @@ import {
   INavLinks,
   ITabDescription,
 } from "@/interfaces/IConstants/IConstants";
+import { IToolbarSettings, ToolbarType } from "@syncfusion/ej2-react-richtexteditor";
 
 //Avatar
 export const avatarStackedData: IAvatarStacked[] = [
@@ -94,3 +95,52 @@ export const TabNavs: ITabDescription[] = [
   { id: 2, name: "upcoming", content: "upcoming" },
   { id: 3, name: "completed", content: "completed" },
 ];
+
+
+export const toolbarSettings1 : IToolbarSettings = {
+  items: [
+    "Bold",
+    "Italic",
+    "Underline",
+    "StrikeThrough",
+    "FontName",
+    "FontSize",
+    "FontColor",
+    "BackgroundColor",
+    "LowerCase",
+    "UpperCase",
+    "|",
+    "Formats",
+    "Alignments",
+    "OrderedList",
+    "UnorderedList",
+    "Outdent",
+    "Indent",
+    "|",
+    "CreateLink",
+    "Image",
+    "|",
+    "ClearFormat",
+    "Print",
+    "SourceCode",
+    "FullScreen",
+    "|",
+    "Undo",
+    "Redo",
+  ],
+  type: ToolbarType.Expand,
+};
+
+export const toolbarSettings2 : IToolbarSettings = {
+  items: [
+    "Bold",
+    "Italic",
+    "Underline",
+    "OrderedList",
+    "FullScreen",
+    "|",
+    "Undo",
+    "Redo",
+  ],
+  type: ToolbarType.Expand
+};
