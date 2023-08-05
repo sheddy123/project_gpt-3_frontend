@@ -51,3 +51,8 @@ export interface ITabDescription{
   name: string;
   content:string;
 }
+
+export interface IToolbarSettings {
+  items: string[];
+  type: string
+}
