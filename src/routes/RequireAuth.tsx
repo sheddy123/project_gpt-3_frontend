@@ -1,55 +1,43 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { sessionEnded } from "@/redux/features/auth/authSlice";
+import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 
 const RequireAuth = ({ allowedRoles }) => {
   const location = useLocation();
+  const [isLoading, setIsLoading] = useState(true);
   const user = useSelector((store) => store?.authReducer);
   const dispatch = useDispatch();
-  const isLoggedIn = user?.message === "Successfully logged in.";
+  const isLoggedIn = user?.message === "Successfully logged in." || user?.message === "Valid client request";
 
-  const currentTimestamp = Math.floor(Date.now() / 1000); // Get the current timestamp in seconds
   const hasAllowedRoles = user?.auth_response?.roles?.some((role) =>
     allowedRoles?.includes(role?.roleName)
   );
-  console.log("AllowedRoles: " + JSON.stringify(allowedRoles), hasAllowedRoles, isLoggedIn)
-  let expiryJwtCode = 0;
-  let isTokenExpired = false;
-  //console.log("TOne is ", user.auth_response.token);
-  if (user && user?.auth_response && user?.auth_response?.token !== "" && user?.auth_response?.token !== undefined) {
-    expiryJwtCode = JSON.stringify(
+  const isTokenExpired = () => {
+    const currentTimestamp = Math.floor(Date.now() / 1000);
+    let expiryJwtCode = JSON.stringify(
       jwtDecode(user.auth_response.token)?.exp
     );
-    isTokenExpired = expiryJwtCode > 0 && expiryJwtCode < currentTimestamp;
-  }
+    if (user?.auth_response?.token && expiryJwtCode) {
+      return expiryJwtCode < currentTimestamp;
+    }
+    return false;
+  };
 
-  if (isTokenExpired) {
-    //console.log("Expiry ended", hasAllowedRoles);
-    dispatch(sessionEnded(undefined));
-  }
+  useEffect(() => {
+    setIsLoading(true);
+    // If you have a way to ensure that the authentication state is already available (e.g., from PersistLogin),
+    // you can directly set isLoading to false.
+    setIsLoading(false);
+  }, [user]);
 
-  if (isLoggedIn && !hasAllowedRoles) {
-    // User tried logging in but does not have allowed roles
-    // Track this event (e.g., send analytics, log to console, etc.)
-    //console.log("User tried logging in but does not have allowed roles");
+  if (isLoading) {
+    // If the authentication state is not yet available, show a loading indicator
+    return <p>Loading...</p>;
   }
-  if (hasAllowedRoles && !isTokenExpired) {
-    return <Outlet />;
-  } else if (isLoggedIn) {
-    return (
-      <Navigate to="/dashboard/unauthorized" state={{ from: location }} replace />
-    );
-  } else if (isTokenExpired || user?.message.includes("Lifetime validation failed")) {
-    return (
-      <Navigate
-        to="/"
-        state={{ from: location, message: "Session Ended" }}
-        replace
-      />
-    );
-  } 
-  else if(hasAllowedRoles === undefined || !hasAllowedRoles) {
+  //console.log("Is logged in", isLoggedIn, user)
+  if (!isLoggedIn) {
     return (
       <Navigate
         to="/"
@@ -58,6 +46,25 @@ const RequireAuth = ({ allowedRoles }) => {
       />
     );
   }
+  //console.log("Is token expired ", isTokenExpired())
+  if (isTokenExpired()) {
+    dispatch(sessionEnded(undefined));
+    return (
+      <Navigate
+        to="/"
+        state={{ from: location, message: "Session Ended" }}
+        replace
+      />
+    );
+  }
+//  console.log("Has allowed roles ", hasAllowedRoles)
+  if (hasAllowedRoles && !isTokenExpired()) {
+    return <Outlet />;
+  }
+
+  return (
+    <Navigate to="/dashboard/unauthorized" state={{ from: location }} replace />
+  );
 };
 
 export default RequireAuth;
