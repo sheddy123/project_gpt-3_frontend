@@ -21,3 +21,23 @@ export enum FieldType {
   Checkbox = "checkbox",
   RichText = "richText"
 }
+export enum FieldLabel {
+  Course = "Course",
+  Difficulty = "Difficulty",
+  solution_Type = "Solution_Type",
+  Optional_fields = "Optional_fields",
+  Answer = "Answer",
+  question_Type = "Question_Type",
+  Question = "Question",
+  Options = "Options"
+}
+export enum FieldName {
+  Course = "Course",
+  Difficulty = "Difficulty",
+  SolutionType = "Solution Type",
+  OptionalFields = "Optional fields",
+  Answer = "Answer",
+  QuestionType = "Question Type",
+  Question = "Question",
+  MultipleOptions = "Multiple Options",
+}
