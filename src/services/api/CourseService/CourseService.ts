@@ -23,6 +23,27 @@ export const getCourseService = createAsyncThunk(
   }
 );
 
+export const getCourseDopdownListsService = createAsyncThunk(
+  "users/Course/getCourseDopdownLists",
+  async (_, thunkAPI) => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    try {
+      const response = await axios.get(`${Course_Url}${import.meta.env.VITE_COURSE_DROPDOWN_LISTS_URL}`, {
+        withCredentials: true,
+        signal,
+      });
+      return response.data;
+    } catch (err) {
+      console.error(err);
+      return thunkAPI.rejectWithValue("Your error message");
+    } finally {
+      controller.abort();
+    }
+  }
+);
+
 export const deletetCourseService = createAsyncThunk(
   "users/Course/deleteCourse",
   async (props: any, thunkAPI) => {
