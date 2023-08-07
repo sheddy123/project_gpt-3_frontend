@@ -1,8 +1,7 @@
 import {
   createCourseService,
-  deletetCourseService,
+  deleteCourseService,
   editCourseService,
-  getCourseDopdownListsService,
   getCourseService,
 } from "@/services/api/CourseService/CourseService";
 import { createSlice } from "@reduxjs/toolkit";
@@ -10,7 +9,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isLoading: false,
   data: [],
-  courseDopdownListsData: []
 };
 
 const courseSlice = createSlice({
@@ -50,32 +48,20 @@ const courseSlice = createSlice({
       .addCase(editCourseService.rejected, (state, action) => {
         state.isLoading = false;
       })
-      //getCourseDopdownListsService
-      .addCase(getCourseDopdownListsService.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(getCourseDopdownListsService.fulfilled, (state, action) => {
-        state.courseDopdownListsData = action.payload;
-        state.isLoading = true;
-      })
-      .addCase(getCourseDopdownListsService.rejected, (state, action) => {
-        state.isLoading = false;
-      })
       //deleteCourseService
-      .addCase(deletetCourseService.pending, (state) => {
+      .addCase(deleteCourseService.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(deletetCourseService.fulfilled, (state, action) => {
+      .addCase(deleteCourseService.fulfilled, (state, action) => {
         state.isLoading = true;
       })
-      .addCase(deletetCourseService.rejected, (state, action) => {
+      .addCase(deleteCourseService.rejected, (state, action) => {
         state.isLoading = false;
       })
       ;
   },
 });
 export const selectAllCourses = (state) => state.courseReducer.data;
-export const selectAllDropdownCourses = (state) => state.courseReducer.courseDopdownListsData;
 
 // Actions
 export const {} = courseSlice.actions;
