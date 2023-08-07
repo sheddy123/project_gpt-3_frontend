@@ -22,11 +22,13 @@ import {
   Editor,
   DashboardHome,
   StudentCourseList,
-  CoursesLists
+  CoursesLists,
 } from "@/pages/Dashboard";
 import RequireAuth from "./RequireAuth";
 import { ROLES } from "@/utils/Constants/ApiConstants/api_constants";
 import AddQuestions from "@/pages/Dashboard/Instructor/AddQuestions";
+import QuestionLists from "@/pages/Dashboard/Instructor/QuestionLists";
+import TestGridCoursesList from "@/components/Dashboard/Instructor/DynamicGridList";
 
 function NotFoundDashboardPage() {
   return (
@@ -53,6 +55,7 @@ const DashboardLayout = () => {
     currentColor,
     themeSettings,
     setThemeSettings,
+    editDialog,
   } = useStateContext();
   useEffect(() => {
     const currentThemeColor = localStorage.getItem("colorMode");
@@ -93,19 +96,25 @@ const DashboardLayout = () => {
               ? "dark:bg-secondary-dark-bg  bg-main-bg min-h-screen md:ml-72 w-full  "
               : "bg-main-bg dark:bg-secondary-dark-bg  w-full min-h-screen flex-2 "
           }>
-          <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
+          <div
+            className={` ${
+              !editDialog ? "fixed" : ""
+            } md:static bg-main-bg dark:bg-main-dark-bg navbar w-full `}>
             <Navbar />
           </div>
           <div>
             {themeSettings && <ThemeSettings />}
             <Routes>
-            <Route path="*" element={<NotFoundDashboardPage />} />
-            <Route path="unauthorized" element={<UnAuthorizedPage />} />
+              <Route path="*" element={<NotFoundDashboardPage />} />
+              <Route path="unauthorized" element={<UnAuthorizedPage />} />
               <Route element={<RequireAuth allowedRoles={[ROLES.Student]} />}>
                 {/* dashboard  */}
                 <Route path="/" element={<DashboardHome />} />
                 <Route path="/home" element={<DashboardHome />} />
-                <Route path="/courses/:courseId" element={<StudentCourseList />} />
+                <Route
+                  path="/courses/:courseId"
+                  element={<StudentCourseList />}
+                />
 
                 {/* pages  */}
                 <Route path="/orders" element={<Orders />} />
@@ -129,17 +138,16 @@ const DashboardLayout = () => {
                 <Route path="/stacked" element={<Stacked />} />
               </Route>
               <Route
-                element={
-                  <RequireAuth allowedRoles={[ROLES.Instructor]} />
-                }>
-                  <Route path="/add-questions" element={<AddQuestions />} />
-                  <Route path="/courses" element={<CoursesLists />} />
-                </Route>
+                element={<RequireAuth allowedRoles={[ROLES.Instructor]} />}>
+                <Route path="/add-questions" element={<AddQuestions />} />
+                <Route path="/courses" element={<CoursesLists />} />
+                <Route path="/questions" element={<QuestionLists />} />
+                {/* <Route path="/test_courses" element={<TestGridCoursesList />} /> */}
+              </Route>
               <Route
                 element={
                   <RequireAuth allowedRoles={[ROLES.Administrator]} />
                 }></Route>
-                
             </Routes>
           </div>
           <Footer />
