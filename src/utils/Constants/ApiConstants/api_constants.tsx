@@ -5,6 +5,7 @@ export const Logout_Url = BaseUrl + import.meta.env.VITE_LOGOUT;
 export const Create_Profile_Url = BaseUrl + import.meta.env.VITE_CREATE_PROFILE_URL;
 export const Get_Profile_Url = BaseUrl + import.meta.env.VITE_PROFILE_URL;
 export const Course_Url = BaseUrl + import.meta.env.VITE_COURSE_URL;
+export const Questions_Url = BaseUrl + import.meta.env.VITE_QUESTIONS_URL;
 
 export const ROLES = {
   Administrator: "Admin",
@@ -29,7 +30,8 @@ export enum FieldLabel {
   Answer = "Answer",
   question_Type = "Question_Type",
   Question = "Question",
-  Options = "Options"
+  Options = "Options",
+  QuestionId = "QuestionId"
 }
 export enum FieldName {
   Course = "Course",
