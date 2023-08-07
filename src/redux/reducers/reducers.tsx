@@ -6,7 +6,8 @@ import {
   geoLocationReducer,
   profileReducer,
   formReducer,
-  courseReducer
+  courseReducer,
+  questionReducer
 } from "..";
 
 const rootReducer = combineReducers({
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   geoLocationReducer,
   profileReducer,
   formReducer,
-  courseReducer
+  courseReducer,
+  questionReducer
 });
 
 export default rootReducer;
