@@ -1,10 +1,13 @@
 import DynamicForm from "@/components/DynamicForm/DynamicForm";
 import { FormFieldDescriptions } from "@/interfaces/IFeatures/IFeatures";
-import { selectAllDropdownCourses } from "@/redux/features/courses/courseSlice";
 import {
-  createCourseService,
+  selectAllDropdownQuestionFields,
+  selectCreateQuestionResponse,
+} from "@/redux/features/questions/questionSlice";
+import {
+  createQuestionService,
   getCourseDopdownListsService,
-} from "@/services/api/CourseService/CourseService";
+} from "@/services/api/QuestionService/QuestionService";
 import {
   FieldLabel,
   FieldName,
@@ -14,33 +17,38 @@ import {
   toolbarSettings1,
   toolbarSettings2,
 } from "@/utils/Constants/ComponentsConstants/constants";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Toaster } from "react-hot-toast";
 
 const AddQuestions = () => {
   const dispatch = useDispatch();
+
   const handleSubmitCourseForm = (formData: {
     [key: string]: string | boolean | string[];
   }) => {
-    const courseObject = {
-      title: formData.Title,
-      languages: formData.Languages,
-      captions: formData.Captions,
-      version: formData.Version,
-      description: formData.Description,
-      course_code: formData.course_code,
+    const questionFormObj = {
+      answer: formData?.Answer,
+      course: formData?.Course,
+      options: formData?.Options,
+      question: formData?.Question,
+      difficulty: formData?.Difficulty,
+      question_type: formData?.Question_Type,
+      solution_type: formData?.Solution_Type,
+      optional_fields: formData?.Optional_fields,
     };
-    // Implement the dispatching logic for course form here
-    // For example, dispatch an action or call an API to save the form data
-    console.log("Submitting course form:", formData);
-    //dispatch(createCourseService(courseObject) as any);
-    // Dispatch your action or call API here to handle the form data
+    dispatch(createQuestionService(questionFormObj) as any);
+    setResetForm(true);
+    setLoading(true);
   };
+  const questionResponse = useSelector(selectCreateQuestionResponse);
+  const [resetForm, setResetForm] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   function getArraysForFields(data) {
     const arrays = {};
 
-    data.forEach((item) => {
+    data?.forEach((item) => {
       Object.keys(item).forEach((key) => {
         if (
           key.endsWith("Id") &&
@@ -63,14 +71,8 @@ const AddQuestions = () => {
   }
 
   const addQuestionFormData = getArraysForFields(
-    useSelector(selectAllDropdownCourses)
+    useSelector(selectAllDropdownQuestionFields)
   );
-  // const courseData = data
-  // .filter(item => item.courseId !== null && item.courseValue !== null)
-  // .map(item => {
-  //   return { id: item.courseId, value: item.courseValue };
-  // });
-
   // FormFields.ts
   const courseFormFields: FormFieldDescriptions = {
     description_h2: "",
@@ -187,21 +189,34 @@ const AddQuestions = () => {
     ],
     // Add more form fields here if needed
   };
-
+ 
   useEffect(() => {
     dispatch(getCourseDopdownListsService() as any);
   }, []);
-  // Add more form fields here if needed
+
+  useEffect(() => {
+    setLoading(false);
+    if (resetForm && questionResponse === "Successfully inserted") {
+      // toast.success(`${questionResponse}`, {
+      //   position: "top-right",
+      // });
+      // After resetting the form, set resetForm back to false
+      setResetForm(false);
+    }
+  }, [resetForm]);
 
   return (
     <>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white  dark:bg-[#42464D] shadow rounded-sm overflow-hidden prose prose-slate dark:prose-invert max-w-none prose-img:shadow-md prose-p:mb-0 prose-p:mt-0 dark:prose-hr:border-t-2 prose-hr:border-t-2 dark:prose-hr:border-white">
         <h1>Add Questions</h1>
         <DynamicForm
+          key={resetForm ? "reset" : "normal"}
           formFields={courseFormFields}
           onSubmit={handleSubmitCourseForm}
+          isLoading={loading}
         />
       </div>
+      <Toaster position="top-right" />
     </>
   );
 };
