@@ -519,7 +519,7 @@ export const links = [
         role: ROLES.Student
       },
       {
-        name: "Questions",
+        name: "Add Questions",
         linkName: "add-questions",
         icon: <FiBookOpen />,
         role: ROLES.Instructor
@@ -527,6 +527,12 @@ export const links = [
       {
         name: "View Courses",
         linkName: "courses",
+        icon: <FiBookOpen />,
+        role: ROLES.Instructor
+      },
+      {
+        name: "Questions",
+        linkName: "questions",
         icon: <FiBookOpen />,
         role: ROLES.Instructor
       },
