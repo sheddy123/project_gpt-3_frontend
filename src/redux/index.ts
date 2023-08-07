@@ -5,3 +5,4 @@ export { default as geoLocationReducer } from "./features/geoLocation/geoLocatio
 export { default as profileReducer } from "./features/profile/profileSlice";
 export { default as formReducer } from "./features/form/formSlice";
 export { default as courseReducer } from "./features/courses/courseSlice";
+export { default as questionReducer } from "./features/questions/questionSlice";
