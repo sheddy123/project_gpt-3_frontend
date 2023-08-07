@@ -1,43 +1,109 @@
 import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
-import { forwardRef } from "react";
+import {
+  HtmlEditor,
+  Image,
+  Count,
+  Inject,
+  Link,
+  QuickToolbar,
+  RichTextEditorComponent,
+  Toolbar,
+  IToolbarSettings,
+} from "@syncfusion/ej2-react-richtexteditor";
 
-export const addCourseGrid = [
-  { type: "checkbox", width: "50" },
+function findIndexByValue(array, value) {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i].value === value) {
+      return i;
+    }
+  }
+  return -1; // Return -1 if the value is not found in the array
+}
+
+export const courseColumnConfigs = [
   {
-    field: "Course_Code",
-    headerText: "Course Code",
-    width: "250",
-    textAlign: "Right",
-    isPrimaryKey: true,
+    type: "checkbox",
+    field: "courseId",
+    width: "50",
+    // isPrimaryKey: true,
+    // visible: false,
   },
   {
-    field: "Title",
+    field: "course_code",
+    headerText: "Course Code",
+    width: "250",
+    validationRules: { required: true },
+    textAlign: "Right",
+  },
+  {
+    field: "title",
     headerText: "Title",
     width: "200",
   },
   {
-    field: "Languages",
+    field: "languages",
     headerText: "Languages",
     width: "200",
+    editType: "custom",
+    editTemplate: (props) => (
+      <div>
+        <div className=" text-gray-500 mb-2 mt-2">Language</div>
+        <DropDownListComponent
+          id="languages"
+          dataSource={LanguagesOptions}
+          fields={{ text: "text", value: "value" }}
+          placeholder={props.placeholderText || "Select a Language"}
+          value={props.languages || LanguagesOptions[0].value}
+        />
+      </div>
+    ),
   },
   {
-    field: "Description",
+    field: "description",
     headerText: "Description",
     width: "320",
+    validationRules: { required: true },
   },
   {
-    field: "Captions",
+    field: "captions",
     headerText: "Captions",
     width: "150",
-    format: "C2",
-    editType: "dropdownedit",
-    textAlign: "Right",
+    editType: "custom",
+    editTemplate: (props) => {
+      
+      return (
+        <div>
+          <div className=" text-gray-500 mb-2 mt-2">Caption</div>
+          <DropDownListComponent
+            id="caption"
+            dataSource={YesNoOptions}
+            fields={{ text: "text", value: "value" }}
+            placeholder={props.placeholderText || "Select a caption"}
+            value={props.captions || YesNoOptions[0].value}
+          />
+        </div>
+      );
+    },
   },
   {
-    field: "Version",
+    field: "version",
     headerText: "Version",
-    editType: "dropdownedit",
     width: "150",
+    editType: "custom",
+    editTemplate: (props) => {
+      return (
+        <div>
+          <div className=" text-gray-500 mb-2 mt-2">Version</div>
+          <DropDownListComponent
+            id="version"
+            dataSource={versionOptions}
+            fields={{ text: "text", value: "value" }}
+            placeholder={props.placeholderText || "Select a version"}
+            value={props.version || versionOptions[0].value}
+          />
+        </div>
+      );
+    },
   },
 ];
 
@@ -66,33 +132,3 @@ export const LanguagesOptions = [
 //       value={props.defaultValue || versionOptions[0].value}
 //     />
 //   );
-
-export const GridDropDown = forwardRef((props, ref) => {
-  return (
-    <DropDownListComponent
-      id={props.field + "_editor"}
-      dataSource={props.options}
-      ref={ref} // Use forwardRef to forward the ref to the DropDownListComponent
-      fields={{ text: "text", value: "value" }}
-      value={props.defaultValue || props.options[0].value}
-      placeholder={props.placeholderText || "Select a version"}
-      floatLabelType="Auto"
-    />
-  );
-});
-
-
-export function CourseGridDropdown({ dataSource, fields, placeholder, defaultValue }) {
-    console.log(JSON.stringify(dataSource))
-    return (
-      <div>
-        <div className="text-gray-500 mb-2 mt-2">{fields.text}</div>
-        <DropDownListComponent
-          dataSource={dataSource}
-          fields={fields}
-          placeholder={placeholder || `Select a ${fields.text}`}
-          value={defaultValue || dataSource[0].value}
-        />
-      </div>
-    );
-  }
