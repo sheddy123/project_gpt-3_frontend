@@ -15,13 +15,14 @@ import {
   IToolbarSettings,
 } from "@syncfusion/ej2-react-richtexteditor";
 
-const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
+const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit, isLoading, initialValues, currentMode }) => {
   const { currentColor } = useStateContext();
   // const [formValues, setFormValues] = useState<{
   //   [key: string]: string | boolean;
   // }>(
   //   formFields.fields.reduce((acc, field) => ({ ...acc, [field.name]: "" }), {})
   // );
+  
   const [formValues, setFormValues] = useState<{
     [key: string]: string | string[];
   }>(
@@ -31,8 +32,8 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
         [field.name]: field.type === FieldType.Checkbox ? [] : "",
       }),
       {}
-    )
-  );
+    ) 
+);
 
   const [errors, setErrors] = useState<{ [key: string]: string }>(
     formFields.fields.reduce((acc, field) => ({ ...acc, [field.name]: "" }), {})
@@ -46,15 +47,20 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
       setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
     }
   };
+
+
+
   useEffect(() => {
+    
     // Initialize formValues with initial Richtext values
     const initialRichtextValues = formFields.fields
-      .filter((field) => field.type === FieldType.RichText)
-      .reduce((acc, field) => ({ ...acc, [field.name]: "" }), {});
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      ...initialRichtextValues,
-    }));
+    .filter((field) => field.type === FieldType.RichText)
+    .reduce((acc, field) => ({ ...acc, [field.name]: "" }), {});
+  setFormValues((prevValues) => ({
+    ...prevValues,
+    ...initialRichtextValues,
+    ...initialValues, // Apply initial values from the initialValues prop
+  }));
 
     // Clean up event listeners
     return () => {
@@ -76,7 +82,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value, type } = e.target;
-    
+
     // if (type === "checkbox") {
     //   console.log("target is ", e.target);
     //   setFormValues((prevValues) => ({
@@ -148,7 +154,6 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
         fieldErrors[field.name] = "Please select at least one option";
       }
     }
-
     // Set the field errors
     setErrors(fieldErrors);
     // If there are any errors, stop the submission
@@ -175,7 +180,8 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
                 <div className="sm:col-span-3">
                   <label
                     htmlFor={field.name}
-                    className="block dark:text-white text-sm  leading-6 font-semibold text-gray-900">
+                    className={`${currentMode == "Dark" ? "text-slate-100" : "text-gray-900" } block  text-sm  leading-6 font-semibold`}
+                    >
                     {field.label}{" "}
                     {field.required && <span className="text-red-500">*</span>}
                   </label>
@@ -199,7 +205,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
                 <div className="col-span-full">
                   <label
                     htmlFor={field.name}
-                    className="block text-sm dark:text-white font-semibold leading-6 text-gray-900">
+                    className={`${currentMode == "Dark" ? "text-slate-100" : "text-gray-900" } block  text-sm  leading-6 font-semibold`}>
                     {field.name}{" "}
                     {field.required && <span className="text-red-500">*</span>}
                   </label>
@@ -223,7 +229,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
                 <div className="col-span-full">
                   <label
                     htmlFor={field.name}
-                    className="block text-sm dark:text-white font-semibold leading-6 text-gray-900">
+                    className={`${currentMode == "Dark" ? "text-slate-100" : "text-gray-900" } block  text-sm  leading-6 font-semibold`}>
                     {field.name}{" "}
                     {field.required && <span className="text-red-500">*</span>}
                   </label>
@@ -261,7 +267,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
                 <div className="sm:col-span-3">
                   <label
                     htmlFor={field.name}
-                    className="block text-sm dark:text-white font-semibold leading-6 text-gray-900">
+                    className={`${currentMode == "Dark" ? "text-slate-100" : "text-gray-900" } block  text-sm  leading-6 font-semibold`}>
                     {field.label}{" "}
                     {field.required && <span className="text-red-500">*</span>}
                     {errors[field.name] && (
@@ -278,7 +284,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
                     className="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6">
                     <option value="">Select an option</option>
                     {field.options?.map((option) => (
-                      <option key={option.id} value={option.value}>
+                      <option key={option.id} value={option.value} selected={formValues[field.name] === option.value}>
                         {option.value}
                       </option>
                     ))}
@@ -287,7 +293,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
               )}
               {field.type === FieldType.Radio && (
                 <div className="space-y-2 sm:col-span-3">
-                  <legend className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
+                  <legend className={`${currentMode == "Dark" ? "text-slate-100" : "text-gray-900" } block  text-sm  leading-6 font-semibold`}>
                     {field.label}{" "}
                     {field.required && <span className="text-red-500">*</span>}
                     {errors[field.name] && (
@@ -311,7 +317,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
                       <label
                         key={option.value}
                         htmlFor={`${field.name}_${option.id}`} // Add htmlFor attribute to associate label with input
-                        className="block text-sm font-medium leading-6 text-gray-900 dark:text-white">
+                        className={`block text-sm font-medium leading-6 ${currentMode == "Dark" ? "text-slate-100" : "text-gray-900" }`}>
                         {option.value}
                       </label>
                     </div>
@@ -320,8 +326,8 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
               )}
 
               {field.type === FieldType.Checkbox && (
-                <div className="space-y-2 sm:col-span-3">
-                  <legend className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
+                <div className={`${currentMode == "Dark" ? "text-slate-100" : "text-gray-900" } space-y-2 sm:col-span-3`}>
+                  <legend className={` block  text-sm  leading-6 font-semibold`}>
                     {field.label}{" "}
                     {field.required && <span className="text-red-500">*</span>}
                     {errors[field.name] && (
@@ -348,7 +354,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
                           />
                           <label
                             htmlFor={`${field.name}_${option.id}`} // Add htmlFor attribute to associate label with input
-                            className="ml-2">
+                            className={`ml-2 ${currentMode == "Dark" ? "text-slate-100" : "text-gray-900" }`}>
                             {option.value}
                           </label>
                         </div>
@@ -362,13 +368,14 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formFields, onSubmit }) => {
         </div>
       </div>
       <div className="mt-6 flex items-center justify-end gap-x-6">
-        <button
+        {/* <button
           type="button"
           className="text-sm font-semibold dark:text-white leading-6 text-gray-900">
           Cancel
-        </button>
+        </button> */}
         <button
           type="submit"
+          disabled={isLoading}
           className="rounded-md dark:text-white  px-3 py-2 text-sm font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 "
           style={{ background: currentColor }}>
           Save
