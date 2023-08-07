@@ -110,10 +110,14 @@ export interface FormField {
   options: ISelectOptions[]; // For select and radio inputs
   label: string; // For checkbox input
   toolbarSettings?: IToolbarSettings
+  value?: string;
 }
 
 export interface DynamicFormProps {
   formFields: FormFieldDescriptions;
   onSubmit: (formData: { [key: string]: string | boolean | string[] }) => void;
+  isLoading: boolean;
+  initialValues?: { [key: string]: string | boolean | string[] };
+  currentMode?: string;
 }
 /************************************ Dynamic Form ************************************/
