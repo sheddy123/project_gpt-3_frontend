@@ -4,6 +4,7 @@ interface StateContextProps {
   currentColor: string;
   currentMode: string;
   activeMenu: boolean;
+  editDialog: boolean;
   screenSize: number | undefined;
   setScreenSize: (size: number | undefined) => void;
   handleClick: (clicked: keyof typeof initialState) => void;
@@ -11,6 +12,7 @@ interface StateContextProps {
   initialState: typeof initialState;
   setIsClicked: React.Dispatch<React.SetStateAction<typeof initialState>>;
   setActiveMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditDialog: React.Dispatch<React.SetStateAction<boolean>>;
   setCurrentColor: React.Dispatch<React.SetStateAction<string>>;
   setCurrentMode: React.Dispatch<React.SetStateAction<string>>;
   setMode: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -33,6 +35,7 @@ export const ContextProvider: React.FC = ({ children }) => {
   const [currentColor, setCurrentColor] = useState('#03C9D7');
   const [currentMode, setCurrentMode] = useState('Light');
   const [themeSettings, setThemeSettings] = useState(false);
+  const [editDialog, setEditDialog] = useState(false);
   const [activeMenu, setActiveMenu] = useState(true);
   const [isClicked, setIsClicked] = useState(initialState);
 
@@ -68,6 +71,8 @@ export const ContextProvider: React.FC = ({ children }) => {
         setColor,
         themeSettings,
         setThemeSettings,
+        setEditDialog,
+        editDialog
       }}
     >
       {children}
