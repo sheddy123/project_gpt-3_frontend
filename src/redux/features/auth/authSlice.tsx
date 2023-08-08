@@ -35,6 +35,7 @@ const authSlice = createSlice({
     updateAuth: (state, action) => {
       state.message = action.payload?.message;
       state.auth_response = action.payload?.auth_User;
+      //state.auth_response.status = action.payload;
     },
     logOff: (state, action) => {
       console.log("Action is logged out" + JSON.stringify(action.payload));
@@ -46,6 +47,8 @@ const authSlice = createSlice({
       state.message = "Session ended";
     },
     errMessage: (state, action) => {
+      
+      console.log("Action is", action.payload)
       state.message = action.payload;
     },
   },
