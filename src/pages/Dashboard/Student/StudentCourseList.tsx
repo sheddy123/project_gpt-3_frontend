@@ -70,7 +70,7 @@ const StudentCourseList = () => {
           </div>
         </button>}
         <div>
-          <Form />
+          <Form courseId={courseId} />
         </div>
       </div>
     </>
