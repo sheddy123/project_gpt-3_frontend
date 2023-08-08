@@ -13,6 +13,7 @@ import {
 } from "@/redux/features/questions/questionSlice";
 import {
   createQuestionService,
+  editQuestionService,
   getCourseDopdownListsService,
 } from "@/services/api/QuestionService/QuestionService";
 import {
@@ -29,7 +30,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Toaster } from "react-hot-toast";
 import { useStateContext } from "@/utils/Helpers/ContextProvider";
 
-export const QuestionModal = ({
+export const QuestionDialog = ({
   open,
   onClose,
   //onSubmit,
@@ -71,35 +72,27 @@ export const QuestionModal = ({
       question_type: formData?.Question_Type,
       solution_type: formData?.Solution_Type,
       optional_fields: formData?.Optional_fields,
+      questionId: formData?.QuestionId,
     };
-    console.log("Formdata: ", formData, isEditing);
-    if (!isEditing) {
-      const response = await dispatch(
-        createQuestionService(questionFormObj) as any
-      );
-      
-      if (response?.payload?.status == "Successfully inserted") {
-        // Add a delay of 1 second (1000 milliseconds) before calling onClose
-        setTimeout(() => {
-          onClose();
-        }, 3000);
-      }
-    }else{
-      //Handle edit
-      const response = await dispatch(
-        createQuestionService(questionFormObj) as any
-      );
-      
-      if (response?.payload?.status == "Successfully inserted") {
-        // Add a delay of 1 second (1000 milliseconds) before calling onClose
-        setTimeout(() => {
-          onClose();
-        }, 3000);
-      }
-    }
-    setResetForm(true);
+
+    const serviceFunction = isEditing
+      ? editQuestionService
+      : createQuestionService;
+    const response = await dispatch(serviceFunction(questionFormObj) as any);
+    console.log(response);
+    if (
+      response?.payload?.status == "Successfully inserted" ||
+      response?.payload?.status == "Successfully updated"
+    ) {
+      setTimeout(() => {
+        onClose();
+      }, 3000);
+
+      setResetForm(true);
       setLoading(true);
+    }
   };
+
   const questionResponse = useSelector(selectCreateQuestionResponse);
   const [resetForm, setResetForm] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -279,7 +272,7 @@ export const QuestionModal = ({
         <Dialog
           fullScreen
           open={open}
-          onClose={onClose()}
+          onClose={onClose}
           TransitionComponent={Transition}>
           <AppBar
             sx={{ position: "relative" }}
@@ -289,7 +282,7 @@ export const QuestionModal = ({
               <IconButton
                 edge="start"
                 color="inherit"
-                onClick={onClose()}
+                onClick={onClose}
                 aria-label="close">
                 <CloseIcon />
               </IconButton>
@@ -307,7 +300,12 @@ export const QuestionModal = ({
               className={`m-2 md:m-10 mt-24 p-2 md:p-10 ${
                 currentMode == "Dark" ? "bg-[#42464d]" : "bg-white"
               } shadow rounded-sm overflow-hidden prose prose-slate dark:prose-invert max-w-none prose-img:shadow-md prose-p:mb-0 prose-p:mt-0 dark:prose-hr:border-t-2 prose-hr:border-t-2 dark:prose-hr:border-white`}>
-              <h1 className={`${currentMode == "Dark" ? "text-slate-100" : "text-slate-900" }`}>{isEditing ? "Edit question" : "Add question"}</h1>
+              <h1
+                className={`${
+                  currentMode == "Dark" ? "text-slate-100" : "text-slate-900"
+                }`}>
+                {isEditing ? "Edit question" : "Add question"}
+              </h1>
               <DynamicForm
                 key={resetForm ? "reset" : "normal"}
                 formFields={courseFormFields}
