@@ -23,7 +23,7 @@ import {
   selectLastPage,
 } from "@/redux/features/form/formSlice";
 import FormInputs from "./FormInputs";
-const Form = () => {
+const Form = ({courseId}) => {
   const formData = {
     page: useSelector(selectFormPage),
     selectSelectedQuestion: useSelector(selectSelectedQuestion),
@@ -135,6 +135,7 @@ const Form = () => {
         setSkippedQuestion={setSkippedQuestion}
         setPage={setPage}
         wholeQuestions={formData.data}
+        courseId={courseId}
       />
     </form>
   );
