@@ -49,9 +49,11 @@ const questionSlice = createSlice({
       })
       .addCase(editQuestionService.fulfilled, (state, action) => {
         state.isLoading = true;
+        state.createQuestionsResponse = action.payload;
       })
       .addCase(editQuestionService.rejected, (state, action) => {
         state.isLoading = false;
+        state.createQuestionsResponse = action.payload as string;
       })
       //getCourseDopdownListsService
       .addCase(getCourseDopdownListsService.pending, (state) => {
