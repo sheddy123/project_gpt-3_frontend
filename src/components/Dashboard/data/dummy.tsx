@@ -516,25 +516,32 @@ export const links = [
         name: "home",
         linkName:"home",
         icon: <FiHome />,
-        role: ROLES.Student
+        role: ROLES.Student,
+        //children: ['Dropdown1', 'Dropdown2'],
       },
+      // {
+      //   name: "Add Questions",
+      //   linkName: "add-questions",
+      //   icon: <FiBookOpen />,
+      //   role: ROLES.Instructor,
+      //  // children: ['Dropdown1', 'Dropdown2'],
+      // },
       {
-        name: "Add Questions",
-        linkName: "add-questions",
-        icon: <FiBookOpen />,
-        role: ROLES.Instructor
-      },
-      {
-        name: "View Courses",
+        name: "Courses",
         linkName: "courses",
         icon: <FiBookOpen />,
-        role: ROLES.Instructor
+        role: ROLES.Instructor,
+        //children: ['Dropdown1', 'Dropdown2'],
       },
       {
         name: "Questions",
         linkName: "questions",
         icon: <FiBookOpen />,
-        role: ROLES.Instructor
+        role: ROLES.Instructor,
+        // children: [ {
+        //   name: "Add Questions",
+        //   linkName: "add-questions"
+        // }],
       },
     ],
   },
