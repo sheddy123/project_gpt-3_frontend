@@ -6,7 +6,7 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 import { Cart, Chat, Notification, UserProfile } from "..";
 import { useStateContext } from "@/utils/Helpers/ContextProvider";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { links } from "./data/dummy";
@@ -60,6 +60,13 @@ const Navbar = () => {
   const handleActiveMenu = () => setActiveMenu(!activeMenu);
   const activeLink = `pb-2 px-2 border-b-4 border-[${currentColor}] font-semibold`;
   const normalLink = "pb-2 px-2 text-gray-500 font-semibold ";
+
+  const [openDropdown, setOpenDropdown] = useState(null);
+
+  const handleDropdownToggle = (index) => {
+    setOpenDropdown(openDropdown === index ? null : index);
+  };
+
   return (
     <div className="flex justify-between p-2 md:ml-6 md:mr-6 relative">
       <NavButton
@@ -68,28 +75,81 @@ const Navbar = () => {
         color={currentColor}
         icon={<AiOutlineMenu />}
       />
-
       <div className="hidden md:flex items-center space-x-1">
         {links.map((item, index) => (
-          <div key={`${item}${index}`}>
+          <div key={item.title + index} className="flex items-center">
             {item.links
-            .filter((link) => link.role === store?.auth_response.roles?.[0].roleName).map((link) => (
-              <NavLink
-                to={`/dashboard/${link.linkName}`}
-                key={`${item} ${link.name}${index}`}
-                style={({ isActive }) => ({
-                  color: isActive ? currentColor : "",
-                  borderColor: isActive ? currentColor : "",
-                })}
-                className={({ isActive }) =>
-                  isActive ? activeLink : normalLink
-                }>
-                <span key={`${item} ${link}${index}`} className="capitalize ">{link.name}</span>
-              </NavLink>
-            ))}
+              .filter(
+                (link) => link.role === store?.auth_response.roles?.[0].roleName
+              )
+              .map((link, linkIndex) => (
+                <div
+                  key={link.name + linkIndex}
+                  onMouseEnter={() => handleDropdownToggle(linkIndex)}
+                  onMouseLeave={() => handleDropdownToggle(linkIndex)}>
+                  <NavLink
+                    to={`/dashboard/${link.linkName}`}
+                    style={({ isActive }) => ({
+                      color: isActive ? currentColor : "",
+                      borderColor: isActive ? currentColor : "",
+                    })}
+                    className={({ isActive }) =>
+                      isActive ? activeLink : normalLink
+                    }>
+                    <span className="capitalize">{link.name}</span>
+                    {link?.children && (
+                      <div
+                        className={`${
+                          openDropdown === linkIndex ? "block" : "hidden"
+                        } absolute z-10 bg-white shadow-lg`}>
+                        {link?.children.map((child, childIndex) => (
+                          <NavLink
+                            to={`/dashboard/${child}`}
+                            key={child + childIndex}
+                            className="block px-4 py-2 text-gray-800 top-8  hover:bg-gray-100">
+                            {child}
+                          </NavLink>
+                        ))}
+                      </div>
+                    )}
+                  </NavLink>
+                </div>
+              ))}
           </div>
         ))}
       </div>
+      {/* <div className="hidden md:flex items-center space-x-1">
+        {links.map((item, index) => (
+          <div key={`${item}${index}`}>
+            {item.links
+              .filter(
+                (link) => link.role === store?.auth_response.roles?.[0].roleName
+              )
+              .map((link) => (
+                <>
+                  <NavLink
+                    to={`/dashboard/${link.linkName}`}
+                    key={`${item} ${link.name}${index}`}
+                    style={({ isActive }) => ({
+                      color: isActive ? currentColor : "",
+                      borderColor: isActive ? currentColor : "",
+                    })}
+                    className={({ isActive }) =>
+                      isActive ? activeLink : normalLink
+                    }
+                    onMouseEnter={() => handleDropdownToggle(index)}
+                    onMouseLeave={() => handleDropdownToggle(index)}>
+                    <span
+                      key={`${item} ${link}${index}`}
+                      className="capitalize ">
+                      {link.name}
+                    </span>
+                  </NavLink>
+                </>
+              ))}    
+          </div>
+        ))}
+      </div> */}
       <div className="flex">
         {/* <NavButton
           title="Cart"
