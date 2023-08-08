@@ -27,7 +27,8 @@ const FormInputs = ({
   lastPage,
   setSkippedQuestion,
   setPage,
-  wholeQuestions
+  wholeQuestions,
+  courseId
 }) => {
   const page = useSelector(selectFormPage);
   const questLength = useSelector(selectFormQuestionLength);
@@ -46,6 +47,7 @@ const FormInputs = ({
         nextHide={nextHide}
         disableNext={disableNext}
         page={page}
+        courseId={courseId}
       />
     ),
     1: <CourseQuestionLists handleChange={handleChange} />,
