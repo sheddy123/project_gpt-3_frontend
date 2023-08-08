@@ -68,11 +68,26 @@ export const deletetQuestionService = createAsyncThunk(
     const controller = new AbortController();
     const signal = controller.signal;
     try {
-      const response = await axios.delete(
-        `${Questions_Url}${import.meta.env.VITE_DELETE_QUESTION_URL}/${props}`,
+      const response = await toast.promise(
+        new Promise((resolve, reject) => {
+          axios
+            .delete(
+              `${Questions_Url}${
+                import.meta.env.VITE_DELETE_QUESTION_URL
+              }/${props}`,
+              {
+                withCredentials: true,
+                signal,
+              }
+            )
+            .then((res) => resolve(res))
+            .catch((err) => reject(err));
+        }),
         {
-          withCredentials: true,
-          signal,
+          loading: "Loading...",
+          success: "Question deleted successfully",
+          error: (err) =>
+            err?.response?.data?.msg ?? "Server is down, please try again",
         }
       );
       return response.data;
@@ -92,7 +107,6 @@ export const createQuestionService = createAsyncThunk(
     const signal = controller.signal;
 
     try {
-
       const response = await toast.promise(
         new Promise((resolve, reject) => {
           axios
@@ -131,26 +145,31 @@ export const editQuestionService = createAsyncThunk(
     const controller = new AbortController();
     const signal = controller.signal;
     try {
-      const response = await axios.patch(
-        `${Questions_Url}${import.meta.env.VITE_UPDATE_QUESTION_URL}`,
+      const response = await toast.promise(
+        new Promise((resolve, reject) => {
+          axios
+            .patch(
+              `${Questions_Url}${import.meta.env.VITE_UPDATE_QUESTION_URL}`,
+              props,
+              {
+                withCredentials: true,
+                signal,
+              }
+            )
+            .then((res) => resolve(res))
+            .catch((err) => reject(err));
+        }),
         {
-          title: props.title,
-          languages: props.languages,
-          captions: props.captions === "Yes",
-          version: props.version,
-          description: props.description,
-          course_code: props.course_code,
-          courseId: props.courseId,
-        },
-        {
-          withCredentials: true,
-          signal,
+          loading: "Loading...",
+          success: "Question updated successfully",
+          error: (err) =>
+            err?.response?.statusText ?? "Server is down, please try again",
         }
       );
       return response.data;
     } catch (err) {
       console.error(err);
-      return thunkAPI.rejectWithValue("Your error message");
+      return thunkAPI.rejectWithValue(err?.response?.data);
     } finally {
       controller.abort();
     }
