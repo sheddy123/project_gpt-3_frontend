@@ -245,7 +245,10 @@ const Sidebar = () => {
                   <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
                     {item.title}
                   </p>
-                  {item.links.map((link) => (
+                  {item.links
+              .filter(
+                (link) => link.role === store?.auth_response.roles?.[0].roleName
+              ).map((link) => (
                     <NavLink
                       to={`/dashboard/${link.name}`}
                       key={link.name}
