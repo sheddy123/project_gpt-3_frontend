@@ -80,7 +80,7 @@
     flex-direction: column;
     
     text-align: end;
-    background: var(--color-footer);
+    background: var(--color-navbar_drop);
     padding: 2rem;
     position: absolute;
     right: 0;
@@ -132,3 +132,6 @@
         display: block;
     }
 }
+
+
+
