@@ -157,7 +157,7 @@ export const courseQuestionsGrid = [
   },
   {
     field: "Start",
-    headerText: "",
+    headerText: "Action",
     width: "150",
     template: CourseGridButton,
     textAlign: "Center",
