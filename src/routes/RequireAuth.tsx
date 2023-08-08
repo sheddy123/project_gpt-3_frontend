@@ -9,7 +9,9 @@ const RequireAuth = ({ allowedRoles }) => {
   const [isLoading, setIsLoading] = useState(true);
   const user = useSelector((store) => store?.authReducer);
   const dispatch = useDispatch();
-  const isLoggedIn = user?.message === "Successfully logged in." || user?.message === "Valid client request";
+  const isLoggedIn =
+    user?.message === "Successfully logged in." ||
+    user?.message === "Valid client request";
 
   const hasAllowedRoles = user?.auth_response?.roles?.some((role) =>
     allowedRoles?.includes(role?.roleName)
@@ -31,13 +33,21 @@ const RequireAuth = ({ allowedRoles }) => {
     // you can directly set isLoading to false.
     setIsLoading(false);
   }, [user]);
-
+  const searchStrings = ["The token is expired", "Session ended", "Lifetime validation failed. The token is expired"];
+  let foundString = "";
+  for (const searchString of searchStrings) {
+    if (user?.message?.includes(searchString)) {
+      foundString = searchString;
+      break; // If found, exit the loop early
+    }
+  }
+console.log("Found string is ", foundString);
   if (isLoading) {
     // If the authentication state is not yet available, show a loading indicator
     return <p>Loading...</p>;
   }
   //console.log("Is logged in", isLoggedIn, user)
-  if (!isLoggedIn) {
+  if (!isLoggedIn && !foundString) {
     return (
       <Navigate
         to="/"
@@ -47,7 +57,7 @@ const RequireAuth = ({ allowedRoles }) => {
     );
   }
   //console.log("Is token expired ", isTokenExpired())
-  if (isTokenExpired()) {
+  if (foundString || isTokenExpired()) {
     dispatch(sessionEnded(undefined));
     return (
       <Navigate
@@ -57,7 +67,7 @@ const RequireAuth = ({ allowedRoles }) => {
       />
     );
   }
-//  console.log("Has allowed roles ", hasAllowedRoles)
+  //  console.log("Has allowed roles ", hasAllowedRoles)
   if (hasAllowedRoles && !isTokenExpired()) {
     return <Outlet />;
   }
