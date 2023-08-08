@@ -11,9 +11,12 @@ import { Box, Button, IconButton, Tooltip } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import { validateRequired } from "@/utils/Helpers/helpers";
 import { useDispatch, useSelector } from "react-redux";
-import { getQuestionService } from "@/services/api/QuestionService/QuestionService";
+import {
+  deletetQuestionService,
+  getQuestionService,
+} from "@/services/api/QuestionService/QuestionService";
 import { selectAllQuestions } from "@/redux/features/questions/questionSlice";
-import { QuestionModal } from "./QuestionDialog";
+import { QuestionDialog } from "./QuestionDialog";
 import { ThemeProvider, createTheme, useTheme } from "@mui/material/styles";
 import { useStateContext } from "@/utils/Helpers/ContextProvider";
 
@@ -159,34 +162,35 @@ export default function GridQuestions() {
         enableColumnOrdering: false,
         enableEditing: false, //disable editing on this column
         enableSorting: false,
-        size: 80,
+        size: 50,
       },
       {
         accessorKey: "answer",
         header: "Answer",
-        size: 140,
+        size: 100,
         muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
           ...getCommonEditTextFieldProps(cell),
         }),
       },
-      {
-        accessorKey: "question",
-        header: "Question",
-        size: 140,
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-        }),
-      },
-      {
-        accessorKey: "options",
-        header: "Options",
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-        }),
-      },
+      // {
+      //   accessorKey: "question",
+      //   header: "Question",
+      //   size: 140,
+      //   muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
+      //     ...getCommonEditTextFieldProps(cell),
+      //   }),
+      // },
+      // {
+      //   accessorKey: "options",
+      //   header: "Options",
+      //   muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
+      //     ...getCommonEditTextFieldProps(cell),
+      //   }),
+      // },
       {
         accessorKey: "courseCode",
         header: "Course Code",
+        size: 100,
         muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
           ...getCommonEditTextFieldProps(cell),
         }),
@@ -194,6 +198,7 @@ export default function GridQuestions() {
       {
         accessorKey: "difficultyLevel",
         header: "Difficulty Level",
+        size: 100,
         muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
           ...getCommonEditTextFieldProps(cell),
         }),
@@ -201,6 +206,7 @@ export default function GridQuestions() {
       {
         accessorKey: "optionalFields",
         header: "Optional Fields",
+        size: 100,
         muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
           ...getCommonEditTextFieldProps(cell),
         }),
@@ -208,6 +214,7 @@ export default function GridQuestions() {
       {
         accessorKey: "questionType",
         header: "Question Type",
+        size: 100,
         muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
           ...getCommonEditTextFieldProps(cell),
         }),
@@ -255,25 +262,28 @@ export default function GridQuestions() {
   };
 
   const handleModalClose = () => {
-    console.log("Clicked");
     setModalOpen(false);
     setEditDialog(false);
+    dispatch(getQuestionService() as any);
   };
 
   const handleDeleteRow = useCallback(
     (row) => {
       if (
-        !confirm(
+        confirm(
           `Are you sure you want to delete question with ID: ${row.getValue(
             "questionId"
           )}`
         )
       ) {
-        return;
+        tableData.splice(row.index, 1);
+        setTableData([...tableData]);
+        dispatch(
+          deletetQuestionService(row.getValue("questionId")) as any
+        ).then(() => dispatch(getQuestionService() as any));
+
+        //send api delete request here, then refetch or update local table data for re-render
       }
-      //send api delete request here, then refetch or update local table data for re-render
-      tableData.splice(row.index, 1);
-      setTableData([...tableData]);
     },
     [tableData]
   );
@@ -363,10 +373,10 @@ export default function GridQuestions() {
       </ThemeProvider>
 
       {modalOpen && (
-        <QuestionModal
+        <QuestionDialog
           //columns={questionColumns}
           open={modalOpen}
-          onClose={() => handleModalClose}
+          onClose={handleModalClose}
           //onSubmit={handleCreateNewRow}
           AppBar={AppBar}
           Toolbar={Toolbar}
