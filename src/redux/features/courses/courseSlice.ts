@@ -2,6 +2,7 @@ import {
   createCourseService,
   deleteCourseService,
   editCourseService,
+  getCourseQuizDetailsService,
   getCourseService,
 } from "@/services/api/CourseService/CourseService";
 import { createSlice } from "@reduxjs/toolkit";
@@ -9,6 +10,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isLoading: false,
   data: [],
+  courseQuizDetails: [],
 };
 
 const courseSlice = createSlice({
@@ -26,6 +28,17 @@ const courseSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(getCourseService.rejected, (state, action) => {
+        state.isLoading = false;
+      })
+      //getCourseQuizDetailsService
+      .addCase(getCourseQuizDetailsService.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getCourseQuizDetailsService.fulfilled, (state, action) => {
+        state.isLoading = true;
+        state.courseQuizDetails = action.payload;
+      })
+      .addCase(getCourseQuizDetailsService.rejected, (state, action) => {
         state.isLoading = false;
       })
       //createCourseService
@@ -62,6 +75,7 @@ const courseSlice = createSlice({
   },
 });
 export const selectAllCourses = (state) => state.courseReducer.data;
+export const selectCourseQuizDetals = (state) => state.courseReducer.courseQuizDetails;
 
 // Actions
 export const {} = courseSlice.actions;
