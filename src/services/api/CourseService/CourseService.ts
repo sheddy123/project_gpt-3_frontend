@@ -46,6 +46,29 @@ export const deleteCourseService = createAsyncThunk(
   }
 );
 
+export const getCourseQuizDetailsService = createAsyncThunk(
+  "users/Course/getCourseQuizDetails",
+  async (props: any, thunkAPI) => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+    try {
+      const response = await axios.get(
+        `${Course_Url}${import.meta.env.VITE_COURSE_QUIZ_DETAILS_URL}/${props}`,
+        {
+          withCredentials: true,
+          signal,
+        }
+      );
+      return response.data;
+    } catch (err) {
+      console.error(err);
+      return thunkAPI.rejectWithValue("Your error message");
+    } finally {
+      controller.abort();
+    }
+  }
+);
+
 export const createCourseService = createAsyncThunk(
   "users/Course/createCourse",
   async (props: any, thunkAPI) => {
