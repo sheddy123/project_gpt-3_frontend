@@ -6,9 +6,18 @@ import {
 import { useState, useRef, useEffect } from "react";
 import "./Form.css";
 import { useStateContext } from "@/utils/Helpers/ContextProvider";
+import { useDispatch, useSelector } from "react-redux";
+import { getCourseQuizDetailsService } from "@/services/api/CourseService/CourseService";
+import { selectCourseQuizDetals } from "@/redux/features/courses/courseSlice";
+import DOMPurify from "dompurify";
 
-
-const CourseOverview = ({ handleNext, disableNext, nextHide, page }) => {
+const CourseOverview = ({
+  handleNext,
+  disableNext,
+  nextHide,
+  page,
+  courseId,
+}) => {
   const [showTopContent, setShowTopContent] = useState(false);
   // Create a reference to the element you want to scroll to (e.g., a div)
   const scrollContainerRef = useRef(null);
@@ -17,15 +26,44 @@ const CourseOverview = ({ handleNext, disableNext, nextHide, page }) => {
     setShowTopContent((prev) => !prev);
     scrollContainerRef.current.scrollIntoView({ behavior: "smooth" });
   };
-  const { currentColor} = useStateContext();
-  
+  const { currentColor } = useStateContext();
+  const dispatch = useDispatch();
+  const retrievedData = useSelector(selectCourseQuizDetals);
+  console.log("retrieved data", retrievedData);
+  const viewData = {
+    courseQuizDetailsDto: {
+      courseId: retrievedData?.courseQuizDetailsDto?.courseId,
+      caption: retrievedData?.courseQuizDetailsDto?.caption,
+      courseCode: retrievedData?.courseQuizDetailsDto?.courseCode,
+      courseDescription: retrievedData?.courseQuizDetailsDto?.courseDescription,
+      courseLanguages: retrievedData?.courseQuizDetailsDto?.courseLanguages,
+      courseTitle: retrievedData?.courseQuizDetailsDto?.courseTitle,
+      courseVersion: retrievedData?.courseQuizDetailsDto?.courseVersion,
+      difficultyLevel: retrievedData?.courseQuizDetailsDto?.difficultyLevel,
+      practiceTests: retrievedData?.courseQuizDetailsDto?.practiceTests,
+      dateCreated: retrievedData?.courseQuizDetailsDto?.dateCreated,
+    },
+    difficultyLevel: retrievedData?.difficultyLevel,
+    totalQuestions: retrievedData?.totalQuestions,
+    totalPracticeTests: retrievedData?.totalPracticeTests,
+    questionType: retrievedData?.questionType,
+  };
+  const sanitizedText = DOMPurify.sanitize(
+    viewData?.courseQuizDetailsDto?.courseDescription ?? ""
+  );
+  useEffect(() => {
+    dispatch(getCourseQuizDetailsService(courseId) as any);
+  }, []);
 
   return (
     <>
       <div>
         <h1>About this course</h1>
         <div className="flex justify-between items-start">
-          <p className="text-left">Pass your AZ-400 DevOps Exam</p>
+          <p className="text-left">
+            Test your knowledge with the{" "}
+            <b>{viewData.courseQuizDetailsDto.courseTitle}</b> quiz!
+          </p>
           <button
             onClick={() => handleNext(page)}
             disabled={disableNext}
@@ -45,60 +83,57 @@ const CourseOverview = ({ handleNext, disableNext, nextHide, page }) => {
 
           {/* Row 1, Column 2 */}
           <div className="">
-            <p className=" mb-0 mt-0">Skill level: Intermediate Level</p>
-            <p className=" mb-0 mt-0">Students: 52176</p>
+            <p className=" mb-0 mt-0">
+              Skill level: <b>({viewData.difficultyLevel?.join(", ")}) Level</b>
+            </p>
+            <p className=" mb-0 mt-0">Students: </p>
             <p className=" mb-0 mt-0">Languages: English</p>
-            <p className=" mb-0 mt-0">Captions: Yes</p>
+            <p className=" mb-0 mt-0">Captions: No</p>
           </div>
 
           {/* Row 1, Column 3 */}
           <div className="">
-            <p className=" mb-0 mt-0">Practice tests: 2</p>
-            <p className=" mb-0 mt-0">Questions: 90</p>
-            <p className=" mb-0 mt-0">Lectures: 258</p>
-            <p className=" mb-0 mt-0">Video: 21 total hours</p>
+            <p className=" mb-0 mt-0">
+              Practice tests: {viewData.totalPracticeTests}
+            </p>
+            <p className=" mb-0 mt-0">Questions: {viewData.totalQuestions}</p>
+            <p className=" mb-0 mt-0">Lectures: ---</p>
+            <p className=" mb-0 mt-0">Video: ---</p>
+          </div>
+        </div>
+
+        <hr className="mb-3" />
+        <div
+          className={`grid grid-cols-1 sm:grid-cols-3 gap-4 ${
+            showTopContent ? "" : "fade__content"
+          } `}>
+          {/* Row 1, Column 1 */}
+          <div className="">
+            <p className=" mb-0 mt-0">Description</p>
+          </div>
+
+          {/* Row 1, Column 2 */}
+          <div className=" col-span-2">
+            <p>
+              <strong>
+                <em>
+                  Version {viewData.courseQuizDetailsDto.courseVersion},{" "}
+                  {viewData.courseQuizDetailsDto.dateCreated}
+                </em>
+              </strong>
+            </p>
+            {sanitizedText}
           </div>
         </div>
         
-          <hr className="mb-3" />
-          <div className={`grid grid-cols-1 sm:grid-cols-3 gap-4 ${
-            showTopContent ? "" : "fade__content"}`}>
-            {/* Row 1, Column 1 */}
-            <div className="">
-              <p className=" mb-0 mt-0">Description</p>
-            </div>
-
-            {/* Row 1, Column 2 */}
-            <div className=" col-span-2">
-              <p>
-                <strong>
-                  <em>Version 2.0 July 2022</em>
-                </strong>
-              </p>
-              <p>
-                Completed a major refresh of the AZ-400 course.&nbsp;This is to
-                align with the major changes made to the AZ-400 exam by
-                Microsoft on the 13th of July.{" "}
-              </p>
-              <p>The course now aligns with the new exam objectives</p>
-              <ul>
-                <li>
-                  <p>Configure processes and communications</p>
-                </li>
-                <li>
-                  <p>Design and implement source control</p>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className={`long__text ${showTopContent ? "expanded" : ""}`}>
-          <hr className="mb-3" />
+        <div className={`long__text ${showTopContent ? "expanded" : ""}`}>
+          {/* <hr className="mb-3" /> */}
           <div
             className={`grid grid-cols-1 sm:grid-cols-3 gap-4 
           }`}>
             {/* Row 1, Column 2 */}
             <div className="">
-              <p className=" mb-0 mt-0">Description</p>
+              <p className=" mb-0 mt-0">About instructor</p>
             </div>
 
             {/* Row 1, Column 3 */}
@@ -122,10 +157,11 @@ const CourseOverview = ({ handleNext, disableNext, nextHide, page }) => {
                 </div>
               </div>
               <p>
-                A Software technology evangelist with over 20+ years in the
-                software Industry.&nbsp;
+                An ardent Software Technology Evangelist specializing in
+                Frontend Development, with an extensive [n++] years of
+                experience in the dynamic Software Industry &nbsp;
               </p>
-              <p>
+              {/* <p>
                 A certification buff with numerous certifications with the most
                 recent ones being&nbsp;
               </p>
@@ -139,7 +175,7 @@ const CourseOverview = ({ handleNext, disableNext, nextHide, page }) => {
               <p>
                 5. Designing &amp; Implementing Azure Networking Solutions
                 [AZ-700]
-              </p>
+              </p> */}
             </div>
           </div>
         </div>
