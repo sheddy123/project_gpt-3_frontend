@@ -132,3 +132,28 @@ export const editCourseService = createAsyncThunk(
     }
   }
 );
+
+export const getCourseRelatedQuestionService = createAsyncThunk(
+  "users/Course/getCourseRelatedQuestionService",
+  async (props: any, thunkAPI) => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    try {
+      const response = await axios.post(
+        `${Course_Url}${import.meta.env.VITE_GET_RELATED_COURSE_QUESTION_URL}`,
+        props,
+        {
+          withCredentials: true,
+          signal,
+        }
+      );
+      return response.data;
+    } catch (err) {
+      console.error(err);
+      return thunkAPI.rejectWithValue("Your error message");
+    } finally {
+      controller.abort();
+    }
+  }
+);
