@@ -9,6 +9,7 @@ import {
   resetAnsweredQuestions,
 } from "@/redux/features/form/formSlice";
 import avatar2 from "./avatar2.jpg";
+import { getCourseRelatedQuestionService } from "@/services/api/CourseService/CourseService";
 
 const courseGridStatus = (props) => (
   <TooltipComponent content={props.Status} position="BottomCenter">
@@ -72,10 +73,21 @@ const CourseGridImage = (props) => {
 const CourseGridButton = (props) => {
   const dispatch = useDispatch();
   const page = useSelector(selectFormPage);
-  const handleNext = (page: number) => {
+  console.log("Page in coursegridbutton is " + page);
+  const handleNext = (page: number, questionCategory: any) => {
+    //console.log("Props is ", questionCategory);
     dispatch(setPage(page + 1));
-    dispatch(resetSelectedQuestions());
-    dispatch(resetAnsweredQuestions());
+    //reset questions to default
+    dispatch(
+      getCourseRelatedQuestionService({
+        question_type: questionCategory?.QuestionType,
+        difficulty: questionCategory?.Difficulty,
+        course_id: questionCategory?.CourseID,
+      }) as any
+    ).then(() => {
+      dispatch(resetSelectedQuestions());
+      dispatch(resetAnsweredQuestions());
+    });
   };
 
   return (
@@ -94,7 +106,7 @@ const CourseGridButton = (props) => {
           disabled={props.Status == "Completed"}
           data-te-ripple-init
           data-te-ripple-color="light"
-          onClick={() => handleNext(page)}
+          onClick={() => handleNext(page, props)}
           className={`inline-block rounded ${
             props.Status == "Completed"
               ? "bg-orange-500"
