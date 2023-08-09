@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectFormPage,
-  selectFormQuestionLength,
   setQuestionLength,
   setTotalQuestions,
 } from "@/redux/features/form/formSlice";
@@ -31,7 +30,6 @@ const FormInputs = ({
   courseId
 }) => {
   const page = useSelector(selectFormPage);
-  const questLength = useSelector(selectFormQuestionLength);
   const { setActiveMenu } = useStateContext();
   const dispatch = useDispatch();
   
@@ -57,7 +55,6 @@ const FormInputs = ({
           key={step.formId}
           component={index + 1}
           data={step}
-          questLength={questLength}
           handleChange={handleChange}
           handleNext={handleNext}
           handlePrev={handlePrev}
@@ -79,10 +76,9 @@ const FormInputs = ({
   };
   useEffect(() => {
     dispatch(setQuestionLength(Object.keys(display).length));
-    dispatch(setTotalQuestions(questionSets.length));
+    dispatch(setTotalQuestions(questionSets.length)); 
   }, []);
-
-  const isOnLastPage = page === questLength;
+  const isOnLastPage = page === (wholeQuestions.length + 2);
   const displayRequiredPage = !isOnLastPage ? (
     display[page]
   ) : (
