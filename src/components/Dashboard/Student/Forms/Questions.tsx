@@ -10,7 +10,6 @@ const Questions = ({
   component,
   data,
   handleChange,
-  questLength,
   handleNext,
   handlePrev,
   page,
@@ -29,7 +28,7 @@ const Questions = ({
   const [selectedItem, setSelectedItem] = useState(null);
   const sanitizedText = DOMPurify.sanitize(data.question);
   const dispatch = useDispatch();
-
+console.log("Current question answered: ", selectAnsweredQuestions)
   const currentQuestionAnsweredObject = selectAnsweredQuestions.find(
     (item) => item.formId === component + 1
   );
@@ -74,7 +73,7 @@ const Questions = ({
       <div>
         <h2>Short Quiz</h2>
         <h4>
-          Quiz {component} | {questLength - 2} questions
+          Quiz {component} | {wholeQuestions?.length} questions
         </h4>
       </div>
       <div className={`grid grid-cols-1 sm:grid-cols-3 gap-4`}>
@@ -116,9 +115,8 @@ const Questions = ({
             dangerouslySetInnerHTML={{ __html: sanitizedText }}
             className="pt-3 mb-10"
           />
-
           <ul className="space-y-4">
-            {data?.options.map((item, index) => (
+            {data?.options?.split(",")?.map((item, index) => (
               <li
                 key={index}
                 className={`border border-[#676161]  p-4 rounded-lg flex items-center cursor-pointer w-full hover:bg-black hover:text-[#FAEBD7] hover:dark:bg-[#20232a] hover:dark:border-[#20232a]
