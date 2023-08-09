@@ -3,11 +3,20 @@ import {
   deleteCourseService,
   editCourseService,
   getCourseQuizDetailsService,
+  getCourseRelatedQuestionService,
   getCourseService,
 } from "@/services/api/CourseService/CourseService";
 import { createSlice } from "@reduxjs/toolkit";
+import { IStudentCourseQuizById } from "@/interfaces/IFeatures/IFeatures";
 
-const initialState = {
+interface IInitialState {
+  isLoading: boolean;
+  data: any[]; // You can replace 'any' with the appropriate type
+  courseQuizDetails: IStudentCourseQuizById[]; // Assign the interface here
+}
+
+
+const initialState : IInitialState = {
   isLoading: false,
   data: [],
   courseQuizDetails: [],
