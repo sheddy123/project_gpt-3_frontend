@@ -109,8 +109,9 @@ export interface FormField {
   required: boolean;
   options: ISelectOptions[]; // For select and radio inputs
   label: string; // For checkbox input
-  toolbarSettings?: IToolbarSettings
+  toolbarSettings?: IToolbarSettings;
   value?: string;
+  addMore?: boolean;
 }
 
 export interface DynamicFormProps {
@@ -121,3 +122,42 @@ export interface DynamicFormProps {
   currentMode?: string;
 }
 /************************************ Dynamic Form ************************************/
+
+/************************************ StudentCourseQuizById ************************************/
+
+export interface IStudentCourseQuizById {
+  courseQuizDetailsDto: ICourseQuizDetailsDto;
+  courseQuizDetailsDtoList: ICourseQuizDetailsDto[];
+  difficultyLevel: string[];
+  totalQuestions: number;
+  totalPracticeTests: number;
+  questionType: string[];
+}
+/************************************ StudentCourseQuizById ************************************/
+
+/************************************ CourseQuizDetailsDto ************************************/
+export interface ICourseQuizDetailsDto {
+  courseId: string;
+  caption: string;
+  courseCode: string;
+  courseDescription: string;
+  courseLanguages: string;
+  courseTitle: string;
+  courseVersion: string;
+  difficultyLevel: string;
+  practiceTests: string;
+  dateCreated: string;
+  maxStatus: string;
+  statusText: string;
+  questionType: string;
+}
+/************************************ CourseQuizDetailsDto ************************************/
+
+/************************************ ICourseRealtedQuestions ************************************/
+export interface ICourseRealtedQuestions {
+  course_id: number;
+  question: string;
+  options: string;
+  date_created: string;
+}
+/************************************ ICourseRealtedQuestions ************************************/
