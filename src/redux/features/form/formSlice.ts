@@ -1,4 +1,4 @@
-import { getCourseService } from "@/services/api/CourseService/CourseService";
+import { getCourseRelatedQuestionService, getCourseService } from "@/services/api/CourseService/CourseService";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -19,64 +19,64 @@ const initialState = {
     },
   ],
   data: [
-    {
-      formId: 5,
-      question: `Which of the following is a bug and item tracking tool that can be integrated into your DevOps processes? `,
-      options: ["Maven", "JIRA", "Jenkins"],
-      answer: "JIRA",
-      courseId: 100,
-      id: 78,
-    },
-    {
-      formId: 6,
-      question: `Your DevOps team is currently looking at the integration of Azure DevOps services and Microsoft Teams. Your team has already added the Azure Boards app to Microsoft Teams.
+    // {
+    //   formId: 5,
+    //   question: `Which of the following is a bug and item tracking tool that can be integrated into your DevOps processes? `,
+    //   options: ["Maven", "JIRA", "Jenkins"],
+    //   answer: "JIRA",
+    //   courseId: 100,
+    //   id: 78,
+    // },
+    // {
+    //   formId: 6,
+    //   question: `Your DevOps team is currently looking at the integration of Azure DevOps services and Microsoft Teams. Your team has already added the Azure Boards app to Microsoft Teams.
 
-      Which of the following command is used to link a specific Azure Boards project to the respective Teams channel?`,
-      options: [
-        "@azure boards connect",
-        "@azure boards link",
-        "@azure boards create",
-      ],
-      answer: "@azure boards link",
-      courseId: 100,
-      id: 31,
-    },
-    {
-      formId: 7,
-      question: `Your DevOps team is currently using the Azure DevOps suite of services. They have defined a project in Azure DevOps and are currently using Azure Boards for work tracking purposes. They want to make use of chart widgets to track different project metrics.
+    //   Which of the following command is used to link a specific Azure Boards project to the respective Teams channel?`,
+    //   options: [
+    //     "@azure boards connect",
+    //     "@azure boards link",
+    //     "@azure boards create",
+    //   ],
+    //   answer: "@azure boards link",
+    //   courseId: 100,
+    //   id: 31,
+    // },
+    // {
+    //   formId: 7,
+    //   question: `Your DevOps team is currently using the Azure DevOps suite of services. They have defined a project in Azure DevOps and are currently using Azure Boards for work tracking purposes. They want to make use of chart widgets to track different project metrics.
 
-      Which of the following can be used to track the below metric?
+    //   Which of the following can be used to track the below metric?
       
-      <b>“Time taken to close a work item after work on it has started”</b>`,
-      options: ["Velocity", "Sprint Capacity", "Lead time", "Cycle Time"],
-      answer: "Cycle Time",
-      courseId: 100,
-      id: 14,
-    },
-    {
-      formId: 8,
-      question: `Your DevOps team is currently using the Azure DevOps suite of services. They have defined a project in Azure DevOps and are currently using Azure Boards for work tracking purposes. They want to make use of chart widgets to track different project metrics.
+    //   <b>“Time taken to close a work item after work on it has started”</b>`,
+    //   options: ["Velocity", "Sprint Capacity", "Lead time", "Cycle Time"],
+    //   answer: "Cycle Time",
+    //   courseId: 100,
+    //   id: 14,
+    // },
+    // {
+    //   formId: 8,
+    //   question: `Your DevOps team is currently using the Azure DevOps suite of services. They have defined a project in Azure DevOps and are currently using Azure Boards for work tracking purposes. They want to make use of chart widgets to track different project metrics.
 
-      Which of the following can be used to track the below metric?
+    //   Which of the following can be used to track the below metric?
       
-      <b>“Time taken to close a work item after it was created”</b>`,
-      options: ["Velocity", "Sprint Capacity", "Lead time", "Cycle Time"],
-      answer: "Lead time",
-      courseId: 100,
-      id: 4,
-    },
-    {
-      formId: 9,
-      question: `Your DevOps team is currently using the Azure DevOps suite of services. They have defined a project in Azure DevOps and are currently using Azure Boards for work tracking purposes. They want to make use of chart widgets to track different project metrics.
+    //   <b>“Time taken to close a work item after it was created”</b>`,
+    //   options: ["Velocity", "Sprint Capacity", "Lead time", "Cycle Time"],
+    //   answer: "Lead time",
+    //   courseId: 100,
+    //   id: 4,
+    // },
+    // {
+    //   formId: 9,
+    //   question: `Your DevOps team is currently using the Azure DevOps suite of services. They have defined a project in Azure DevOps and are currently using Azure Boards for work tracking purposes. They want to make use of chart widgets to track different project metrics.
 
-      Which of the following can be used to track the below metric?
+    //   Which of the following can be used to track the below metric?
       
-      <b>“Track the team’s capacity to deliver work sprint after sprint”</b>`,
-      options: ["Velocity", "Sprint Capacity", "Lead time", "Cycle Time"],
-      answer: "Velocity",
-      courseId: 100,
-      id: 1,
-    },
+    //   <b>“Track the team’s capacity to deliver work sprint after sprint”</b>`,
+    //   options: ["Velocity", "Sprint Capacity", "Lead time", "Cycle Time"],
+    //   answer: "Velocity",
+    //   courseId: 100,
+    //   id: 1,
+    // },
   ],
   title: {
     0: "About Course",
@@ -182,6 +182,17 @@ const formSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getCourseService.rejected, (state, action) => {
+        state.isLoading = false;
+      })
+      //getCourseRelatedQuestionService
+      .addCase(getCourseRelatedQuestionService.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getCourseRelatedQuestionService.fulfilled, (state, action) => {
+        state.isLoading = true;
+        state.data = action.payload;
+      })
+      .addCase(getCourseRelatedQuestionService.rejected, (state, action) => {
         state.isLoading = false;
       });
   },
