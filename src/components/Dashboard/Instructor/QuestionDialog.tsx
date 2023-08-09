@@ -153,7 +153,7 @@ export const QuestionDialog = ({
         options: addQuestionFormData?.solution,
         label: FieldName.SolutionType,
         required: true,
-        value: "dd",
+        value: "",
       },
       {
         name: FieldLabel.Optional_fields,
@@ -161,7 +161,7 @@ export const QuestionDialog = ({
         options: addQuestionFormData?.optionalField,
         label: FieldName.OptionalFields,
         required: false,
-        value: "ff",
+        value: "",
       },
       {
         name: FieldLabel.Answer,
@@ -178,6 +178,7 @@ export const QuestionDialog = ({
         label: FieldName.QuestionType,
         required: true,
         value: "",
+
       },
       {
         name: FieldLabel.Question,
@@ -190,12 +191,13 @@ export const QuestionDialog = ({
       },
       {
         name: FieldLabel.Options,
-        type: FieldType.RichText,
+        type: FieldType.Input,
         options: [],
-        label: FieldName.MultipleOptions,
+        label: FieldName.Options,
         required: true,
         toolbarSettings: toolbarSettings2,
         value: "",
+        addMore: true
       },
 
       // {
