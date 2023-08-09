@@ -16,12 +16,20 @@ import {
   Toolbar,
   ToolbarItems,
 } from "@syncfusion/ej2-react-grids";
-import { courseQuestionsGrid, courseQuestionsData } from "../../data/StudentQuestionGrid";
+import { courseQuestionsGrid } from "../../data/StudentQuestionGrid";
 import DropDownComponent from "../DropdownComponent";
 import { useStateContext } from "@/utils/Helpers/ContextProvider";
 import { useEffect } from "react";
 import Button from "@/components/Common/Button/Button";
+import { useSelector } from "react-redux";
+import { selectCourseQuizDetals } from "@/redux/features/courses/courseSlice";
+import { IStudentCourseQuizById } from "@/interfaces/IFeatures/IFeatures";
+import avatar2 from "../../data/avatar2.jpg";
+import { CourseStatus } from "@/utils/Constants/ApiConstants/api_constants";
 const CourseQuestionLists = ({ handleChange }) => {
+  const retrievedData: IStudentCourseQuizById = useSelector(
+    selectCourseQuizDetals
+  );
   function CustomInput({ onChange, value }) {
     return (
       <input
@@ -34,11 +42,16 @@ const CourseQuestionLists = ({ handleChange }) => {
   }
 
   let grid: Grid | null;
-  const elementIds = ['Title', 'Difficulty', 'Status', 'Solution', 'QuestionType'];
+  const elementIds = [
+    "Title",
+    "Difficulty",
+    "Status",
+    "Solution",
+    "QuestionType",
+  ];
 
   const dropdownOnChangeHandler = (args) => {
     if (args == "Reset") {
-      
       grid.searchSettings.key = "";
       elementIds.forEach((id) => {
         const element = document.getElementById(id);
@@ -53,9 +66,9 @@ const CourseQuestionLists = ({ handleChange }) => {
 
   const { currentMode, currentColor } = useStateContext();
   const statusDataSrc = ["Active", "Pending", "Completed"];
-  const difficultyDataSrc = ["Easy", "Medium", "Difficult"];
+  const difficultyDataSrc = retrievedData.difficultyLevel; //["Easy", "Medium", "Difficult"];
   const solutionDataSrc = ["MCQ"];
-  const questionTypeDataSrc = ["GPT-3-Based Hybrid", "Traditional questions"];
+  const questionTypeDataSrc = retrievedData.questionType; // ["GPT-3-Based Hybrid", "Traditional questions"];
   const toolbarOptions = [
     //{ template: () => <CustomInput value={customSearchText} onChange={setCustomSearchText} />, },
     {
@@ -150,6 +163,26 @@ const CourseQuestionLists = ({ handleChange }) => {
     const inputElement = document.querySelector(".e-input");
     inputElement.placeholder = "Search questions";
   }, []);
+
+  const courseQuestionsData = retrievedData.courseQuizDetailsDtoList.map(
+    (item) => ({
+      CourseID: item.courseId,
+      Title: item.courseTitle,
+      Solution: avatar2, // Replace this with the correct property
+      Acceptance: "65%", // Replace this with the correct property
+      Difficulty: item.difficultyLevel,
+      Status: item.statusText,
+      StatusBg:
+        item.statusText == CourseStatus.Active
+          ? "#8BE78B"
+          : item.statusText == CourseStatus.Pending
+          ? "#FEC90F"
+          : "#8BE78B", // You can set the desired background color here
+      Start: "Begin test",
+      QuestionType: item.questionType,
+    })
+  );
+
   return (
     <div className={`not-prose ${currentMode == "Dark" ? "darkMode" : ""}`}>
       <GridComponent
