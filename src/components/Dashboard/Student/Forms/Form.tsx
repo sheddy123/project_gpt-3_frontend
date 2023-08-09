@@ -63,6 +63,7 @@ const Form = ({courseId}) => {
     if (page > 1) {
       dispatch(setSkippedQuestion({id: id}));
     }
+    console.log("Page is " + page)
     dispatch(setPage(page + 1));
     dispatch(setSelectedQuestion(page));
   };
