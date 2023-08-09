@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCourseQuizDetailsService } from "@/services/api/CourseService/CourseService";
 import { selectCourseQuizDetals } from "@/redux/features/courses/courseSlice";
 import DOMPurify from "dompurify";
+import { IStudentCourseQuizById } from "@/interfaces/IFeatures/IFeatures";
 
 const CourseOverview = ({
   handleNext,
@@ -29,8 +30,7 @@ const CourseOverview = ({
   const { currentColor } = useStateContext();
   const dispatch = useDispatch();
   const retrievedData = useSelector(selectCourseQuizDetals);
-  console.log("retrieved data", retrievedData);
-  const viewData = {
+  const viewData : IStudentCourseQuizById = {
     courseQuizDetailsDto: {
       courseId: retrievedData?.courseQuizDetailsDto?.courseId,
       caption: retrievedData?.courseQuizDetailsDto?.caption,
@@ -42,7 +42,11 @@ const CourseOverview = ({
       difficultyLevel: retrievedData?.courseQuizDetailsDto?.difficultyLevel,
       practiceTests: retrievedData?.courseQuizDetailsDto?.practiceTests,
       dateCreated: retrievedData?.courseQuizDetailsDto?.dateCreated,
+      maxStatus: retrievedData?.courseQuizDetailsDto?.maxStatus,
+      statusText: retrievedData?.courseQuizDetailsDto?.statusText,
+      questionType: retrievedData?.courseQuizDetailsDto?.questionType,
     },
+    courseQuizDetailsDtoList: retrievedData?.courseQuizDetailsDtoList,
     difficultyLevel: retrievedData?.difficultyLevel,
     totalQuestions: retrievedData?.totalQuestions,
     totalPracticeTests: retrievedData?.totalPracticeTests,
