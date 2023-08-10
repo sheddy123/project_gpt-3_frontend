@@ -83,6 +83,7 @@ const CourseGridButton = (props) => {
         question_type: questionCategory?.QuestionType,
         difficulty: questionCategory?.Difficulty,
         course_id: questionCategory?.CourseID,
+        language: questionCategory?.Language ?? "",
       }) as any
     ).then(() => {
       dispatch(resetSelectedQuestions());
@@ -142,6 +143,12 @@ export const courseQuestionsGrid = [
   {
     field: "Acceptance",
     headerText: "Acceptance",
+    width: "100",
+    textAlign: "Center",
+  },
+  {
+    field: "Language",
+    headerText: "Language",
     width: "100",
     textAlign: "Center",
   },
