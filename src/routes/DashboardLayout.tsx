@@ -29,6 +29,7 @@ import { ROLES } from "@/utils/Constants/ApiConstants/api_constants";
 import AddQuestions from "@/pages/Dashboard/Instructor/AddQuestions";
 import QuestionLists from "@/pages/Dashboard/Instructor/QuestionLists";
 import TestGridCoursesList from "@/components/Dashboard/Instructor/DynamicGridList";
+import DisplayConfetti from "@/components/Common/Confetti/DisplayConfetti";
 
 function NotFoundDashboardPage() {
   return (
