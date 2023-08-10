@@ -132,6 +132,8 @@ export interface IStudentCourseQuizById {
   totalQuestions: number;
   totalPracticeTests: number;
   questionType: string[];
+  title: string[];
+  language: string[];
 }
 /************************************ StudentCourseQuizById ************************************/
 
@@ -150,6 +152,7 @@ export interface ICourseQuizDetailsDto {
   maxStatus: string;
   statusText: string;
   questionType: string;
+  language: string;
 }
 /************************************ CourseQuizDetailsDto ************************************/
 
