@@ -30,6 +30,7 @@ export enum FieldLabel {
   Answer = "Answer",
   question_Type = "Question_Type",
   Question = "Question",
+  Language = "Language",
   Options = "Options",
   QuestionId = "QuestionId",
 }
@@ -41,6 +42,7 @@ export enum FieldName {
   Answer = "Answer",
   QuestionType = "Question Type",
   Question = "Question",
+  Language = "Language",
   MultipleOptions = "Multiple Options",
   Options = "Options",
 }
