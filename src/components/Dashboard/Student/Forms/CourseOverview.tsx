@@ -62,7 +62,7 @@ const CourseOverview = ({
   return (
     <>
       <div>
-        <h1>About this course</h1>
+        <h1>About this quiz</h1>
         <div className="flex justify-between items-start">
           <p className="text-left">
             Test your knowledge with the{" "}
