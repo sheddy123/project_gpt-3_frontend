@@ -57,6 +57,7 @@ export const QuestionDialog = ({
     [FieldLabel.question_Type]: initialValue?.questionType, // For Select, provide the value of the selected option
     [FieldLabel.Question]: initialValue?.question ?? "", // For RichText, provide the HTML content
     [FieldLabel.Options]: initialValue?.options ?? "", // For RichText, provide the HTML content
+    [FieldLabel.Language]: initialValue?.language ?? "", // For RichText, provide the HTML content
     [FieldLabel.QuestionId]: initialValue?.questionId, // For RichText, provide the HTML content
   };
 
@@ -73,6 +74,7 @@ export const QuestionDialog = ({
       solution_type: formData?.Solution_Type,
       optional_fields: formData?.Optional_fields,
       questionId: formData?.QuestionId,
+      language: formData?.Language,
     };
 
     const serviceFunction = isEditing
@@ -163,14 +165,7 @@ export const QuestionDialog = ({
         required: false,
         value: "",
       },
-      {
-        name: FieldLabel.Answer,
-        type: FieldType.Input,
-        options: [],
-        label: FieldName.Answer,
-        required: true,
-        value: "",
-      },
+      
       {
         name: FieldLabel.question_Type,
         type: FieldType.Select,
@@ -179,6 +174,22 @@ export const QuestionDialog = ({
         required: true,
         value: "",
 
+      },
+      {
+        name: FieldLabel.Language,
+        type: FieldType.Select,
+        options: addQuestionFormData?.language,
+        label: FieldName.Language,
+        required: true,
+        value: "",
+      },
+      {
+        name: FieldLabel.Answer,
+        type: FieldType.Input,
+        options: [],
+        label: FieldName.Answer,
+        required: true,
+        value: "",
       },
       {
         name: FieldLabel.Question,
