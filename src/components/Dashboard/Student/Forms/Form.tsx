@@ -23,6 +23,7 @@ import {
   selectLastPage,
 } from "@/redux/features/form/formSlice";
 import FormInputs from "./FormInputs";
+import { openConfetti } from "@/redux/features/modal/modalSlice";
 const Form = ({courseId}) => {
   const formData = {
     page: useSelector(selectFormPage),
@@ -69,6 +70,7 @@ const Form = ({courseId}) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(openConfetti(undefined));
     dispatch(submitQuestion());
     dispatch(setSkippedQuestion(formData.page));
     dispatch(setPage(formData.page + 1));
