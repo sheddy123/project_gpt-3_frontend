@@ -48,6 +48,7 @@ const CourseQuestionLists = ({ handleChange }) => {
     "Status",
     "Solution",
     "QuestionType",
+    "Language"
   ];
 
   const dropdownOnChangeHandler = (args) => {
@@ -67,15 +68,17 @@ const CourseQuestionLists = ({ handleChange }) => {
   const { currentMode, currentColor } = useStateContext();
   const statusDataSrc = ["Active", "Pending", "Completed"];
   const difficultyDataSrc = retrievedData.difficultyLevel; //["Easy", "Medium", "Difficult"];
+  const titleDataSrc = retrievedData.title; //["Easy", "Medium", "Difficult"];
   const solutionDataSrc = ["MCQ"];
   const questionTypeDataSrc = retrievedData.questionType; // ["GPT-3-Based Hybrid", "Traditional questions"];
+  const languageDataSrc = retrievedData.language;
   const toolbarOptions = [
     //{ template: () => <CustomInput value={customSearchText} onChange={setCustomSearchText} />, },
     {
       template: () => (
         <DropDownComponent
           handleOnClick={dropdownOnChangeHandler}
-          filterData={null}
+          filterData={titleDataSrc}
           currentMode={null}
           filterText="Title"
           id={"Title"}
@@ -101,6 +104,17 @@ const CourseQuestionLists = ({ handleChange }) => {
           currentMode={null}
           filterText="Status"
           id={"Status"}
+        />
+      ),
+    },
+    {
+      template: () => (
+        <DropDownComponent
+          handleOnClick={dropdownOnChangeHandler}
+          filterData={languageDataSrc}
+          currentMode={null}
+          filterText="Language"
+          id={"Language"}
         />
       ),
     },
@@ -141,7 +155,7 @@ const CourseQuestionLists = ({ handleChange }) => {
   const selectionsettings = { persistSelection: true };
   const editing = { allowDeleting: false, allowEditing: false };
   const searchOptions = {
-    fields: ["Title", "Solution", "Difficulty", "Status", "QuestionType"],
+    fields: ["Title", "Solution", "Difficulty", "Status", "QuestionType", "Language"],
     ignoreCase: true,
     operator: "contains",
   };
@@ -171,6 +185,7 @@ const CourseQuestionLists = ({ handleChange }) => {
       Solution: avatar2, // Replace this with the correct property
       Acceptance: "65%", // Replace this with the correct property
       Difficulty: item.difficultyLevel,
+      Language: item.language,
       Status: item.statusText,
       StatusBg:
         item.statusText == CourseStatus.Active
