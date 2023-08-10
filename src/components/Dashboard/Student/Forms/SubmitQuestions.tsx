@@ -1,3 +1,4 @@
+import DisplayConfetti from "@/components/Common/Confetti/DisplayConfetti";
 import { SharpInformation } from "@/components/Common/Icons/Icons";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 import { useDispatch } from "react-redux";
@@ -35,6 +36,7 @@ const SubmitQuestions = ({ page, setPage }) => {
   };
   return (
     <>
+   
       <div
         className="bg-green-50 dark:bg-gray-800 dark:text-white border-t-4 border-green-500 rounded-b text-green-800 px-4 py-3 shadow-md"
         role="alert">
