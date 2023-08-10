@@ -116,7 +116,7 @@ console.log("Current question answered: ", selectAnsweredQuestions)
             className="pt-3 mb-10"
           />
           <ul className="space-y-4">
-            {data?.options?.split(",")?.map((item, index) => (
+            {data?.options?.split(";")?.map((item, index) => (
               <li
                 key={index}
                 className={`border border-[#676161]  p-4 rounded-lg flex items-center cursor-pointer w-full hover:bg-black hover:text-[#FAEBD7] hover:dark:bg-[#20232a] hover:dark:border-[#20232a]
