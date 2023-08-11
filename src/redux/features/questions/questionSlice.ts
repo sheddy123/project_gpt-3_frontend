@@ -4,6 +4,7 @@ import {
   editQuestionService,
   getCourseDopdownListsService,
   getQuestionService,
+  gradeStudentQuizService,
 } from "@/services/api/QuestionService/QuestionService";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -11,7 +12,8 @@ const initialState = {
   isLoading: false,
   data: [],
   courseDopdownListsData: [],
-  createQuestionsResponse: ''
+  createQuestionsResponse: '',
+  studentPerformance:{}
 };
 
 const questionSlice = createSlice({
@@ -42,6 +44,17 @@ const questionSlice = createSlice({
       .addCase(createQuestionService.rejected, (state, action) => {
         state.isLoading = false;
         state.createQuestionsResponse = action.payload as string;
+      })
+      //gradeStudentQuizService
+      .addCase(gradeStudentQuizService.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(gradeStudentQuizService.fulfilled, (state, action) => {
+        state.isLoading = true;
+        state.studentPerformance = action.payload;
+      })
+      .addCase(gradeStudentQuizService.rejected, (state, action) => {
+        state.isLoading = false;
       })
       //updateQuestionService
       .addCase(editQuestionService.pending, (state) => {
@@ -81,6 +94,7 @@ const questionSlice = createSlice({
 export const selectAllQuestions = (state) => state.questionReducer.data;
 export const selectCreateQuestionResponse = (state) => state.questionReducer.createQuestionsResponse;
 export const selectAddQuestionsResponse = (state) => state.questionReducer.data;
+export const selectStudentPerformanceResponse = (state) => state.questionReducer.studentPerformance;
 export const selectAllDropdownQuestionFields = (state) =>
   state.questionReducer.courseDopdownListsData;
 
