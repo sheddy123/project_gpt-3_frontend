@@ -175,3 +175,42 @@ export const editQuestionService = createAsyncThunk(
     }
   }
 );
+
+export const gradeStudentQuizService = createAsyncThunk(
+  "users/Question/gradeStudentQuiz",
+  async (props: any, thunkAPI) => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    try {
+      const response = await toast.promise(
+        new Promise((resolve, reject) => {
+          axios
+            .post(
+              `${Questions_Url}${import.meta.env.VITE_GRADE_STUDENT_QUIZ_URL}`,
+              props,
+              {
+                withCredentials: true,
+                signal,
+              }
+            )
+            .then((res) => resolve(res))
+            .catch((err) => reject(err));
+        }),
+        {
+          loading: "Loading...",
+          success: "Scores graded successfully",
+          error: (err) =>
+            err?.response?.data?.msg ?? "Server is down, please try again",
+        }
+      );
+
+      return response.data;
+    } catch (err) {
+      console.error(err);
+      return thunkAPI.rejectWithValue("Your error message");
+    } finally {
+      controller.abort();
+    }
+  }
+);
