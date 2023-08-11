@@ -24,6 +24,7 @@ import {
 } from "@/redux/features/form/formSlice";
 import FormInputs from "./FormInputs";
 import { openConfetti } from "@/redux/features/modal/modalSlice";
+import { gradeStudentQuizService } from "@/services/api/QuestionService/QuestionService";
 const Form = ({courseId}) => {
   const formData = {
     page: useSelector(selectFormPage),
@@ -64,7 +65,6 @@ const Form = ({courseId}) => {
     if (page > 1) {
       dispatch(setSkippedQuestion({id: id}));
     }
-    console.log("Page is " + page)
     dispatch(setPage(page + 1));
     dispatch(setSelectedQuestion(page));
   };
@@ -74,7 +74,7 @@ const Form = ({courseId}) => {
     dispatch(submitQuestion());
     dispatch(setSkippedQuestion(formData.page));
     dispatch(setPage(formData.page + 1));
-    // console.log(JSON.stringify(formData.data));
+    dispatch(gradeStudentQuizService({studentQuizGrade:formData.selectAnsweredQuestions, courseQuizLists:formData.data}) as any);
   };
   const updatedQuestionsArray = formData.data.map((item, index) => ({
     ...item,
@@ -123,7 +123,7 @@ const Form = ({courseId}) => {
       </header> */}
       <br />
       <FormInputs
-        handleChange={handleChange}
+        handleChange={handleSubmit}
         handleNext={handleNext}
         nextHide={formData.nextHide}
         handlePrev={handlePrev}

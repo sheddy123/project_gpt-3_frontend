@@ -82,7 +82,7 @@ const FormInputs = ({
   const displayRequiredPage = !isOnLastPage ? (
     display[page]
   ) : (
-    <SubmitQuestions page={page} setPage={setPage} />
+    <SubmitQuestions page={page} setPage={setPage} courseId={courseId} />
   );
 
   const content = (

@@ -4,7 +4,9 @@ import { Star } from "@/components/Common/Icons/Icons";
 import { useState } from "react";
 import DOMPurify from "dompurify";
 import QuestionListAnswerPanel from "./QuestionListAnswerPanel";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { selectStudentPerformanceResponse } from "@/redux/features/questions/questionSlice";
+import { selectFormData } from "@/redux/features/form/formSlice";
 
 const Questions = ({
   component,
@@ -28,7 +30,6 @@ const Questions = ({
   const [selectedItem, setSelectedItem] = useState(null);
   const sanitizedText = DOMPurify.sanitize(data.question);
   const dispatch = useDispatch();
-console.log("Current question answered: ", selectAnsweredQuestions)
   const currentQuestionAnsweredObject = selectAnsweredQuestions.find(
     (item) => item.formId === component + 1
   );
@@ -68,6 +69,19 @@ console.log("Current question answered: ", selectAnsweredQuestions)
     }
     dispatch(setPage(page + 1));
   };
+
+  const feedbackResponse = useSelector(selectStudentPerformanceResponse);
+  const questionFeedback = {
+    feedbackList: feedbackResponse?.feedbackList ?? [],
+    gradeScore: feedbackResponse?.gradeScore,
+    sessionQuizAnswers: feedbackResponse?.sessionQuizAnswers,
+    initialQuestions: useSelector(selectFormData).map((item, index) => ({
+      ...item,
+      formId: index + 2
+    })),
+  };
+  const currentQuestionFeedback = questionFeedback.feedbackList?.filter(feedback => feedback.id == data.id)[0];
+  
   return (
     <div>
       <div>
@@ -93,11 +107,16 @@ console.log("Current question answered: ", selectAnsweredQuestions)
                 </div>
                 <div>
                   <p className="font-bold">
-                    Dive deeper into the course materials for a comprehensive
-                    grasp of the subject.
+                    {currentQuestionFeedback?.feedback}
+                    {/* Dive deeper into the course materials for a comprehensive
+                    grasp of the subject. */}
                   </p>
                   <p className="text-sm">
-                    Your performance: 3 out of 5 correct answers.
+                    <em>Correct answer: {currentQuestionFeedback?.answer}</em>
+                  </p>
+                  <p className="text-sm">
+                    Your performance: {questionFeedback.gradeScore} out of{" "}
+                    {questionFeedback.feedbackList?.length} correct answers.
                   </p>
                 </div>
               </div>
