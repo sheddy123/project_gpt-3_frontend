@@ -1,5 +1,6 @@
 import {
   createCourseService,
+  createRelatedCourseRatingsService,
   deleteCourseService,
   editCourseService,
   getCourseQuizDetailsService,
@@ -13,19 +14,24 @@ interface IInitialState {
   isLoading: boolean;
   data: any[]; // You can replace 'any' with the appropriate type
   courseQuizDetails: IStudentCourseQuizById[]; // Assign the interface here
+  ratingsResponse: string;
 }
 
-
-const initialState : IInitialState = {
+const initialState: IInitialState = {
   isLoading: false,
   data: [],
   courseQuizDetails: [],
+  ratingsResponse: "",
 };
 
 const courseSlice = createSlice({
   name: "course",
   initialState,
-  reducers: {},
+  reducers: {
+    resetRatingResponse: (state) => {
+      state.ratingsResponse = "";
+    },
+  },
   extraReducers: (builder) => {
     builder
       //getCourseService
@@ -80,13 +86,26 @@ const courseSlice = createSlice({
       .addCase(deleteCourseService.rejected, (state, action) => {
         state.isLoading = false;
       })
-      ;
+      //deleteCourseService
+      .addCase(createRelatedCourseRatingsService.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createRelatedCourseRatingsService.fulfilled, (state, action) => {
+        state.isLoading = true;
+        state.ratingsResponse = action.payload;
+      })
+      .addCase(createRelatedCourseRatingsService.rejected, (state, action) => {
+        state.isLoading = false;
+      });
   },
 });
 export const selectAllCourses = (state) => state.courseReducer.data;
-export const selectCourseQuizDetals = (state) => state.courseReducer.courseQuizDetails;
+export const selectRatingsResponse = (state) =>
+  state.courseReducer.ratingsResponse;
+export const selectCourseQuizDetals = (state) =>
+  state.courseReducer.courseQuizDetails;
 
 // Actions
-export const {} = courseSlice.actions;
+export const {resetRatingResponse} = courseSlice.actions;
 // Reducer
 export default courseSlice.reducer;
