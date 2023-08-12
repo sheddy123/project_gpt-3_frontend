@@ -5,10 +5,60 @@ import { selectStudentPerformanceResponse } from "@/redux/features/questions/que
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 import { useDispatch, useSelector } from "react-redux";
 import { getFeedback } from "@/utils/Helpers/helpers";
-import { getCourseQuizDetailsService } from "@/services/api/CourseService/CourseService";
+import {
+  createRelatedCourseRatingsService,
+  getCourseQuizDetailsService,
+} from "@/services/api/CourseService/CourseService";
+import Rating from "@/components/Common/Reviews/Rating";
+import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { useStateContext } from "@/utils/Helpers/ContextProvider";
+import { openConfetti } from "@/redux/features/modal/modalSlice";
+import {
+  resetRatingResponse,
+  selectRatingsResponse,
+} from "@/redux/features/courses/courseSlice";
+import { ApiResponses } from "@/utils/Constants/ApiConstants/api_constants";
 
-const SubmitQuestions = ({ page, setPage, courseId }) => {
+const SubmitQuestions = ({
+  page,
+  setPage,
+  courseId,
+  showRating,
+  setShowRating,
+}) => {
   const dispatch = useDispatch();
+  const [rating, setRating] = useState(null);
+  const { currentMode } = useStateContext();
+  const ratingResponse = useSelector(selectRatingsResponse);
+  useEffect(() => {
+    if (ratingResponse == ApiResponses.Saved_Successfully) {
+      toast(
+        `Thank you taking the time to give a rating. More support? Don't
+      hesitate to get in touch!`,
+        {
+          icon: "👏",
+          style: {
+            borderRadius: "10px",
+            background: currentMode == "Dark" ? "#333" : "#fff",
+            color: currentMode == "Dark" ? "#fff" : "#0c0606",
+          },
+        }
+      );
+      dispatch(resetRatingResponse());
+    }
+  }, [ratingResponse]);
+  const handleThankYouPageClick = (props) => {
+    //send to the server
+    dispatch(
+      createRelatedCourseRatingsService({
+        rate_number: props,
+        course_id: courseId,
+      }) as any
+    );
+    setShowRating(false);
+    dispatch(openConfetti(undefined));
+  };
   // const reviewObj = {
   //   wrongAnswersReview: [
   //     {
@@ -126,15 +176,19 @@ const SubmitQuestions = ({ page, setPage, courseId }) => {
                   {reviewObj.correctAnswersReview.map(
                     ({ id, question, formId }, index) => {
                       return (
-                        <span
-                          className="font-semibold block cursor-pointer border mb-2 p-2 border-black dark:border-[#FFF8DC] shadow-md rounded hover:bg-slate-900 hover:text-white hover:dark:border-[#FFF8DC]"
-                          key={index + id}
-                          dangerouslySetInnerHTML={{
-                            __html: DOMPurify.sanitize(question),
-                          }}
-                          onClick={() =>
-                            handleGoToQuestionReviewPage(formId)
-                          }></span>
+                        <TooltipComponent
+                          content="Click to see review"
+                          position="BottomCenter">
+                          <span
+                            className="block cursor-pointer border mb-2 p-2 border-black dark:border-[#FFF8DC] shadow-md rounded hover:bg-slate-900 hover:text-white hover:dark:border-[#FFF8DC]"
+                            key={index + id}
+                            dangerouslySetInnerHTML={{
+                              __html: DOMPurify.sanitize(question),
+                            }}
+                            onClick={() =>
+                              handleGoToQuestionReviewPage(formId)
+                            }></span>
+                        </TooltipComponent>
                       );
                     }
                   )}
@@ -179,15 +233,19 @@ const SubmitQuestions = ({ page, setPage, courseId }) => {
                   {reviewObj.wrongAnswersReview.map(
                     ({ id, question, formId }, index) => {
                       return (
-                        <span
-                          className="font-semibold block cursor-pointer border mb-2 p-2 border-black dark:border-[#FFF8DC] shadow-md rounded hover:bg-slate-900 hover:text-white hover:dark:border-[#FFF8DC]"
-                          key={index + id}
-                          dangerouslySetInnerHTML={{
-                            __html: DOMPurify.sanitize(question),
-                          }}
-                          onClick={() =>
-                            handleGoToQuestionReviewPage(formId)
-                          }></span>
+                        <TooltipComponent
+                          content="Click to see review"
+                          position="BottomCenter">
+                          <span
+                            className=" block cursor-pointer border mb-2 p-2 border-black dark:border-[#FFF8DC] shadow-md rounded hover:bg-slate-900 hover:text-white hover:dark:border-[#FFF8DC]"
+                            key={index + id}
+                            dangerouslySetInnerHTML={{
+                              __html: DOMPurify.sanitize(question),
+                            }}
+                            onClick={() =>
+                              handleGoToQuestionReviewPage(formId)
+                            }></span>
+                        </TooltipComponent>
                       );
                     }
                   )}
@@ -205,6 +263,14 @@ const SubmitQuestions = ({ page, setPage, courseId }) => {
           </button>
         </div>
       </div>
+      {showRating && (
+        <Rating
+          setRating={setRating}
+          handleThankYouPageClick={handleThankYouPageClick}
+          setShowRating={setShowRating}
+        />
+      )}
+      <Toaster position="top-right" />
     </>
   );
 };
