@@ -25,7 +25,8 @@ import {
 import FormInputs from "./FormInputs";
 import { openConfetti } from "@/redux/features/modal/modalSlice";
 import { gradeStudentQuizService } from "@/services/api/QuestionService/QuestionService";
-const Form = ({courseId}) => {
+import { useState } from "react";
+const Form = ({ courseId }) => {
   const formData = {
     page: useSelector(selectFormPage),
     selectSelectedQuestion: useSelector(selectSelectedQuestion),
@@ -43,6 +44,8 @@ const Form = ({courseId}) => {
     lastPage: useSelector(selectLastPage),
   };
   const dispatch = useDispatch();
+
+  const [showRating, setShowRating] = useState(true);
   const handleChange = () => {
     //dispatch(submitQuestion());
     // const { name, value, type } = e.target;
@@ -53,7 +56,7 @@ const Form = ({courseId}) => {
   };
   const handlePrev = (page: number, id?: number) => {
     if (page > 1) {
-      dispatch(setSkippedQuestion({id:id}));
+      dispatch(setSkippedQuestion({ id: id }));
     }
     dispatch(setPage(page - 1));
   };
@@ -63,7 +66,7 @@ const Form = ({courseId}) => {
       dispatch(resetAnsweredQuestions());
     }
     if (page > 1) {
-      dispatch(setSkippedQuestion({id: id}));
+      dispatch(setSkippedQuestion({ id: id }));
     }
     dispatch(setPage(page + 1));
     dispatch(setSelectedQuestion(page));
@@ -74,7 +77,13 @@ const Form = ({courseId}) => {
     dispatch(submitQuestion());
     dispatch(setSkippedQuestion(formData.page));
     dispatch(setPage(formData.page + 1));
-    dispatch(gradeStudentQuizService({studentQuizGrade:formData.selectAnsweredQuestions, courseQuizLists:formData.data}) as any);
+    setShowRating(true);
+    dispatch(
+      gradeStudentQuizService({
+        studentQuizGrade: formData.selectAnsweredQuestions,
+        courseQuizLists: formData.data,
+      }) as any
+    );
   };
   const updatedQuestionsArray = formData.data.map((item, index) => ({
     ...item,
@@ -139,6 +148,8 @@ const Form = ({courseId}) => {
         setPage={setPage}
         wholeQuestions={formData.data}
         courseId={courseId}
+        showRating={showRating}
+        setShowRating={setShowRating}
       />
     </form>
   );
