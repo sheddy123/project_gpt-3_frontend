@@ -27,12 +27,14 @@ const FormInputs = ({
   setSkippedQuestion,
   setPage,
   wholeQuestions,
-  courseId
+  courseId,
+  showRating, 
+  setShowRating
 }) => {
   const page = useSelector(selectFormPage);
   const { setActiveMenu } = useStateContext();
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     setActiveMenu(false);
     //setSelectedQuestion([]);
@@ -82,7 +84,7 @@ const FormInputs = ({
   const displayRequiredPage = !isOnLastPage ? (
     display[page]
   ) : (
-    <SubmitQuestions page={page} setPage={setPage} courseId={courseId} />
+    <SubmitQuestions page={page} setPage={setPage} courseId={courseId} showRating={showRating} setShowRating={setShowRating} />
   );
 
   const content = (
