@@ -23,7 +23,7 @@ const MyLearning = () => {
             />
             <div className="space-y-0.5 font-medium dark:text-white text-left">
               <div className="text-sm text-gray-500 dark:text-gray-400">
-                Developer at Open AI
+                Array
               </div>
               <div>
                 <span className="font-bold font-poppins text-lg">
@@ -40,7 +40,7 @@ const MyLearning = () => {
             />
             <div className="space-y-0.5 font-medium dark:text-white text-left">
               <div className="text-sm text-gray-500 dark:text-gray-400">
-                Developer at Open AI
+                Linked Lists
               </div>
               <div>
                 <span className="font-bold font-poppins text-lg">
@@ -59,7 +59,7 @@ const MyLearning = () => {
             />
             <div className="space-y-0.5 font-medium dark:text-white text-left">
               <div className="text-sm text-gray-500 dark:text-gray-400">
-                Developer at Open AI
+                Strings
               </div>
               <div>
                 <span className="font-bold font-poppins text-lg">
@@ -76,7 +76,7 @@ const MyLearning = () => {
             />
             <div className="space-y-0.5 font-medium dark:text-white text-left">
               <div className="text-sm text-gray-500 dark:text-gray-400">
-                Developer at Open AI
+                Binary Tree
               </div>
               <div>
                 <span className="font-bold font-poppins text-lg">
@@ -87,8 +87,9 @@ const MyLearning = () => {
           </figcaption>
         </div>
       </div>
-      <div className=" dark:bg-secondary-dark-bg rounded-3xl">
-        <div className="w-full">
+      <div className=" dark:bg-secondary-dark-bg rounded-md flex">
+      
+        <div className="flex-auto w-96">
           <Pie
             id="chart-pie"
             data={pieChartData}
@@ -96,6 +97,9 @@ const MyLearning = () => {
             height="full"
           />
         </div>
+        <div className="flex-auto w-4">
+    
+  </div>
       </div>
    
     </>
