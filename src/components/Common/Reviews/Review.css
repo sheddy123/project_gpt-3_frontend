@@ -1,0 +1,111 @@
+.card_review {
+  width: 546px;
+  max-width: 90vw;
+  height: 200px;
+  background-color: hsl(213, 19%, 18%);
+  border-radius: 8px;
+  padding: 2px;
+ 
+}
+
+.star_img_container {
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  background-color: hsl(211, 19%, 24%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title_review {
+  color: white;
+  margin: 2rem 0 1rem 0;
+}
+
+.text_review {
+  color: hsl(217, 12%, 63%);
+  margin-bottom: 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.6rem;
+}
+
+.rating {
+  display: flex;
+  justify-content: center;
+  align-items: space-between;
+  margin-bottom: 2rem;
+  cursor: pointer;
+}
+
+.rating_container {
+  text-align: center;
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  background-color: hsl(211, 19%, 24%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: hsl(217, 12%, 63%);
+  font-weight: 700;
+}
+
+.rating_container.active {
+  color: gray;
+  background-color: white;
+}
+.rating_container:hover {
+  background-color: white;
+  color: gray;
+}
+
+.submit_btn {
+  cursor: pointer;
+  text-transform: uppercase;
+  border: 0;
+  outline: 0;
+  width: 50%;
+  padding: 12px 0;
+  
+  border-radius: 25px;
+  letter-spacing: 3.5px;
+  font-family: inherit;
+  font-weight: 700;
+}
+
+.submit_btn:active {
+  background-color: white;
+  color: hsl(25, 97%, 53%);
+}
+
+/*************Thank you **********/
+.thank_you_img_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.selected {
+  width: 60%;
+  border-radius: 25px;
+  padding: 8px 12px;
+  background-color: hsl(211, 19%, 24%);
+  margin: 1.5rem auto;
+  text-align: center;
+  color: hsl(25, 75%, 40%);
+}
+
+.title {
+  color: white;
+  margin: 2rem 0 1rem 0;
+  text-align: center;
+}
+
+.text {
+  color: hsl(217, 12%, 63%);
+  font-size: 0.92rem;
+  line-height: 1.4rem;
+  text-align: center;
+}
