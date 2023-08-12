@@ -73,7 +73,6 @@ const CourseGridImage = (props) => {
 const CourseGridButton = (props) => {
   const dispatch = useDispatch();
   const page = useSelector(selectFormPage);
-  console.log("Page in coursegridbutton is " + page);
   const handleNext = (page: number, questionCategory: any) => {
     //console.log("Props is ", questionCategory);
     dispatch(setPage(page + 1));
