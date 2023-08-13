@@ -41,7 +41,6 @@ const RequireAuth = ({ allowedRoles }) => {
       break; // If found, exit the loop early
     }
   }
-console.log("Found string is ", foundString);
   if (isLoading) {
     // If the authentication state is not yet available, show a loading indicator
     return <p>Loading...</p>;
