@@ -8,7 +8,6 @@ import axios from "axios";
 export const getProfileService = createAsyncThunk(
   "users/Profile/GetProfileService",
   async (prop: any, thunkAPI) => {
-    console.log("Prop item received: " + prop);
     const controller = new AbortController();
     const signal = controller.signal;
     try {
