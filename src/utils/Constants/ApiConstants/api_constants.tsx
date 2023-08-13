@@ -52,3 +52,6 @@ export enum CourseStatus {
   Pending = "Pending",
   Completed = "Completed",
 }
+export enum ApiResponses {
+  Saved_Successfully = "Saved Successfully",
+}
