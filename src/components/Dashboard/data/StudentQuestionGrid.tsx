@@ -7,6 +7,7 @@ import {
   setPage,
   resetSelectedQuestions,
   resetAnsweredQuestions,
+  setStartTime,
 } from "@/redux/features/form/formSlice";
 import avatar2 from "./avatar2.jpg";
 import { getCourseRelatedQuestionService } from "@/services/api/CourseService/CourseService";
@@ -87,6 +88,7 @@ const CourseGridButton = (props) => {
     ).then(() => {
       dispatch(resetSelectedQuestions());
       dispatch(resetAnsweredQuestions());
+      dispatch(setStartTime());
     });
   };
 
