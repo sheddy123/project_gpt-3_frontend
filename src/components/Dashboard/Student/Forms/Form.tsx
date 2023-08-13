@@ -21,6 +21,8 @@ import {
   submitQuestion,
   selectIsSubmitted,
   selectLastPage,
+  selectStartTime,
+  selectEndTime,
 } from "@/redux/features/form/formSlice";
 import FormInputs from "./FormInputs";
 import { openConfetti } from "@/redux/features/modal/modalSlice";
@@ -42,6 +44,7 @@ const Form = ({ courseId }) => {
     questionsSkipped: useSelector(selectQuestionsSkipped),
     isSubmitted: useSelector(selectIsSubmitted),
     lastPage: useSelector(selectLastPage),
+    startTime: useSelector(selectStartTime)
   };
   const dispatch = useDispatch();
 
@@ -82,6 +85,8 @@ const Form = ({ courseId }) => {
       gradeStudentQuizService({
         studentQuizGrade: formData.selectAnsweredQuestions,
         courseQuizLists: formData.data,
+        startTime: formData.startTime,
+        endTime: new Date()
       }) as any
     );
   };
