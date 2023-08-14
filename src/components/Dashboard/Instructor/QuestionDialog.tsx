@@ -54,6 +54,7 @@ export const QuestionDialog = ({
     [FieldLabel.solution_Type]: isEditing ? "MCQ" : "", // For Radio, provide the value of the selected option
     [FieldLabel.Optional_fields]: initialValue?.optionalFields, // For Radio, provide the value of the selected option
     [FieldLabel.Answer]: initialValue?.answer, // For Input, provide the value
+    [FieldLabel.Feedback]: initialValue?.feedback,
     [FieldLabel.question_Type]: initialValue?.questionType, // For Select, provide the value of the selected option
     [FieldLabel.Question]: initialValue?.question ?? "", // For RichText, provide the HTML content
     [FieldLabel.Options]: initialValue?.options ?? "", // For RichText, provide the HTML content
@@ -75,13 +76,13 @@ export const QuestionDialog = ({
       optional_fields: formData?.Optional_fields,
       questionId: formData?.QuestionId,
       language: formData?.Language,
+      feedback: formData?.Feedback
     };
 
     const serviceFunction = isEditing
       ? editQuestionService
       : createQuestionService;
     const response = await dispatch(serviceFunction(questionFormObj) as any);
-    console.log(response);
     if (
       response?.payload?.status == "Successfully inserted" ||
       response?.payload?.status == "Successfully updated"
@@ -188,6 +189,14 @@ export const QuestionDialog = ({
         type: FieldType.Input,
         options: [],
         label: FieldName.Answer,
+        required: true,
+        value: "",
+      },
+      {
+        name: FieldLabel.Feedback,
+        type: FieldType.Input,
+        options: [],
+        label: FieldName.Feedback,
         required: true,
         value: "",
       },
