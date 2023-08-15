@@ -65,6 +65,7 @@ const DashboardLayout = () => {
       setCurrentColor(currentThemeColor);
       setCurrentMode(currentThemeMode);
     }
+    
   }, []);
 
   return (
