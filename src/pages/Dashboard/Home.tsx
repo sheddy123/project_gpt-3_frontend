@@ -10,6 +10,7 @@ import {
 } from "@/components/Dashboard";
 import { useStateContext } from "@/utils/Helpers/ContextProvider";
 import { getCourseService } from "@/services/api/CourseService/CourseService";
+import { getStudentLogTimeService } from "@/services/api/AuthService/GetAuthService";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const Home = () => {
     dispatch(openModal(undefined));
     setActiveMenu(true);
     dispatch(getCourseService() as any);
+    dispatch(getStudentLogTimeService() as any);
   }, []);
 
   return (
