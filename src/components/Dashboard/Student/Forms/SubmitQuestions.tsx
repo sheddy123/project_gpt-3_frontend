@@ -26,6 +26,7 @@ const SubmitQuestions = ({
   courseId,
   showRating,
   setShowRating,
+  difficulty
 }) => {
   const dispatch = useDispatch();
   const [rating, setRating] = useState(null);
@@ -54,6 +55,7 @@ const SubmitQuestions = ({
       createRelatedCourseRatingsService({
         rate_number: props,
         course_id: courseId,
+        difficulty_id: difficulty,
       }) as any
     );
     setShowRating(false);
