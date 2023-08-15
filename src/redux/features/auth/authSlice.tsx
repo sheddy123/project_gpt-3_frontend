@@ -1,5 +1,9 @@
 import { IAuth } from "@/interfaces/IFeatures/IFeatures";
-import { getAuthService } from "@/services/api/AuthService/GetAuthService";
+import {
+  getAuthService,
+  getStudentLogTimeService,
+  getStudentProgressService,
+} from "@/services/api/AuthService/GetAuthService";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: IAuth = {
@@ -23,6 +27,9 @@ const initialState: IAuth = {
     refresh_token: "",
     refresh_token_expiry_time: "",
   },
+  studentProgress: [],
+  studentProgressIsLoading: false,
+  studentLogTime: {},
 };
 
 const authSlice = createSlice({
@@ -47,13 +54,35 @@ const authSlice = createSlice({
       state.message = "Session ended";
     },
     errMessage: (state, action) => {
-      
-      console.log("Action is", action.payload)
+      console.log("Action is", action.payload);
       state.message = action.payload;
     },
   },
   extraReducers: (builder) => {
+    //getStudentProgressService
     builder
+      .addCase(getStudentProgressService.pending, (state) => {
+        state.studentProgressIsLoading = true;
+      })
+      .addCase(getStudentProgressService.fulfilled, (state, action) => {
+        state.studentProgressIsLoading = false;
+        state.studentProgress = action.payload;
+      })
+      .addCase(getStudentProgressService.rejected, (state) => {
+        state.studentProgressIsLoading = false;
+      });
+    //getStudentLogTimeService
+    builder
+      .addCase(getStudentLogTimeService.pending, (state) => {
+        state.studentProgressIsLoading = true;
+      })
+      .addCase(getStudentLogTimeService.fulfilled, (state, action) => {
+        state.studentProgressIsLoading = false;
+        state.studentLogTime = action.payload;
+      })
+      .addCase(getStudentLogTimeService.rejected, (state) => {
+        state.studentProgressIsLoading = false;
+      })
       .addCase(getAuthService.pending, (state) => {
         state.auth_response.isLoading = true;
       })
@@ -99,6 +128,11 @@ const authSlice = createSlice({
       });
   },
 });
+
+export const selectStudentProgress = (state) =>
+  state.authReducer.studentProgress;
+export const selectStudentLogTime = (state) =>
+  state.authReducer.studentLogTime;
 
 export const { clearAuth, updateAuth, logOff, errMessage, sessionEnded } =
   authSlice.actions;
