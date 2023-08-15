@@ -549,24 +549,24 @@ export const links = [
   {
     title: "Pages",
     links: [
-      {
-        name: "Orders",
-        linkName: "Orders",
-        icon: <AiOutlineShoppingCart />,
-        role: ROLES.Student
-      },
-      {
-        name: "Employees",
-        linkName: "Orders",
-        icon: <IoMdContacts />,
-        role: ROLES.Student
-      },
-      {
-        name: "Customers",
-        linkName: "Orders",
-        icon: <RiContactsLine />,
-        role: ROLES.Student
-      },
+      // {
+      //   name: "Orders",
+      //   linkName: "Orders",
+      //   icon: <AiOutlineShoppingCart />,
+      //   role: ROLES.Student
+      // },
+      // {
+      //   name: "Employees",
+      //   linkName: "Orders",
+      //   icon: <IoMdContacts />,
+      //   role: ROLES.Student
+      // },
+      // {
+      //   name: "Customers",
+      //   linkName: "Orders",
+      //   icon: <RiContactsLine />,
+      //   role: ROLES.Administrator
+      // },
     ],
   },
   // {
