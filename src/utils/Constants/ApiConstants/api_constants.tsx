@@ -1,6 +1,8 @@
 export const BaseUrl = import.meta.env.VITE_API_BASE_URL;
 export const AUTH_TOKEN = "/";
 export const Login_Url = BaseUrl + import.meta.env.VITE_LOGIN;
+export const Student_Progress_Url = BaseUrl + import.meta.env.VITE_STUDENT_PROGRESS_URL;
+export const Student_Log_Time_Url = BaseUrl + import.meta.env.VITE_STUDENT_LOG_TIME_URL;
 export const Logout_Url = BaseUrl + import.meta.env.VITE_LOGOUT;
 export const Create_Profile_Url =
   BaseUrl + import.meta.env.VITE_CREATE_PROFILE_URL;
