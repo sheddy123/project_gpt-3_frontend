@@ -42,3 +42,56 @@ export function getFeedback(grade) {
     return "Invalid grade";
   }
 }
+
+// Calculate student progress
+export function calculateStudentProgress(courses) {
+  let totalQuestions = 0;
+  let totalQuestionsTaken = 0;
+
+  // Simulated data
+// const courses = [
+//   {
+//     name: 'Course 1',
+//     levels: ['Easy', 'Medium', 'Hard'],
+//     questionsPerLevel: 5,
+//     questionsTaken: {
+//       Easy: 5,
+//       Medium: 5,
+//       Hard: 5,
+//     },
+//   },
+//   // Add more courses...
+// ];
+  // Calculate the total number of questions and questions taken
+  courses.forEach(course => {
+    course.levels.forEach(level => {
+      const questionsTaken = course.questionsTaken[level] || 0;
+      totalQuestions += course.questionsPerLevel;
+      totalQuestionsTaken += questionsTaken;
+    });
+  });
+
+  // Calculate progress percentage
+  const progress = (totalQuestionsTaken / totalQuestions) * 100;
+  return progress.toFixed(2); // Round to 2 decimal places
+}
+
+export function convertMillisecondsToTime(milliseconds) {
+  const totalSeconds = Math.floor(milliseconds / 1000);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  return formattedTime;
+}
+
+export function convertMillisecondsToTimeToString(milliseconds) {
+  const totalSeconds = Math.floor(milliseconds / 1000);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  const formattedTime = `${hours}h ${minutes}min ${seconds}sec`;
+  return formattedTime;
+}
