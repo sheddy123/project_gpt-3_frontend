@@ -5,11 +5,28 @@ import { IToolbarSettings } from "@syncfusion/ej2-react-richtexteditor";
 export interface IAuth {
   message: string;
   auth_response: IAuthResponse;
+  studentProgress: StudentProgress[];
+  studentProgressIsLoading:boolean;
+  studentLogTime:object;
 }
 
 export interface ILogin {
   code: string;
   provider: string;
+}
+
+export interface StudentProgress {
+  name: string;
+  levels: string[];
+  questionsPerLevel: number;
+  questionsTaken: QuestionsTaken;
+  percentageProgress?: string;
+}
+
+export interface QuestionsTaken{
+  easy: number;
+  medium: number;
+  difficult: number;
 }
 
 export interface IAuthResponse {
