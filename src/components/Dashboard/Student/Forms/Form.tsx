@@ -22,7 +22,6 @@ import {
   selectIsSubmitted,
   selectLastPage,
   selectStartTime,
-  selectEndTime,
 } from "@/redux/features/form/formSlice";
 import FormInputs from "./FormInputs";
 import { openConfetti } from "@/redux/features/modal/modalSlice";
@@ -44,10 +43,9 @@ const Form = ({ courseId }) => {
     questionsSkipped: useSelector(selectQuestionsSkipped),
     isSubmitted: useSelector(selectIsSubmitted),
     lastPage: useSelector(selectLastPage),
-    startTime: useSelector(selectStartTime)
+    startTime: useSelector(selectStartTime),
   };
   const dispatch = useDispatch();
-
   const [showRating, setShowRating] = useState(true);
   const handleChange = () => {
     //dispatch(submitQuestion());
@@ -86,14 +84,16 @@ const Form = ({ courseId }) => {
         studentQuizGrade: formData.selectAnsweredQuestions,
         courseQuizLists: formData.data,
         startTime: formData.startTime,
-        endTime: new Date()
+        endTime: new Date(),
       }) as any
     );
+    dispatch(getStudentProgressService() as any);
   };
   const updatedQuestionsArray = formData.data.map((item, index) => ({
     ...item,
     formId: index + 2, // Update the formId to start from 2
   }));
+
   // Rest of the component code...
   const content = (
     <form className="form flex-col" onSubmit={handleSubmit}>
