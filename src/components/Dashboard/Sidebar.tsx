@@ -16,6 +16,9 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { dashboardSidebar } from "@/utils/Constants/ComponentsConstants/constants";
 import { getProfileService } from "@/services/api/ProfileService/profileService";
 import LearningHoursCard from "./Student/LearningHoursCard";
+import { getStudentProgressService } from "@/services/api/AuthService/GetAuthService";
+import { selectStudentLogTime, selectStudentProgress } from "@/redux/features/auth/authSlice";
+import { calculateStudentProgress, convertMillisecondsToTime } from "@/utils/Helpers/helpers";
 
 const Sidebar = () => {
   const { currentColor, activeMenu, setActiveMenu, screenSize, handleClick } =
@@ -74,6 +77,12 @@ const Sidebar = () => {
     });
   };
 
+  const studentProgress = useSelector(selectStudentProgress);
+  const studentLogTime = useSelector(selectStudentLogTime);
+  const timeSpent = convertMillisecondsToTime(studentLogTime?.totalDurationMillis);
+
+  const studentProgressSession = calculateStudentProgress(studentProgress);
+
   useEffect(() => {
     //setIsActiveLink(window.location.pathname === `/dashboard/${link.name}`);
     //console.log(`setActiveLink` + isActiveLink);
@@ -100,7 +109,7 @@ const Sidebar = () => {
       .catch((error) => {
         console.log(error);
       });
-
+    dispatch(getStudentProgressService() as any);
     //Profile
     dispatch(getProfileService(store?.auth_response.user_name) as any)
       .then(unwrapResult)
@@ -136,7 +145,7 @@ const Sidebar = () => {
                 to="/"
                 onClick={handleCloseSideBar}
                 className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900">
-                <SiShopware /> <span>Shoppy</span>
+                <SiShopware /> <span>Hybrid_GPT3</span>
               </Link>
 
               <TooltipComponent content="Menu" position="BottomCenter">
@@ -187,7 +196,11 @@ const Sidebar = () => {
                 </div>
               </div>
             </div>
-            <StudentProgressBar progress={65} spanText="%" progressText="Progress" />
+            <StudentProgressBar
+              progress={Math.ceil(parseFloat(studentProgressSession))}
+              spanText="%"
+              progressText="Progress"
+            />
 
             {/* {links.map((item) => (
               <div key={item.title} className="mt-10">
@@ -246,40 +259,42 @@ const Sidebar = () => {
                     {item.title}
                   </p>
                   {item.links
-              .filter(
-                (link) => link.role === store?.auth_response.roles?.[0].roleName
-              ).map((link) => (
-                    <NavLink
-                      to={`/dashboard/${link.name}`}
-                      key={link.name}
-                      onClick={handleCloseSideBar}
-                      style={({ isActive }) => ({
-                        backgroundColor: isActive ? currentColor : "",
-                      })}
-                      className={({ isActive }) =>
-                        isActive ? activeLink : normalLink
-                      }>
-                      {link.icon}
-                      <span className="capitalize ">{link.name}</span>
-                    </NavLink>
-                  ))}
+                    .filter(
+                      (link) =>
+                        link.role === store?.auth_response.roles?.[0].roleName
+                    )
+                    .map((link) => (
+                      <NavLink
+                        to={`/dashboard/${link.name}`}
+                        key={link.name}
+                        onClick={handleCloseSideBar}
+                        style={({ isActive }) => ({
+                          backgroundColor: isActive ? currentColor : "",
+                        })}
+                        className={({ isActive }) =>
+                          isActive ? activeLink : normalLink
+                        }>
+                        {link.icon}
+                        <span className="capitalize ">{link.name}</span>
+                      </NavLink>
+                    ))}
                 </div>
               ))}
             </div>
             <LearningHoursCard
               currentColor={currentColor}
               img={img}
-              noOfHours={76}
+              noOfHours={timeSpent}
             />
             <div className="mt-20 text-center dark:text-white text-black font-bold font-poppins">
-              
               <p className=" text-base">
-              <img
-                width="20"
-                height="20"
-                src="https://img.icons8.com/fluency/48/so-so.png"
-                alt="so-so" className="inline-flex items-center justify-center w-5 h-5 ml-1"
-              />
+                <img
+                  width="20"
+                  height="20"
+                  src="https://img.icons8.com/fluency/48/so-so.png"
+                  alt="so-so"
+                  className="inline-flex items-center justify-center w-5 h-5 ml-1"
+                />
                 Hey, {store?.auth_response.user_name}!
               </p>
               <p className="text-sm text-gray-500">
