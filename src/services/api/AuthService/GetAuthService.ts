@@ -1,5 +1,6 @@
 import { ILogin } from "@/interfaces/IFeatures/IFeatures";
 import {
+  Highest_Performing_Scorers_Url,
   Login_Url,
   Student_Log_Time_Url,
   Student_Progress_Url,
@@ -72,6 +73,27 @@ export const getStudentLogTimeService = createAsyncThunk(
 
     try {
       const response = await axios.get(Student_Log_Time_Url, {
+        withCredentials: true,
+        signal,
+      });
+      return response.data;
+    } catch (err) {
+      console.error(err);
+      return thunkAPI.rejectWithValue("Your error message");
+    } finally {
+      controller.abort();
+    }
+  }
+);
+
+export const getHighestPerformingScorersService = createAsyncThunk(
+  "users/Auth/getHighestPerformingScorers",
+  async (_, thunkAPI) => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    try {
+      const response = await axios.get(Highest_Performing_Scorers_Url, {
         withCredentials: true,
         signal,
       });
