@@ -8,6 +8,8 @@ export interface IAuth {
   studentProgress: StudentProgress[];
   studentProgressIsLoading:boolean;
   studentLogTime:object;
+  highestScorers:object;
+  getHighestScorersIsLoading: boolean;
 }
 
 export interface ILogin {
