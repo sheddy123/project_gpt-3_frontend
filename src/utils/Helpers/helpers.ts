@@ -1,3 +1,5 @@
+import { brandData } from "../Constants/ComponentsConstants/constants";
+
 export function trimAndConvertToLowerCase(str) {
   // Remove whitespace characters using trim()
   const trimmedStr = str.replace(/\s/g, "");
@@ -49,22 +51,22 @@ export function calculateStudentProgress(courses) {
   let totalQuestionsTaken = 0;
 
   // Simulated data
-// const courses = [
-//   {
-//     name: 'Course 1',
-//     levels: ['Easy', 'Medium', 'Hard'],
-//     questionsPerLevel: 5,
-//     questionsTaken: {
-//       Easy: 5,
-//       Medium: 5,
-//       Hard: 5,
-//     },
-//   },
-//   // Add more courses...
-// ];
+  // const courses = [
+  //   {
+  //     name: 'Course 1',
+  //     levels: ['Easy', 'Medium', 'Hard'],
+  //     questionsPerLevel: 5,
+  //     questionsTaken: {
+  //       Easy: 5,
+  //       Medium: 5,
+  //       Hard: 5,
+  //     },
+  //   },
+  //   // Add more courses...
+  // ];
   // Calculate the total number of questions and questions taken
-  courses.forEach(course => {
-    course.levels.forEach(level => {
+  courses.forEach((course) => {
+    course.levels.forEach((level) => {
       const questionsTaken = course.questionsTaken[level] || 0;
       totalQuestions += course.questionsPerLevel;
       totalQuestionsTaken += questionsTaken;
@@ -82,7 +84,9 @@ export function convertMillisecondsToTime(milliseconds) {
   const minutes = Math.floor((totalSeconds % 3600) / 60);
   const seconds = totalSeconds % 60;
 
-  const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  const formattedTime = `${String(hours).padStart(2, "0")}:${String(
+    minutes
+  ).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
   return formattedTime;
 }
 
@@ -94,4 +98,32 @@ export function convertMillisecondsToTimeToString(milliseconds) {
 
   const formattedTime = `${hours}h ${minutes}min ${seconds}sec`;
   return formattedTime;
+}
+
+export function getInitials(fullName) {
+  const words = fullName.split(" ");
+  const initials = words.map((word) => word.charAt(0).toUpperCase()).join(".");
+  return `(${initials})`;
+}
+
+export function getImageURLForBrand(brand: string): string | undefined {
+  let firstWord = brand.split(" ")[0].toLowerCase();
+  if (firstWord === "c#") firstWord = "csharp";
+
+  console.log(firstWord);
+  for (const imgUrl of brandData.img) {
+    const fileName = imgUrl.split("/").pop();
+    if (fileName && fileName.toLowerCase().includes(firstWord)) {
+      return imgUrl;
+    }
+  }
+
+  return undefined; // Brand not found
+}
+
+export function truncateString(text, maxLength) {
+  if (text.length <= maxLength) {
+    return text;
+  }
+  return text.slice(0, maxLength) + "...";
 }
