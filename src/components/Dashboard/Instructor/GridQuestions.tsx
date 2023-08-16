@@ -39,7 +39,7 @@ export default function GridQuestions() {
   const questionData = {
     tableData: useSelector(selectAllQuestions),
   };
-  console.log("Question data", questionData);
+  
   const globalTheme = useTheme(); //(optional) if you already have a theme defined in your app root, you can import here
 
   const tableTheme = useMemo(
