@@ -48,7 +48,7 @@ const MyLearning = () => {
       <div key={index}>
         <figcaption className="flex items-center justify-start space-x-3">
           <img
-            className="rounded-full w-9 h-9"
+            className="rounded-full w-9 h-9 hover:drop-shadow-xl hover:bg-light-gray"
             src={getImageURLForBrand(obj?.title)}
             alt="profile picture"
           />
