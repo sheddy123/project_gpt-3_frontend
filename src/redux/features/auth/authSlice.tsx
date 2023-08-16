@@ -1,6 +1,7 @@
 import { IAuth } from "@/interfaces/IFeatures/IFeatures";
 import {
   getAuthService,
+  getHighestPerformingScorersService,
   getStudentLogTimeService,
   getStudentProgressService,
 } from "@/services/api/AuthService/GetAuthService";
@@ -29,7 +30,9 @@ const initialState: IAuth = {
   },
   studentProgress: [],
   studentProgressIsLoading: false,
+  getHighestScorersIsLoading: false,
   studentLogTime: {},
+  highestScorers: {},
 };
 
 const authSlice = createSlice({
@@ -70,6 +73,21 @@ const authSlice = createSlice({
       })
       .addCase(getStudentProgressService.rejected, (state) => {
         state.studentProgressIsLoading = false;
+      });
+    //getHighestPerformingScorersService
+    builder
+      .addCase(getHighestPerformingScorersService.pending, (state) => {
+        state.getHighestScorersIsLoading = true;
+      })
+      .addCase(
+        getHighestPerformingScorersService.fulfilled,
+        (state, action) => {
+          state.getHighestScorersIsLoading = false;
+          state.highestScorers = action.payload;
+        }
+      )
+      .addCase(getHighestPerformingScorersService.rejected, (state) => {
+        state.getHighestScorersIsLoading = false;
       });
     //getStudentLogTimeService
     builder
@@ -131,8 +149,8 @@ const authSlice = createSlice({
 
 export const selectStudentProgress = (state) =>
   state.authReducer.studentProgress;
-export const selectStudentLogTime = (state) =>
-  state.authReducer.studentLogTime;
+export const selectStudentLogTime = (state) => state.authReducer.studentLogTime;
+export const selectHighestScorers = (state) => state.authReducer.highestScorers;
 
 export const { clearAuth, updateAuth, logOff, errMessage, sessionEnded } =
   authSlice.actions;
