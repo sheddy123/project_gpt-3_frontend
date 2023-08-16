@@ -72,6 +72,7 @@ export const navLinksData: INavLinks = {
 export const brandData: IBrands = {
   img: [
     new URL("@/assets/icons/c.png", import.meta.url).href,
+    new URL("@/assets/icons/csharp.png", import.meta.url).href,
     new URL("@/assets/icons/cpp.png", import.meta.url).href,
     new URL("@/assets/icons/html.png", import.meta.url).href,
     new URL("@/assets/icons/java.png", import.meta.url).href,
