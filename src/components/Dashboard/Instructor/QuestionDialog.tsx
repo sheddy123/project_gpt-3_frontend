@@ -76,7 +76,7 @@ export const QuestionDialog = ({
       optional_fields: formData?.Optional_fields,
       questionId: formData?.QuestionId,
       language: formData?.Language,
-      feedback: formData?.Feedback
+      feedback: formData?.Feedback,
     };
 
     const serviceFunction = isEditing
@@ -129,6 +129,24 @@ export const QuestionDialog = ({
   const addQuestionFormData = getArraysForFields(
     useSelector(selectAllDropdownQuestionFields)
   );
+  const moveSelectOneToTop = (options) => {
+    if (options) {
+      const selectOneIndex = options.findIndex((item) => item.id === 0);
+
+      if (selectOneIndex !== -1) {
+        const selectOneOption = options.splice(selectOneIndex, 1)[0];
+        options.unshift(selectOneOption);
+      }
+
+      return options;
+    }
+    return options;
+  };
+
+  const removeObjectById = (array, id) => {
+    if (!array) return;
+    return array.filter((item) => item.id !== id);
+  };
   // FormFields.ts
   const courseFormFields: FormFieldDescriptions = {
     description_h2: "",
@@ -137,7 +155,7 @@ export const QuestionDialog = ({
       {
         name: FieldLabel.Course,
         type: FieldType.Select,
-        options: addQuestionFormData?.course,
+        options: moveSelectOneToTop(addQuestionFormData?.course),
         label: FieldName.Course,
         required: true,
         value: "",
@@ -145,7 +163,7 @@ export const QuestionDialog = ({
       {
         name: FieldLabel.Difficulty,
         type: FieldType.Select,
-        options: addQuestionFormData?.difficulty,
+        options: moveSelectOneToTop(addQuestionFormData?.difficulty),
         label: FieldName.Difficulty,
         required: true,
         value: "",
@@ -153,7 +171,7 @@ export const QuestionDialog = ({
       {
         name: FieldLabel.solution_Type,
         type: FieldType.Radio,
-        options: addQuestionFormData?.solution,
+        options: removeObjectById(addQuestionFormData?.solution, 0),
         label: FieldName.SolutionType,
         required: true,
         value: "",
@@ -161,25 +179,24 @@ export const QuestionDialog = ({
       {
         name: FieldLabel.Optional_fields,
         type: FieldType.Radio,
-        options: addQuestionFormData?.optionalField,
+        options: removeObjectById(addQuestionFormData?.optionalField, 0),
         label: FieldName.OptionalFields,
         required: false,
         value: "",
       },
-      
+
       {
         name: FieldLabel.question_Type,
         type: FieldType.Select,
-        options: addQuestionFormData?.questionType,
+        options: moveSelectOneToTop(addQuestionFormData?.questionType),
         label: FieldName.QuestionType,
         required: true,
         value: "",
-
       },
       {
         name: FieldLabel.Language,
         type: FieldType.Select,
-        options: addQuestionFormData?.language,
+        options: moveSelectOneToTop(addQuestionFormData?.language),
         label: FieldName.Language,
         required: true,
         value: "",
@@ -217,7 +234,7 @@ export const QuestionDialog = ({
         required: true,
         toolbarSettings: toolbarSettings2,
         value: "",
-        addMore: true
+        addMore: true,
       },
 
       // {
