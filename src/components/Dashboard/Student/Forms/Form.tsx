@@ -48,7 +48,7 @@ const Form = ({ courseId }) => {
     startTime: useSelector(selectStartTime),
   };
   const dispatch = useDispatch();
-  const [showRating, setShowRating] = useState(true);
+  const [showRating, setShowRating] = useState(false);
   const handleChange = () => {
     //dispatch(submitQuestion());
     // const { name, value, type } = e.target;

@@ -23,7 +23,7 @@ const Questions = ({
   lastPage,
   setSkippedQuestion,
   setPage,
-  wholeQuestions,
+  wholeQuestions
 }) => {
   const { currentColor, currentMode } = useStateContext();
   const [fillColor, setFillColor] = useState("slate-400");

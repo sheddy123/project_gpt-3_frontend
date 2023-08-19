@@ -3,8 +3,9 @@ import { useStateContext } from "@/utils/Helpers/ContextProvider";
 import { useDispatch, useSelector } from "react-redux";
 import { selectHighestScorers } from "@/redux/features/auth/authSlice";
 import { useEffect } from "react";
-import { getHighestPerformingScorersService } from "@/services/api/AuthService/GetAuthService";
+import { getHighestPerformingScorersService, getStudentLogTimeService, getStudentProgressService } from "@/services/api/AuthService/GetAuthService";
 import { getInitials } from "@/utils/Helpers/helpers";
+import { getCourseService } from "@/services/api/CourseService/CourseService";
 const Leaders = () => {
   const { currentColor } = useStateContext();
   const highestScorers = useSelector(selectHighestScorers);
@@ -12,6 +13,9 @@ const Leaders = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getHighestPerformingScorersService() as any);
+    dispatch(getCourseService() as any);
+    dispatch(getStudentLogTimeService() as any);
+    dispatch(getStudentProgressService() as any);
   }, []);
 
   const difficultyClassMapping = {

@@ -110,7 +110,9 @@ export function getImageURLForBrand(brand: string): string | undefined {
   let firstWord = brand.split(" ")[0].toLowerCase();
   if (firstWord === "c#") firstWord = "csharp";
   else if(firstWord === "c++") firstWord = "cpp";
-
+  else if(firstWord === "javascript") firstWord = "js3";
+  else if(firstWord === "operating") firstWord = "os";
+  
   for (const imgUrl of brandData.img) {
     const fileName = imgUrl.split("/").pop();
     if (fileName && fileName.toLowerCase().includes(firstWord)) {

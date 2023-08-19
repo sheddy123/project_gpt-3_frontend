@@ -18,7 +18,6 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { dashboardSidebar } from "@/utils/Constants/ComponentsConstants/constants";
 import { getProfileService } from "@/services/api/ProfileService/profileService";
 import LearningHoursCard from "./Student/LearningHoursCard";
-import { getStudentProgressService } from "@/services/api/AuthService/GetAuthService";
 import { selectStudentLogTime, selectStudentProgress } from "@/redux/features/auth/authSlice";
 import { calculateStudentProgress, convertMillisecondsToTime } from "@/utils/Helpers/helpers";
 
@@ -111,7 +110,7 @@ const Sidebar = () => {
       .catch((error) => {
         console.log(error);
       });
-    dispatch(getStudentProgressService() as any);
+    
     //Profile
     dispatch(getProfileService(store?.auth_response.user_name) as any)
       .then(unwrapResult)
