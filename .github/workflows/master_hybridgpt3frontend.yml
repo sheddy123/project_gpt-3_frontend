@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'hybridgpt3frontend'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C4A3CCEEF68D4682BBF1868359E1347B }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6AF8E80283BE402D81E91C51394F68FD }}
           package: .
