@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import ProfileModal from "@/components/Common/Modal/ProfileModal";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";

@@ -8,7 +8,7 @@ import CustomModal from "./CustomModal";
 
 const Modal = () => {
   const [errorText, setErrorText] = useState("");
-  const errorResponse = useSelector((store) => store?.authReducer?.message);
+  const errorResponse = useSelector((store:any) => store?.authReducer?.message);
   const [showAlert, setShowAlert] = useState(false);
   const location = useLocation();
   const message = location.state && location.state.message;

@@ -17,14 +17,19 @@ const CountUp = ({ start = 0, end, duration = 2000  }) => {
     setTimeout(Count, 70);
   };
 
-  useEffect(() => {
-    let isMounted = true;
-    if (isMounted) {
-      Count();
-    }
-    return () => (isMounted = false);
-  }, [end]);
+  // useEffect(() => {
+  //   let isMounted = true;
+  //   if (isMounted) {
+  //     Count();
+  //   }
+  //   return () => (isMounted = false);
+  // }, [end]);
 
+  useEffect(() => {
+    Count();
+  }, [end]);
+  
+  
   return (
     <>{value}</>
   );

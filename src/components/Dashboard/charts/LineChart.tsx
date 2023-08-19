@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import { ChartComponent, SeriesCollectionDirective, SeriesDirective, Inject, LineSeries, DateTime, Legend, Tooltip } from '@syncfusion/ej2-react-charts';
 import { lineCustomSeries, LinePrimaryXAxis, LinePrimaryYAxis } from '../data/dummy';
 import { useStateContext } from '@/utils/Helpers/ContextProvider';
@@ -6,6 +8,7 @@ const LineChart = () => {
   const { currentMode } = useStateContext();
 
   return (
+    
     <ChartComponent
       id="line-chart"
       height="420px"

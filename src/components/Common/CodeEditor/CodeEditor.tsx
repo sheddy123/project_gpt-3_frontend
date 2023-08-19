@@ -20,7 +20,7 @@ const CodeEditor = () => {
     `Enter a command in the code editor and click 'Run' to execute.`
   );
 
-  const codeResponse = useSelector((store) => store?.codeEditorReducer);
+  const codeResponse = useSelector((store: any) => store?.codeEditorReducer);
   useEffect(() => {
     // Check if codeResponse has a value and update defaultValue
     if (codeResponse?.response?.response) {

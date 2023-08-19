@@ -9,7 +9,7 @@ const DisplayConfetti = () => {
     height: window.innerHeight,
   });
   const dispatch = useDispatch();
-  const modalReducer = useSelector((state) => state.modalReducer);
+  const modalReducer = useSelector((state:any) => state.modalReducer);
   const detectSize = () => {
     setWindowDimension({
       width: window.innerWidth,

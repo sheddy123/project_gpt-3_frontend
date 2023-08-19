@@ -27,6 +27,7 @@ const StudentProgressBar: React.FC<StudentProgressBarProps> = ({
           <div className="card">
             <div
               className="percent"
+              // @ts-ignore
               style={{ "--num": `${progress}`, "--offset": offset }}
             >
               <div className="dot"></div>

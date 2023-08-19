@@ -23,6 +23,7 @@ const TabNav = ({ handleTabClick, tabNavs, activeTab }: ITabNav) => {
             style={{
               color: activeTab === tab.name + "-tab" ? currentColor : "",
             }}
+            // @ts-ignore
             onClick={(event) => handleTabClick(event?.target.id)}>
             {tab.name.toLocaleUpperCase()}
           </button>

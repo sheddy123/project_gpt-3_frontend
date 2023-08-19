@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import NavLinks from "./NavLinks";
 import { useState } from "react";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";

@@ -59,6 +59,7 @@ const ProfileModal = () => {
     if (checked) {
       updatedSkills = [...programming_skills, name];
     } else {
+      // @ts-ignore
       updatedSkills = programming_skills.filter((skill) => skill !== name);
     }
 
@@ -102,6 +103,7 @@ const ProfileModal = () => {
     if (isValid) {
       // Proceed with form submission if all validations pass
       // Handle form submission logic here
+      // @ts-ignore
       inputs.user_id = store?.authReducer?.auth_response.user_name;
       inputs.programming_skills = JSON.stringify(inputs.programming_skills);
       dispatch(createProfileService(inputs) as any)

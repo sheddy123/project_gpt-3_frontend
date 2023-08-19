@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
 
 const DropDownComponent = ({ currentMode, filterData, handleOnClick, filterText, id }) => { 

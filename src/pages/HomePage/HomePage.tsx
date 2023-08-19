@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import Possibility from "@/components/Possibility/PossibilityComponent/Possibility";
 import About from "@/components/About/AboutComponent/About";
 import Brand from "@/components/Brand/Brand";

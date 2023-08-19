@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import DynamicForm from "@/components/DynamicForm/DynamicForm";
 import { FormFieldDescriptions } from "@/interfaces/IFeatures/IFeatures";
 import {

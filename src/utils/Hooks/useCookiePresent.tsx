@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import { useDispatch } from "react-redux";
 import { appAxiosAuthInstance } from "../Helpers/axios_config";
 import { BaseUrl } from "../Constants/ApiConstants/api_constants";

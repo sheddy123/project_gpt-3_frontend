@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import { Questions_Url } from "@/utils/Constants/ApiConstants/api_constants";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";

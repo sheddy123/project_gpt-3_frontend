@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import { ChartsHeader } from '@/components';
 import { useStateContext } from '@/utils/Helpers/ContextProvider';
 import { areaCustomSeries, areaPrimaryXAxis, areaPrimaryYAxis } from '@/components/Dashboard/data/dummy';

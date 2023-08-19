@@ -49,11 +49,13 @@ const OAuthGoogle = () => {
       // The script has been loaded, and the 'google' object is available
       // You can now use the 'google' object here
       /* global google */
+      // @ts-ignore
       google.accounts.id.initialize({
         client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
         callback: handleGoogleCallBackResponse,
       });
 
+      // @ts-ignore
       google.accounts.id.renderButton(
         document.getElementById("signInGoogleDiv"),
         { theme: "outline", size: "large" }

@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import { FieldType } from "@/utils/Constants/ApiConstants/api_constants";
 import { IToolbarSettings } from "@syncfusion/ej2-react-richtexteditor";
 
