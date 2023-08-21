@@ -7,7 +7,8 @@ import {
   profileReducer,
   formReducer,
   courseReducer,
-  questionReducer
+  questionReducer,
+  gpt3Reducer
 } from "..";
 
 const rootReducer = combineReducers({
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   profileReducer,
   formReducer,
   courseReducer,
-  questionReducer
+  questionReducer,
+  gpt3Reducer
 });
 
 export default rootReducer;
