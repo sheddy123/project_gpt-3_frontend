@@ -31,6 +31,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Toaster } from "react-hot-toast";
 import { useStateContext } from "@/utils/Helpers/ContextProvider";
+import { getArraysForFields, moveSelectOneToTop, removeObjectById } from "@/utils/Helpers/helpers";
 
 export const QuestionDialog = ({
   open,
@@ -102,57 +103,17 @@ export const QuestionDialog = ({
   const [resetForm, setResetForm] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  function getArraysForFields(data) {
-    const arrays = {};
-
-    data?.forEach((item) => {
-      Object.keys(item).forEach((key) => {
-        if (
-          key.endsWith("Id") &&
-          item[key] !== null &&
-          item[key.replace("Id", "Value")] !== null
-        ) {
-          const fieldName = key.replace("Id", "");
-          if (!arrays[fieldName]) {
-            arrays[fieldName] = [];
-          }
-          arrays[fieldName].push({
-            id: item[key],
-            value: item[key.replace("Id", "Value")],
-          });
-        }
-      });
-    });
-
-    return arrays;
-  }
   const { currentMode } = useStateContext();
 
   const addQuestionFormData = getArraysForFields(
     useSelector(selectAllDropdownQuestionFields)
   );
-  const moveSelectOneToTop = (options) => {
-    if (options) {
-      const selectOneIndex = options.findIndex((item) => item.id === 0);
-
-      if (selectOneIndex !== -1) {
-        const selectOneOption = options.splice(selectOneIndex, 1)[0];
-        options.unshift(selectOneOption);
-      }
-
-      return options;
-    }
-    return options;
-  };
-
-  const removeObjectById = (array, id) => {
-    if (!array) return;
-    return array.filter((item) => item.id !== id);
-  };
+  
   // FormFields.ts
   const courseFormFields: FormFieldDescriptions = {
     description_h2: "",
     description_paragraph: "",
+    buttonText:"Save",
     fields: [
       {
         name: FieldLabel.Course,
@@ -206,6 +167,7 @@ export const QuestionDialog = ({
       {
         name: FieldLabel.Answer,
         type: FieldType.Input,
+        input_type: FieldType.Text,
         options: [],
         label: FieldName.Answer,
         required: true,
@@ -214,6 +176,7 @@ export const QuestionDialog = ({
       {
         name: FieldLabel.Feedback,
         type: FieldType.Input,
+        input_type: FieldType.Text,
         options: [],
         label: FieldName.Feedback,
         required: true,
@@ -231,6 +194,7 @@ export const QuestionDialog = ({
       {
         name: FieldLabel.Options,
         type: FieldType.Input,
+        input_type: FieldType.Text,
         options: [],
         label: FieldName.Options,
         required: true,
@@ -354,6 +318,7 @@ export const QuestionDialog = ({
                 isLoading={loading}
                 initialValues={initialValueObj}
                 currentMode={currentMode}
+                onClose={onClose}
               />
               <Toaster position="top-right" />
             </div>
