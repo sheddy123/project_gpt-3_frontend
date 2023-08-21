@@ -29,7 +29,8 @@ const FormInputs = ({
   wholeQuestions,
   courseId,
   showRating, 
-  setShowRating
+  setShowRating,
+  questionType
 }) => {
   const page = useSelector(selectFormPage);
   const { setActiveMenu } = useStateContext();
@@ -70,6 +71,7 @@ const FormInputs = ({
           setSkippedQuestion={setSkippedQuestion}
           setPage={setPage}
           wholeQuestions={wholeQuestions}
+          questionType={questionType}
         />
       );
       return acc;
