@@ -24,6 +24,7 @@ import {
   selectIsSubmitted,
   selectLastPage,
   selectStartTime,
+  selectQuestionType,
 } from "@/redux/features/form/formSlice";
 import FormInputs from "./FormInputs";
 import { openConfetti } from "@/redux/features/modal/modalSlice";
@@ -46,6 +47,7 @@ const Form = ({ courseId }) => {
     isSubmitted: useSelector(selectIsSubmitted),
     lastPage: useSelector(selectLastPage),
     startTime: useSelector(selectStartTime),
+    questionType: useSelector(selectQuestionType),
   };
   const dispatch = useDispatch();
   const [showRating, setShowRating] = useState(false);
@@ -157,6 +159,7 @@ const Form = ({ courseId }) => {
         courseId={courseId}
         showRating={showRating}
         setShowRating={setShowRating}
+        questionType={formData.questionType}
       />
     </form>
   );
