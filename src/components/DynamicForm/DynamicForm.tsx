@@ -24,6 +24,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
   isLoading,
   initialValues,
   currentMode,
+  onClose
 }) => {
   const { currentColor } = useStateContext();
   const [additionalInputs, setAdditionalInputs] = useState<{
@@ -238,9 +239,10 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                         )}
                       </label>
                       <input
-                        type="text"
+                        type={field?.input_type ?? "text"}
                         id={field.name}
                         name={field.name}
+                        min={field.min} max={field.max} step={field.step}
                         className="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                         value={formValues[field.name] as string}
                         onChange={handleChange}
@@ -274,7 +276,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                             )}
                           </label>
                           <input
-                            type="text"
+                            type={field?.input_type ?? "text"}
                             id={`${field.name}_additional_${index}`}
                             name={`${field.name}_additional_${index}`}
                             className="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
@@ -316,7 +318,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                       name={field.name}
                       value={formValues[field.name] as string}
                       onChange={handleChange}
-                      rows={3}
+                      rows={8}
                       className="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                       //required={field.required}
                     />
@@ -527,7 +529,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
             disabled={isLoading}
             className="rounded-md dark:text-white  px-3 py-2 text-sm font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 "
             style={{ background: currentColor }}>
-            Save
+            {formFields?.buttonText}
           </button>
         </div>
       </form>
@@ -535,6 +537,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
         <Gpt3Modal
           setGpt3OptionSelected={setGpt3OptionSelected}
           handleChange={handleChange}
+          onClose={onClose}
           resetSelectField={(fieldName) => {
             //console.log("Before reset:", formValues); // Log the current values before resetting
             setFormValues((prevValues) => {
