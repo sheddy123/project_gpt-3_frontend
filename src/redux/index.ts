@@ -6,3 +6,4 @@ export { default as profileReducer } from "./features/profile/profileSlice";
 export { default as formReducer } from "./features/form/formSlice";
 export { default as courseReducer } from "./features/courses/courseSlice";
 export { default as questionReducer } from "./features/questions/questionSlice";
+export { default as gpt3Reducer } from "./features/gpt3/openaiGpt3Slice";
