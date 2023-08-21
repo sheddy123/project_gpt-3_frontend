@@ -109,10 +109,10 @@ export function getInitials(fullName) {
 export function getImageURLForBrand(brand: string): string | undefined {
   let firstWord = brand.split(" ")[0].toLowerCase();
   if (firstWord === "c#") firstWord = "csharp";
-  else if(firstWord === "c++") firstWord = "cpp";
-  else if(firstWord === "javascript") firstWord = "js3";
-  else if(firstWord === "operating") firstWord = "os";
-  
+  else if (firstWord === "c++") firstWord = "cpp";
+  else if (firstWord === "javascript") firstWord = "js3";
+  else if (firstWord === "operating") firstWord = "os";
+
   for (const imgUrl of brandData.img) {
     const fileName = imgUrl.split("/").pop();
     if (fileName && fileName.toLowerCase().includes(firstWord)) {
@@ -128,4 +128,60 @@ export function truncateString(text, maxLength) {
     return text;
   }
   return text.slice(0, maxLength) + "...";
+}
+
+export const moveSelectOneToTop = (options) => {
+  if (options) {
+    const selectOneIndex = options.findIndex((item) => item.id === 0);
+
+    if (selectOneIndex !== -1) {
+      const selectOneOption = options.splice(selectOneIndex, 1)[0];
+      options.unshift(selectOneOption);
+    }
+
+    return options;
+  }
+  return options;
+};
+
+export const removeObjectById = (array, id) => {
+  if (!array) return;
+  return array.filter((item) => item.id !== id);
+};
+
+export function getArraysForFields(data) {
+  const arrays = {};
+
+  data?.forEach((item) => {
+    Object.keys(item).forEach((key) => {
+      if (
+        key.endsWith("Id") &&
+        item[key] !== null &&
+        item[key.replace("Id", "Value")] !== null
+      ) {
+        const fieldName = key.replace("Id", "");
+        if (!arrays[fieldName]) {
+          arrays[fieldName] = [];
+        }
+        arrays[fieldName].push({
+          id: item[key],
+          value: item[key.replace("Id", "Value")],
+        });
+      }
+    });
+  });
+
+  return arrays;
+}
+
+export function assignValue(inputString, comparisonValue, defaultValue) {
+  const number = parseFloat(inputString);
+  const value = parseFloat(comparisonValue);
+  const defaultNumber = parseFloat(defaultValue);
+
+  if (!isNaN(number) && number <= value) {
+    return number;
+  } else {
+    return defaultNumber;
+  }
 }
