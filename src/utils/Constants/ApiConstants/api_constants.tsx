@@ -1,9 +1,12 @@
 export const BaseUrl = import.meta.env.VITE_API_BASE_URL;
 export const AUTH_TOKEN = "/";
 export const Login_Url = BaseUrl + import.meta.env.VITE_LOGIN;
-export const Student_Progress_Url = BaseUrl + import.meta.env.VITE_STUDENT_PROGRESS_URL;
-export const Student_Log_Time_Url = BaseUrl + import.meta.env.VITE_STUDENT_LOG_TIME_URL;
-export const Highest_Performing_Scorers_Url = BaseUrl + import.meta.env.VITE_GET_HIGHEST_PERFORMING_SCORERS_URL;
+export const Student_Progress_Url =
+  BaseUrl + import.meta.env.VITE_STUDENT_PROGRESS_URL;
+export const Student_Log_Time_Url =
+  BaseUrl + import.meta.env.VITE_STUDENT_LOG_TIME_URL;
+export const Highest_Performing_Scorers_Url =
+  BaseUrl + import.meta.env.VITE_GET_HIGHEST_PERFORMING_SCORERS_URL;
 export const Logout_Url = BaseUrl + import.meta.env.VITE_LOGOUT;
 export const Create_Profile_Url =
   BaseUrl + import.meta.env.VITE_CREATE_PROFILE_URL;
@@ -24,6 +27,8 @@ export enum FieldType {
   Radio = "radio",
   Checkbox = "checkbox",
   RichText = "richText",
+  Number = "number",
+  Text = "text",
 }
 export enum FieldLabel {
   Course = "Course",
@@ -37,6 +42,11 @@ export enum FieldLabel {
   Language = "Language",
   Options = "Options",
   QuestionId = "QuestionId",
+  Temperature = "Temperature",
+  Max_Tokens = "Max_Tokens",
+  Max_Questions = "Max_Questions",
+  Prompt = "Prompt",
+  Model = "Model",
 }
 export enum FieldName {
   Course = "Course",
@@ -50,6 +60,11 @@ export enum FieldName {
   Language = "Language",
   MultipleOptions = "Multiple Options",
   Options = "Options",
+  Temperature = "Temperature",
+  Max_Tokens = "Max_Tokens",
+  Max_Questions = "Max_Questions",
+  Prompt = "Prompt",
+  Model = "Model",
 }
 
 export enum CourseStatus {
