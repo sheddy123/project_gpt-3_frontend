@@ -23,7 +23,8 @@ const Questions = ({
   lastPage,
   setSkippedQuestion,
   setPage,
-  wholeQuestions
+  wholeQuestions,
+  questionType,
 }) => {
   const { currentColor, currentMode } = useStateContext();
   const [fillColor, setFillColor] = useState("slate-400");
@@ -33,6 +34,10 @@ const Questions = ({
   const currentQuestionAnsweredObject = selectAnsweredQuestions.find(
     (item) => item.formId === component + 1
   );
+  const options =
+    questionType === "GPT-3 hybrid"
+      ? data?.options?.split("@@")
+      : data?.options?.split(";");
   const currentQuestionAnswered =
     currentQuestionAnsweredObject?.formId == component + 1
       ? currentQuestionAnsweredObject.selectedAnswer
@@ -77,11 +82,13 @@ const Questions = ({
     sessionQuizAnswers: feedbackResponse?.sessionQuizAnswers,
     initialQuestions: useSelector(selectFormData).map((item, index) => ({
       ...item,
-      formId: index + 2
+      formId: index + 2,
     })),
   };
-  const currentQuestionFeedback = questionFeedback.feedbackList?.filter(feedback => feedback.id == data.id)[0];
-  
+  const currentQuestionFeedback = questionFeedback.feedbackList?.filter(
+    (feedback) => feedback.id == data.id
+  )[0];
+
   return (
     <div>
       <div>
@@ -135,7 +142,7 @@ const Questions = ({
             className="pt-3 mb-10"
           />
           <ul className="space-y-4">
-            {data?.options?.split(";")?.map((item, index) => (
+            {options?.map((item, index) => (
               <li
                 key={index}
                 className={`border border-[#676161]  p-4 rounded-lg flex items-center cursor-pointer w-full hover:bg-black hover:text-[#FAEBD7] hover:dark:bg-[#20232a] hover:dark:border-[#20232a]
