@@ -5,7 +5,7 @@ const TabNav = ({ handleTabClick, tabNavs, activeTab }: ITabNav) => {
   const { currentColor } = useStateContext();
   return (
     <ul
-      className="flex flex-wrap -mb-px"
+      className="flex flex-wrap -mb-px list-none"
       id="myTab"
       data-tabs-toggle="#myTabContent"
       role="tablist">
