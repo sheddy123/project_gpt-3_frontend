@@ -54,7 +54,7 @@ const TabContent = ({ TabNavs, activeTab }) => {
                     <div
                       key={`${item}${index}`}
                       className={` shadow grid grid-cols-2 p-2 h-full w-full overflow-hidden relative max-w-xs bg-cover bg-no-repeat cont`}
-                      style={{ background: colors[index] }}>
+                       style={{ background: colors[index] }}>
                       <div>
                         {/* <button
                         type="button"
