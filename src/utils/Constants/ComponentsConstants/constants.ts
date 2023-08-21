@@ -98,6 +98,11 @@ export const TabNavs: ITabDescription[] = [
   { id: 3, name: "completed", content: "completed" },
 ];
 
+export const Gpt3TabNavs: ITabDescription[] = [
+  { id: 1, name: "prompt request", content: "prompt request" },
+  { id: 2, name: "completed", content: "completed" },
+];
+
 
 export const toolbarSettings1 : IToolbarSettings = {
   items: [
