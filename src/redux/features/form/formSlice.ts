@@ -12,6 +12,7 @@ const initialState = {
   totalQuestions: 0,
   isSubmitted: false,
   lastPage: 0,
+  questionType: "",
   selectedQuestion: [1],
   questionsSkipped: [0],
   startTime: new Date(),
@@ -93,6 +94,9 @@ const formSlice = createSlice({
     },
     setStartTime: (state) => {
       state.startTime = new Date();
+    },
+    setQuestionType: (state, action) => {
+      state.questionType = action.payload;
     },
     setSelectedQuestion: (state, action) => {
       const isNumberSelected = state.selectedQuestion.includes(action.payload);
@@ -206,6 +210,7 @@ export const selectFormData = (state) => state.formReducer.data;
 export const selectFormTitle = (state) => state.formReducer.title;
 export const selectIsSubmitted = (state) => state.formReducer.isSubmitted;
 export const selectLastPage = (state) => state.formReducer.lastPage;
+export const selectQuestionType = (state) => state.formReducer.questionType;
 export const selectStartTime = (state) => state.formReducer.startTime;
 export const selectQuestionsSkipped = (state) =>
   state.formReducer.questionsSkipped;
@@ -242,7 +247,8 @@ export const {
   resetAnsweredQuestions,
   setSkippedQuestion,
   submitQuestion,
-  setStartTime
+  setStartTime,
+  setQuestionType
 } = formSlice.actions;
 
 // Reducer
