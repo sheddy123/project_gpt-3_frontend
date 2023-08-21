@@ -8,9 +8,9 @@ export interface IAuth {
   message: string;
   auth_response: IAuthResponse;
   studentProgress: StudentProgress[];
-  studentProgressIsLoading:boolean;
-  studentLogTime:object;
-  highestScorers:object;
+  studentProgressIsLoading: boolean;
+  studentLogTime: object;
+  highestScorers: object;
   getHighestScorersIsLoading: boolean;
 }
 
@@ -27,7 +27,7 @@ export interface StudentProgress {
   percentageProgress?: string;
 }
 
-export interface QuestionsTaken{
+export interface QuestionsTaken {
   easy: number;
   medium: number;
   difficult: number;
@@ -119,6 +119,7 @@ export interface FormFieldDescriptions {
   description_h2: string;
   description_paragraph: string;
   fields: FormField[];
+  buttonText: string;
 }
 export interface ISelectOptions {
   id: string | number;
@@ -127,12 +128,16 @@ export interface ISelectOptions {
 export interface FormField {
   name: string;
   type: FieldType;
+  input_type?: string;
   required: boolean;
   options: ISelectOptions[]; // For select and radio inputs
   label: string; // For checkbox input
   toolbarSettings?: IToolbarSettings;
   value?: string;
   addMore?: boolean;
+  min?: number;
+  step?: number;
+  max?: number;
 }
 
 export interface DynamicFormProps {
@@ -141,6 +146,7 @@ export interface DynamicFormProps {
   isLoading: boolean;
   initialValues?: { [key: string]: string | boolean | string[] };
   currentMode?: string;
+  onClose?: void;
 }
 /************************************ Dynamic Form ************************************/
 
@@ -185,3 +191,30 @@ export interface ICourseRealtedQuestions {
   date_created: string;
 }
 /************************************ ICourseRealtedQuestions ************************************/
+
+/************************************ OpenAiGpt3 ************************************/
+export interface Choice {
+  text: string;
+  index: number;
+  logprobs: null;
+  finish_reason: string;
+}
+
+export interface Usage {
+  prompt_tokens: number;
+  completion_tokens: number;
+  total_tokens: number;
+}
+
+export interface TextCompletionResponse {
+  warning: string;
+  id: string;
+  object: string;
+  created: number;
+  model: string;
+  choices: Choice[];
+  usage: Usage;
+  isLoading: boolean;
+  status: string;
+}
+/************************************ OpenAiGpt3 ************************************/
