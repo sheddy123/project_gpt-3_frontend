@@ -33,7 +33,7 @@ const Navbar = () => {
 
   const logUserOut = async () => {
     await logout();
-    dispatch(clearAuth());
+    dispatch(clearAuth);
   };
 
   useEffect(() => {

@@ -21,7 +21,7 @@ const UserProfile = () => {
   const dispatch = useDispatch();
   const logUserOut = async () => {
     await logout();
-    dispatch(clearAuth());
+    dispatch(clearAuth);
   };
   const store = useSelector((store) => store);
   const data = store?.profileReducer?.programming_skills && JSON.parse(
