@@ -68,7 +68,7 @@ const RequireAuth = ({ allowedRoles }) => {
       />
     );
   }
-  //  console.log("Has allowed roles ", hasAllowedRoles)
+   // console.log("Has allowed roles ", hasAllowedRoles, user)
   if (hasAllowedRoles && !isTokenExpired()) {
     return <Outlet />;
   }

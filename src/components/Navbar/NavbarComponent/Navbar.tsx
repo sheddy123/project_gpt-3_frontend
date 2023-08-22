@@ -14,6 +14,7 @@ import useLogout from "@/utils/Hooks/useLogout";
 import { useEffect } from "react";
 import useCookiePresent from "@/utils/Hooks/useCookiePresent";
 import { Link } from "react-router-dom";
+import { clearAuth } from "@/redux/features/auth/authSlice";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -32,6 +33,7 @@ const Navbar = () => {
 
   const logUserOut = async () => {
     await logout();
+    dispatch(clearAuth());
   };
 
   useEffect(() => {

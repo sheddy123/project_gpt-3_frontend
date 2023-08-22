@@ -41,6 +41,25 @@ const authSlice = createSlice({
   reducers: {
     clearAuth: (state) => {
       state.message = "auth has been cleared";
+      state.auth_response = {
+        isLoading: true,
+        code: "",
+        access_failed_count: "0",
+        email: "",
+        locked_out_enabled: "",
+        lockout_end: "",
+        normalized_email: "",
+        normalized_username: "",
+        phone_number: "",
+        image_url: "",
+        security_stamp: "",
+        user_name: "",
+        twoFactorEnabled: "",
+        roles: [{ id: 0, roleName: "" }],
+        token: "",
+        refresh_token: "",
+        refresh_token_expiry_time: "",
+      };
     },
     updateAuth: (state, action) => {
       state.message = action.payload?.message;
