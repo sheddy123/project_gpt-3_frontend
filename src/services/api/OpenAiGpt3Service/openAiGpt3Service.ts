@@ -32,7 +32,7 @@ export const createHybridGpt3Service = createAsyncThunk(
             err?.response?.data?.msg ?? "Server is down, please try again",
         }
       );
-
+      
       //   const response = await axios.post(
       //     import.meta.env.VITE_OPEN_AI_URL,
       //     prop,
