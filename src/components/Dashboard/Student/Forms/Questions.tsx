@@ -92,6 +92,15 @@ const Questions = ({
   return (
     <div>
       <div>
+        {!isSubmitted && (
+          <i className=" text-red-700 dark:text-orange-500">
+            <b>Important:</b> Do Not Close or Refresh the Page! Closing,
+            reloading, or refreshing the page during the quiz will result in the
+            loss of your progress and answers. Please stay on this page until
+            you've completed the quiz to ensure your responses are successfully
+            submitted. Thank you for your cooperation!
+          </i>
+        )}
         <h2>Short Quiz</h2>
         <h4>
           Quiz {component} | {wholeQuestions?.length} questions

@@ -59,11 +59,12 @@ const Navbar = () => {
           onClick={logUserOut}
         />
       ) : (
-        <Button
-          styles={`${nav_auth.button[0].styles} md:block hidden`}
-          text={`${nav_auth.button[0].text}`}
-          onClick={() => dispatch(openModal(undefined))}
-        />
+        <Link to={"dashboard/home"} className={`text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br  font-medium rounded-none text-sm px-5 py-2.5 text-center  md:block hidden cursor-pointer`}>{`${nav_auth.button[0].text}`}</Link>
+        // <Button
+        //   styles={`${nav_auth.button[0].styles} md:block hidden`}
+        //   text={`${nav_auth.button[0].text}`}
+        //   onClick={() => dispatch(openModal(undefined))}
+        // />
       )}
     </>
   );
