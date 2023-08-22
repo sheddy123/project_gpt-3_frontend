@@ -152,7 +152,7 @@ const CourseOverview = ({
                 />
                 <div>
                   <p className="font-semibold text-xl ">
-                    James Park
+                    Ifeanyi Shadrach
                     <span className="inline-flex items-center justify-center w-5 h-5 ml-1">
                       <Verified color="#31d26c" size={5} />
                     </span>{" "}
