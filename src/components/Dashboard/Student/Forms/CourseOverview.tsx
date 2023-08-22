@@ -164,7 +164,7 @@ const CourseOverview = ({
               </div>
               <p>
                 An ardent Software Technology Evangelist specializing in
-                Frontend Development, with an extensive [n++] years of
+                Software Development, with an extensive [n++] years of
                 experience in the dynamic Software Industry &nbsp;
               </p>
               {/* <p>
