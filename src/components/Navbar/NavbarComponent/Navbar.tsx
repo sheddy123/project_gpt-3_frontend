@@ -97,10 +97,12 @@ const Navbar = () => {
             </Link>
           </li>
           <NavLinks />
-          <div className="py-5">
-            <button className="bg-primary text-white  px-6 py-2 rounded-full">
+          <div className="py-5 flex px-5">
+          <Link to={"dashboard/home"} className="bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br w-full text-white text-center py-2 rounded-full">Get started</Link>
+            
+            {/* <button className="bg-primary text-white  px-6 py-2 rounded-full">
               Get Started
-            </button>
+            </button> */}
           </div>
         </ul>
         <div
