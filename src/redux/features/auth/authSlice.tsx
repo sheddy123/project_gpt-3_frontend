@@ -40,6 +40,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     clearAuth: (state) => {
+      console.log("auth has been cleared")
       state.message = "auth has been cleared";
       state.auth_response = {
         isLoading: true,
