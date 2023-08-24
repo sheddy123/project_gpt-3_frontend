@@ -89,6 +89,7 @@ const Form = ({ courseId }) => {
         courseQuizLists: formData.data,
         startTime: formData.startTime,
         endTime: new Date(),
+        questionType: formData.questionType
       }) as any
     );
     dispatch(getStudentProgressService() as any);
