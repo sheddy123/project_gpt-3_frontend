@@ -43,7 +43,7 @@ const Leaders = () => {
   const tableRowData =
     highestScorers?.length > 0 ? (
       highestScorers.map(
-        ({ user_name, course_name, difficulty_level_name, grade }) => {
+        ({ user_name, course_name, difficulty_level_name, grade, question_type }) => {
           return (
             <tr className="border-b border-gray-200 dark:border-gray-700">
               <th
@@ -56,6 +56,7 @@ const Leaders = () => {
               <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800 text-[10px]">
                 {getDifficultyBadge(difficulty_level_name)}
               </td>
+              <td className="px-6 py-4 text-[10px]">{question_type}</td>
             </tr>
           );
         }
@@ -97,6 +98,11 @@ const Leaders = () => {
                   scope="col"
                   className="px-6 py-3 bg-gray-50 dark:bg-gray-800 text-[10px]">
                   Difficulty
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 bg-gray-50 dark:bg-gray-800 text-[10px]">
+                  Question Type
                 </th>
               </tr>
             </thead>
