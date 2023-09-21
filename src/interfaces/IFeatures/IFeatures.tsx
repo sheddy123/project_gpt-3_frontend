@@ -138,6 +138,8 @@ export interface FormField {
   min?: number;
   step?: number;
   max?: number;
+  tooltipText?: string | React.ReactNode;
+  hasTooltip?: boolean;
 }
 
 export interface DynamicFormProps {
