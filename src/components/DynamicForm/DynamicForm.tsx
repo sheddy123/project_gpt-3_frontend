@@ -4,6 +4,8 @@
 import { DynamicFormProps } from "@/interfaces/IFeatures/IFeatures";
 import { FieldType } from "@/utils/Constants/ApiConstants/api_constants";
 import { useStateContext } from "@/utils/Helpers/ContextProvider";
+import { TooltipComponent } from "@syncfusion/ej2-react-popups";
+import { SharpInformation } from "@/components/Common/Icons/Icons";
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import {
   HtmlEditor,
@@ -204,7 +206,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
       [fieldName]: prevInputs[fieldName].filter((_, i) => i !== index),
     }));
   };
-
+  
   return (
     <>
       <form onSubmit={handleSubmit} id="myForm">
@@ -228,7 +230,14 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                             ? "text-slate-100"
                             : "text-gray-900"
                         } block  text-sm  leading-6 font-semibold`}>
-                        {field.label}{" "}
+                        {field.label} 
+                        {field.hasTooltip && <span className="inline-flex items-center justify-center cursor-pointer">
+                          <TooltipComponent
+                          content={field.tooltipText}
+                          position="BottomCenter">
+                          <SharpInformation />
+                        </TooltipComponent>
+                        </span>}
                         {field.required && (
                           <span className="text-red-500">* </span>
                         )}
@@ -308,15 +317,23 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                           ? "text-slate-100"
                           : "text-gray-900"
                       } block  text-sm  leading-6 font-semibold`}>
-                      {field.name}{" "}
+                      {field.name}
+                      {field.hasTooltip && <span className="inline-flex items-center justify-center cursor-pointer">
+                          <TooltipComponent
+                          content={field.tooltipText}
+                          position="BottomCenter">
+                          <SharpInformation />
+                        </TooltipComponent>
+                        </span>}
                       {field.required && (
                         <span className="text-red-500">*</span>
                       )}
                     </label>
+                    {console.log("Thhd", formValues[field.name])}
                     <textarea
                       id={field.name}
                       name={field.name}
-                      value={formValues[field.name] as string}
+                      value={field.hasTooltip && formValues[field.name] !="" ? JSON.stringify(JSON.parse(formValues[field.name]), null, 2) : formValues[field.name] as string}
                       onChange={handleChange}
                       rows={8}
                       className="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
@@ -338,7 +355,14 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                           ? "text-slate-100"
                           : "text-gray-900"
                       } block  text-sm  leading-6 font-semibold`}>
-                      {field.name}{" "}
+                      {field.name}
+                      {field.hasTooltip && <span className="inline-flex items-center justify-center cursor-pointer">
+                          <TooltipComponent
+                          content={field.tooltipText}
+                          position="BottomCenter">
+                          <SharpInformation />
+                        </TooltipComponent>
+                        </span>}
                       {field.required && (
                         <span className="text-red-500">* </span>
                       )}
@@ -386,7 +410,14 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                           ? "text-slate-100"
                           : "text-gray-900"
                       } block  text-sm  leading-6 font-semibold`}>
-                      {field.label}{" "}
+                      {field.label}
+                      {field.hasTooltip && <span className="inline-flex items-center justify-center cursor-pointer">
+                          <TooltipComponent
+                          content={field.tooltipText}
+                          position="BottomCenter">
+                          <SharpInformation />
+                        </TooltipComponent>
+                        </span>}
                       {field.required && (
                         <span className="text-red-500">* </span>
                       )}
@@ -427,7 +458,14 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                           ? "text-slate-100"
                           : "text-gray-900"
                       } block  text-sm  leading-6 font-semibold`}>
-                      {field.label}{" "}
+                      {field.label}
+                      {field.hasTooltip && <span className="inline-flex items-center justify-center cursor-pointer">
+                          <TooltipComponent
+                          content={field.tooltipText}
+                          position="BottomCenter">
+                          <SharpInformation />
+                        </TooltipComponent>
+                        </span>}
                       {field.required && (
                         <span className="text-red-500">* </span>
                       )}
@@ -473,7 +511,14 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                     } space-y-2 sm:col-span-3`}>
                     <legend
                       className={` block  text-sm  leading-6 font-semibold`}>
-                      {field.label}{" "}
+                      {field.label}
+                      {field.hasTooltip && <span className="inline-flex items-center justify-center cursor-pointer">
+                          <TooltipComponent
+                          content={field.tooltipText}
+                          position="BottomCenter">
+                          <SharpInformation />
+                        </TooltipComponent>
+                        </span>}
                       {field.required && (
                         <span className="text-red-500">* </span>
                       )}
