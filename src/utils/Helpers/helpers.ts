@@ -185,3 +185,26 @@ export function assignValue(inputString, comparisonValue, defaultValue) {
     return defaultNumber;
   }
 }
+
+
+ export function containsSentenceWithPrefix(inputString, targetString) {
+  if(inputString.includes(targetString)){
+    return true;
+  }
+   // Define an array of delimiters to split targetString
+   const delimiters = ['@@', ';'];
+
+   // Iterate through each delimiter and split targetString
+   for (const delimiter of delimiters) {
+     const parts = inputString.split(delimiter);
+     // Iterate through the parts and check if any of them matches the inputString
+     for (const part of parts) {
+      //console.log(part, "<==>", targetString, part.trim() === targetString);
+       if (part.trim() === targetString.trim()) {
+         return true;
+       }
+     }
+   }
+   
+   return false;
+}

@@ -31,7 +31,8 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Toaster } from "react-hot-toast";
 import { useStateContext } from "@/utils/Helpers/ContextProvider";
-import { getArraysForFields, moveSelectOneToTop, removeObjectById } from "@/utils/Helpers/helpers";
+import { containsSentenceWithPrefix, getArraysForFields, moveSelectOneToTop, removeObjectById } from "@/utils/Helpers/helpers";
+import { containsRect } from "@syncfusion/ej2-react-charts";
 
 export const QuestionDialog = ({
   open,
@@ -71,7 +72,7 @@ export const QuestionDialog = ({
     const questionFormObj = {
       answer: formData?.Answer,
       course: formData?.Course,
-      options: formData?.Options,
+      options: formData?.Options?.toString(),//?.replace(',',';'),
       question: formData?.Question,
       difficulty: formData?.Difficulty,
       question_type: formData?.Question_Type,
@@ -81,8 +82,10 @@ export const QuestionDialog = ({
       language: formData?.Language,
       feedback: formData?.Feedback,
     };
+console.log(JSON.stringify(formData));
 
-    const serviceFunction = isEditing
+    if(containsSentenceWithPrefix(formData?.Options,formData?.Answer)) {
+        const serviceFunction = isEditing
       ? editQuestionService
       : createQuestionService;
     const response = await dispatch(serviceFunction(questionFormObj) as any);
@@ -96,6 +99,9 @@ export const QuestionDialog = ({
 
       setResetForm(true);
       setLoading(true);
+    }
+    }else{
+      alert("Answer is not contained in options, please review and try again");
     }
   };
 
@@ -310,7 +316,13 @@ export const QuestionDialog = ({
                   currentMode == "Dark" ? "text-slate-100" : "text-slate-900"
                 }`}>
                 {isEditing ? "Edit question" : "Add question"}
+            
               </h1>
+              <i className={`${currentMode == "Dark" ? "text-orange-300" : "text-red-700"}`}>
+            <b>Important:</b> Do Not Close or Refresh the Page! Closing,
+            reloading, or refreshing the page during question generation, will result in loss of data. Please stay on this page until
+            you've completely uploaded the questions.
+          </i>
               <DynamicForm
                 key={resetForm ? "reset" : "normal"}
                 formFields={courseFormFields}

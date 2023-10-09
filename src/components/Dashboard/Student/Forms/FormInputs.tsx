@@ -82,6 +82,7 @@ const FormInputs = ({
     dispatch(setQuestionLength(Object.keys(display).length));
     dispatch(setTotalQuestions(questionSets.length)); 
   }, []);
+  
   const isOnLastPage = page === (wholeQuestions.length + 2);
   const displayRequiredPage = !isOnLastPage ? (
     display[page]

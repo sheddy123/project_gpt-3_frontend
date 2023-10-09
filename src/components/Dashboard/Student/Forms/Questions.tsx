@@ -34,10 +34,11 @@ const Questions = ({
   const currentQuestionAnsweredObject = selectAnsweredQuestions.find(
     (item) => item.formId === component + 1
   );
+  
   const options =
     questionType === "GPT-3 hybrid"
       ? data?.options?.split("@@")
-      : data?.options?.split(";");
+      : data?.options?.split(";")
   const currentQuestionAnswered =
     currentQuestionAnsweredObject?.formId == component + 1
       ? currentQuestionAnsweredObject.selectedAnswer

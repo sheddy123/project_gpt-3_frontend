@@ -148,7 +148,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
     const additionalValues: { [key: string]: string } = {};
     for (const field of formFields.fields) {
       if (field.addMore && Object.keys(additionalInputs).length > 0) {
-        additionalValues[field.name] = additionalInputs[field.name].join(",");
+        additionalValues[field.name] = additionalInputs[field.name].join("@@");
       }
     }
     return additionalValues;
@@ -329,7 +329,6 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                         <span className="text-red-500">*</span>
                       )}
                     </label>
-                    {console.log("Thhd", formValues[field.name])}
                     <textarea
                       id={field.name}
                       name={field.name}

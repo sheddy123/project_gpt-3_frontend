@@ -49,7 +49,7 @@ const Gpt3Modal = ({
   const gpt3Response3 = useSelector((store) => store?.gpt3Reducer);
   const initialValueObj = {};
   const initialValueCompletedObj = {
-    [FieldLabel.Prompt]: gpt3Response3?.choices[0]?.text ?? "",
+    [FieldLabel.Prompt]: gpt3Response3?.choices[0]?.message?.content ?? "",
   };
  
 
@@ -87,18 +87,23 @@ const Gpt3Modal = ({
         type: FieldType.Select,
         options: [
           { id: 0, value: "Select one option" },
-          { id: 1, value: "text-davinci-003" },
-          { id: 2, value: "text-davinci-002" },
-          { id: 3, value: "text-davinci-001" },
-          { id: 4, value: "text-curie-001" },
-          { id: 5, value: "text-babbage-001" },
-          { id: 6, value: "text-ada-001" },
-          { id: 7, value: "davinci-instruct-beta" },
-          { id: 8, value: "davinci" },
-          { id: 9, value: "curie-instruct-beta" },
-          { id: 10, value: "curie" },
-          { id: 11, value: "babbage" },
-          { id: 12, value: "ada" },
+          { id: 1, value: "gpt-3.5-turbo" },
+          { id: 1, value: "gpt-3.5-turbo-0613" },
+          { id: 1, value: "gpt-3.5-turbo-16k-0613" },
+          { id: 1, value: "gpt-3.5-turbo-16k" },
+
+          // { id: 1, value: "gpt-3.5-turbo-instruct" },
+          // { id: 2, value: "davinci-002" },
+          // { id: 3, value: "text-davinci-001" },
+          // { id: 4, value: "text-curie-001" },
+          // { id: 5, value: "text-babbage-001" },
+          // { id: 6, value: "text-ada-001" },
+          // { id: 7, value: "davinci-instruct-beta" },
+          // { id: 8, value: "davinci" },
+          // { id: 9, value: "curie-instruct-beta" },
+          // { id: 10, value: "curie" },
+          // { id: 11, value: "babbage" },
+          // { id: 12, value: "ada" },
         ],
         label: FieldName.Model,
         required: true,
@@ -106,7 +111,9 @@ const Gpt3Modal = ({
         hasTooltip: true,
         tooltipText: `<p>
         <strong>Models</strong>, <i>(in the context of ChatGpt refers to the underlying neural network architecture and its associated parameters that enable the model to understand and generate human-like text responses in a conversational manner.)</i>.
-      </p>`
+        <br/>Note: <b>gpt-3.5-turbo</b> performs better than others however, it is slower than others  
+        <br/><i>The models are ordered based on their capabilities OpenAI offers different variants or sizes of ChatGPT models, ranging from smaller models with fewer parameters to larger, more powerful models. The choice of model variant can affect performance, cost, and response time.</i>
+        </p>`
       },
       {
         name: FieldLabel.Max_Tokens,
@@ -219,7 +226,8 @@ const Gpt3Modal = ({
   }) => {
     const gpt3Obj = {
       model: formData?.Model,
-      prompt: formData?.Prompt,
+      //prompt: formData?.Prompt,
+      messages:[{"role":"system", "content":formData?.Prompt}],
       temperature: parseFloat(formData?.Temperature),
       max_tokens: parseFloat(formData?.Max_Tokens),
       top_p: 1,
@@ -227,7 +235,7 @@ const Gpt3Modal = ({
       presence_penalty: 0,
     };
     setCourse(formData?.Course);
-    console.log(formData);
+    console.log(gpt3Obj);
     dispatch(createHybridGpt3Service(gpt3Obj) as any);
     setActiveTab("completed-tab");
   };
@@ -281,7 +289,7 @@ const Gpt3Modal = ({
                 activeTab={activeTab}
               />
             </div>
-
+            
             <button
               type="button"
               className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -306,6 +314,16 @@ const Gpt3Modal = ({
           </div>
           <div className="max-h-96 overflow-y-auto">
             <div className="p-6 space-y-6">
+              
+              {activeTab == "prompt request-tab" &&
+            <i className={`${currentMode == "Dark" ? "text-orange-300" : "text-red-700"}`}>
+            <b>Important:</b> Do Not Close/Refresh Page or switch tabs before generating questions! Closing,
+            reloading, or swtiching tabs during question generation, will result in loss of data. Please stay on this page until
+            you've completely uploaded the questions.
+          </i>}
+          {activeTab == "completed-tab" && <i className={`${currentMode == "Dark" ? "text-orange-300" : "text-red-700"}`}>
+            <b>Important:</b> Please review generated questions before uploading questions.
+          </i>}
               <div id="myTabContent">{renderActiveTab(activeTab)}</div>
             </div>
           </div>
