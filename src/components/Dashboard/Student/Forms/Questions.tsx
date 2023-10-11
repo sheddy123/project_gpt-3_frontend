@@ -35,10 +35,16 @@ const Questions = ({
     (item) => item.formId === component + 1
   );
   
-  const options =
-    questionType === "GPT-3 hybrid"
-      ? data?.options?.split("@@")
-      : data?.options?.split(";")
+  // const options : [] =
+  //   questionType === "GPT-3 hybrid" || questionType === "Traditional questions"
+  //     ? data?.options?.split("@@")
+  //     : data?.options?.split(";")
+
+  let options:[] = data?.options?.split("@@");
+  if(options.length <= 1)
+  {options = data?.options?.split(";");
+}
+  
   const currentQuestionAnswered =
     currentQuestionAnsweredObject?.formId == component + 1
       ? currentQuestionAnsweredObject.selectedAnswer
