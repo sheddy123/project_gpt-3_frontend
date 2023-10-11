@@ -148,7 +148,8 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
     const additionalValues: { [key: string]: string } = {};
     for (const field of formFields.fields) {
       if (field.addMore && Object.keys(additionalInputs).length > 0) {
-        additionalValues[field.name] = additionalInputs[field.name].join("@@");
+        //console.log("Option fields: ", `${formValues[field.name]};${additionalInputs[field.name].join(";")}`);
+        additionalValues[field.name] = `${formValues[field.name]}@@${additionalInputs[field.name].join("@@")}`;
       }
     }
     return additionalValues;
