@@ -175,6 +175,7 @@ const Gpt3Modal = ({
           "questions": [
               {
                   "difficulty": "easy",
+                  "language": "PHP",
                   "question": "You are working with PHP's 'echo' statement. What is the correct way to display 'Hello, World!' on the screen?",
                   "options": ["a) print 'Hello, World!';", "b) display('Hello, World!');", "c) echo 'Hello, World!';", "d) console.log('Hello, World!');"],
                   "answer": "c) echo 'Hello, World!';",
