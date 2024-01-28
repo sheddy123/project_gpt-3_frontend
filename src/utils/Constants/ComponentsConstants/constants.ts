@@ -6,7 +6,10 @@ import {
   INavLinks,
   ITabDescription,
 } from "@/interfaces/IConstants/IConstants";
-import { IToolbarSettings, ToolbarType } from "@syncfusion/ej2-react-richtexteditor";
+import {
+  IToolbarSettings,
+  ToolbarType,
+} from "@syncfusion/ej2-react-richtexteditor";
 
 //Avatar
 export const avatarStackedData: IAvatarStacked[] = [
@@ -34,16 +37,13 @@ export const avatarStackedData: IAvatarStacked[] = [
 
 //Header Data
 export const headerData: IHeaderProps = {
-  h1_header_text: ` Embark on a Journey: Assess Coding Proficiency Like Never Before with
-    GPT-3 Hybrid Program Test Generation`,
-  p_header_text: `  Harness AI power for transformative coding proficiency assessment. Our
-    groundbreaking GPT-3-based hybrid program test generation offers
-    unparalleled insights into coding skills and capabilities.`,
-  img: new URL("@/assets/images/ai-coding.png", import.meta.url).href,
+  h1_header_text: ` Embark on a Health Odyssey: Unlock Personalized Coverage with Our Innovative Quote Generator`,
+  p_header_text: `  Discover tailored health coverage with our advanced quote platform.  Tailor your coverage with ease, as our advanced system offers you a personalized journey through three distinct health insurance products. Embrace the security of comprehensive care, where your health is the priority. Get ready to experience a new era in insurance – where quotes are not just numbers, but gateways to a healthier and more protected life.`,
+  img: new URL("@/assets/images/nurse.jpg", import.meta.url).href,
   avatarStackedData: avatarStackedData,
   button: {
     styles: "",
-    text: "Get Started",
+    text: "Get Quote",
   },
 };
 
@@ -103,8 +103,7 @@ export const Gpt3TabNavs: ITabDescription[] = [
   { id: 2, name: "completed", content: "completed" },
 ];
 
-
-export const toolbarSettings1 : IToolbarSettings = {
+export const toolbarSettings1: IToolbarSettings = {
   items: [
     "Bold",
     "Italic",
@@ -138,7 +137,7 @@ export const toolbarSettings1 : IToolbarSettings = {
   type: ToolbarType.Expand,
 };
 
-export const toolbarSettings2 : IToolbarSettings = {
+export const toolbarSettings2: IToolbarSettings = {
   items: [
     "Bold",
     "Italic",
@@ -149,65 +148,22 @@ export const toolbarSettings2 : IToolbarSettings = {
     "Undo",
     "Redo",
   ],
-  type: ToolbarType.Expand
+  type: ToolbarType.Expand,
 };
-
-
 
 export const links = [
   {
-    name: "Dashboard",
+    name: "Health Insurance",
     submenu: true,
     sublinks: [
       {
-        Head: "Dashboard",
+        Head: "HealthInsurance",
         sublink: [
-          { name: "Student", link: "/dashboard/home" },
-          { name: "Intructor", link: "/dashboard/questions" },
-          { name: "Administrator", link: "/dashboard" },
+          { name: "Individual Health", link: "/dashboard/home" },
+          { name: "Company Health", link: "/dashboard/questions" },
+          { name: "Family Health", link: "/dashboard" },
         ],
       },
-      // {
-      //   Head: "Bottomwear",
-      //   sublink: [
-      //     { name: "T-shirt", link: "/" },
-      //     { name: "Casual shirts", link: "/" },
-      //     { name: "formal shirts", link: "/" },
-      //     { name: "formal shirts", link: "/" },
-      //     { name: "formal shirts", link: "/" },
-      //   ],
-      // },
-      // {
-      //   Head: "innerwear",
-      //   sublink: [
-      //     { name: "T-shirt", link: "/" },
-      //     { name: "Casual shirts", link: "/" },
-      //     { name: "formal shirts", link: "/" },
-      //     { name: "formal shirts", link: "/" },
-      //     { name: "formal shirts", link: "/" },
-      //   ],
-      // },
-
-      // {
-      //   Head: "sleepwear",
-      //   sublink: [
-      //     { name: "T-shirt", link: "/" },
-      //     { name: "Casual shirts", link: "/" },
-      //     { name: "formal shirts", link: "/" },
-      //     { name: "formal shirts", link: "/" },
-      //     { name: "formal shirts", link: "/" },
-      //   ],
-      // },
-      // {
-      //   Head: "footwear",
-      //   sublink: [
-      //     { name: "T-shirt", link: "/" },
-      //     { name: "Casual shirts", link: "/" },
-      //     { name: "formal shirts", link: "/" },
-      //     { name: "formal shirts", link: "/" },
-      //     { name: "formal shirts", link: "/" },
-      //   ],
-      // },
     ],
   },
   // {

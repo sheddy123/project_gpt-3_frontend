@@ -13,7 +13,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { getAuthService } from "@/services/api/AuthService/GetAuthService";
 
-const Header = () => {
+const Header = ({handleSelectChange, selectedOption}) => {
   const dispatch = useDispatch();
   const modalReducer = useSelector((state) => state.modalReducer);
   const modal = modalReducer.isOpen && <Modal />;
@@ -61,18 +61,30 @@ const Header = () => {
       {modal}
       <div className="gpt3__header section__padding" id="home">
         <div className="gpt3__header-content">
-          <h1 className="gradient__text">{h1_header_text}</h1>
-          <p>{p_header_text}</p>
-
+          <h1 className="text-cyan-800">{h1_header_text}</h1>
+          <h5 className="header__text text-cyan-700">{p_header_text}</h5>
+       
+          
           <div className="gpt3__header-content__input">
-            <Button
+            
+          <div className="flex w-full">
+            
+          <select id="healthPlan" value={selectedOption} onChange={handleSelectChange} className="flex-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option selected>Select health plan</option>
+            <option value="IndividualHealth">Individual Health</option>
+            <option value="FamilyHealth">Family Health</option>
+            <option value="CompanyHealth">Company Health</option>
+        </select>
+
+        <Button
               onClick={() => dispatch(openModal(undefined))}
               styles={`${button.styles}`}
               text={`${button.text}`}
             />
-            {/* <input type="email" placeholder="Your Email Address" /> */}
+    </div>
+            
           </div>
-          <Avatar AvatarStacked={avatarStackedData} />
+          
         </div>
 
         <div className="gpt3__header-image">

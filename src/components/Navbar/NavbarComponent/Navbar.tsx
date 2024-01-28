@@ -3,13 +3,11 @@
 import NavLinks from "./NavLinks";
 import { useState } from "react";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
-import logo from "@/assets/images/logo.svg";
+import logo from "@/assets/images/healthquote.png";
 import "./Navbar.css";
-import { trimAndConvertToLowerCase } from "@/utils/Helpers/helpers";
 import Button from "@/components/Common/Button/Button";
 import { navLinksData } from "@/utils/Constants/ComponentsConstants/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { openModal } from "@/redux/features/modal/modalSlice";
 import useLogout from "@/utils/Hooks/useLogout";
 import { useEffect } from "react";
 import useCookiePresent from "@/utils/Hooks/useCookiePresent";
@@ -18,18 +16,11 @@ import { clearAuth } from "@/redux/features/auth/authSlice";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const [toggleMenu, setToggleMenu] = useState(false);
-  const { text, nav_auth, icontype } = navLinksData;
+  const { nav_auth } = navLinksData;
   const logout = useLogout();
   const cookiePresent = useCookiePresent();
   const dispatch = useDispatch();
   const auth_message = useSelector((store) => store?.authReducer?.message);
-
-  const menuItems = text.map((item, index) => (
-    <p key={`${index + item}`}>
-      <Link to={`${trimAndConvertToLowerCase(item)}`}>{item}</Link>
-    </p>
-  ));
 
   const logUserOut = async () => {
     await logout();
@@ -61,25 +52,21 @@ const Navbar = () => {
           onClick={logUserOut}
         />
       ) : (
-        <Link to={"dashboard/home"} className={`text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br  font-medium rounded-none text-sm px-5 py-2.5 text-center  md:block hidden cursor-pointer`}>{`${nav_auth.button[0].text}`}</Link>
-        // <Button
-        //   styles={`${nav_auth.button[0].styles} md:block hidden`}
-        //   text={`${nav_auth.button[0].text}`}
-        //   onClick={() => dispatch(openModal(undefined))}
-        // />
+        <Link to={"dashboard/home"} className={`text-white bg-gradient-to-r from-sky-600 via-sky-700 to-sky-800 hover:bg-gradient-to-br  font-medium rounded-none text-sm px-5 py-2.5 text-center  md:block hidden cursor-pointer`}>{`${nav_auth.button[0].text}`}</Link>
       )}
     </>
   );
 
   return (
     <>
-      <div className="gpt3__navbar">
+      <div className="gpt3__navbar bg-sky-500">
         <div className="gpt3__navbar-links z-[500]">
-          <div className="gpt3__navbar-links_logo">
-            <img src={logo} />
+          <div className="img_logo_div">
+            <img src={logo} className="img_logo" />
+            {/* <p class=" font-poppins text-3xl italic text-cyan-900 font-semibold">HealthQuote</p> */}
           </div>
           <div className="gpt3__navbar-links_container">
-            <Link to="/" className="py-7 px-3 inline-block text-white">
+            <Link to="/" className="py-7 px-3 pr-10 inline-block text-white">
               Home
             </Link>
             <NavLinks />
@@ -88,7 +75,7 @@ const Navbar = () => {
         <div className="gpt3__navbar-sign">{auth_Items}</div>
         <ul
           className={`
-        md:hidden bg-[#020F0F] fixed w-full top-0 overflow-y-auto bottom-0 z-[200] py-24 pl-4
+        md:hidden bg-sky-950 fixed w-full top-0 overflow-y-auto bottom-0 z-[200] py-24 pl-4
         duration-500  ${open ? "left-0" : "left-[-100%]"}
         `}>
           <li>
@@ -98,11 +85,8 @@ const Navbar = () => {
           </li>
           <NavLinks />
           <div className="py-5 flex px-5">
-          <Link to={"dashboard/home"} className="bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br w-full text-white text-center py-2 rounded-full">Get started</Link>
-            
-            {/* <button className="bg-primary text-white  px-6 py-2 rounded-full">
-              Get Started
-            </button> */}
+          <Link to={"dashboard/home"} className="bg-gradient-to-r from-sky-600 via-sky-700 to-sky-800  hover:bg-gradient-to-br w-full text-white text-center py-2 rounded-full">Get started</Link>
+           
           </div>
         </ul>
         <div
@@ -114,29 +98,6 @@ const Navbar = () => {
             <RiMenu3Line color="#fff" size={27} />
           )}
         </div>
-        {/* <div className="gpt3__navbar-menu">
-        {toggleMenu ? (
-          <RiCloseLine
-            color="#fff"
-            size={27}
-            onClick={() => setToggleMenu(false)}
-          />
-        ) : (
-          <RiMenu3Line
-            color="#fff"
-            size={27}
-            onClick={() => setToggleMenu(true)}
-          />
-        )}
-        {toggleMenu && (
-          <div className="gpt3__navbar-menu_container scale-up-center">
-            <div className="gpt3__navbar-menu_container-links">{menuItems}</div>
-            <div className="gpt3__navbar-menu_container-links-sign">
-              {auth_Items}
-            </div>
-          </div>
-        )}
-      </div> */}
       </div>
     </>
   );

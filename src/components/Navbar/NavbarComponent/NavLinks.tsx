@@ -33,10 +33,10 @@ const NavLinks = () => {
                   <div className="py-3">
                     <div
                       className="w-4 h-4 left-3 absolute 
-                     bg-slate-300 rotate-45"
+                     bg-sky-100 rotate-45"
                     ></div>
                   </div>
-                  <div className=" bg-slate-300 p-5 grid grid-cols-3 mt-[-5px] gap-10 w-[227px] rounded-sm shadow">
+                  <div className=" bg-sky-100 p-5 grid grid-cols-3 mt-[-5px] gap-10 w-[227px] rounded-sm shadow">
                     {link.sublinks.map((mysublinks) => (
                       <div>
                         {/* <h1 className="text-lg font-semibold ">
@@ -44,7 +44,7 @@ const NavLinks = () => {
                         </h1> */}
                         {mysublinks.sublink.map((slink) => (
                             <ul className="list-none">
-                          <li className="text-sm text-gray-600 my-2.5">
+                          <li className=" text-[16px] text-gray-600 my-2.5 w-[227px]">
                             <Link
                               to={slink.link}
                               className="hover:text-primary font-poppins "

@@ -7,10 +7,10 @@ import { openModal } from '@/redux/features/modal/modalSlice';
 const CTA = () => {
   const dispatch = useDispatch();
   return (
-    <div className="gpt3__cta">
-      <div className="gpt3__cta-content">
+    <div className="gpt3__cta bg-gradient-to-bl from-gray-300 via-gray-500 to-gray-800 hover:bg-gradient-to-br">
+      <div className="gpt3__cta-content ">
         <p>Request Early Access to Get Started</p>
-        <h3>Register Today & start exploring the endless possibilities.</h3>
+        <h3>Register Today & get ready to experience a new era in insurance to a healthier and more protected life.</h3>
       </div>
       <div className="gpt3__cta-btn">
          <Button styles='' text='Get Started' onClick={() => dispatch(openModal(undefined))}/> 
